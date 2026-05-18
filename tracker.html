@@ -483,6 +483,7 @@
             { name: "Retroactive vindication mechanism (calibration-history amplifies when divergent claims are vindicated)", percent: 0 },
             { name: "Specialist support (narrow-confidence on specialty, wide elsewhere — no cross-domain penalty)", percent: 0 },
             { name: "Novice on-ramp (wide uncertainty honored; influence grows as history grows)", percent: 0 },
+            { name: "Encoder-concentration-graded influence weighting — calibration-influence weight is multiplied by a concentration-aware diversity factor; high-concentration encoders' submissions have smoothly downweighted influence; direct-encoded submissions exempt", percent: 0 },
           ],
           issues: [
             "Calibration-as-reputation requires source-side statistical literacy — friction, not barrier; ecosystem tooling expected to absorb some of it.",
@@ -547,6 +548,7 @@
             { name: "Behavioral pattern detection (identifies upstream-model fingerprints on synthetic submissions)", percent: 0 },
             { name: "Retroactive economic accountability via stake-of-earnings (high-leverage attacks become costly)", percent: 0 },
             { name: "Composition discipline (no layer sufficient alone; combination scales attack-cost with attack-value)", percent: 0 },
+            { name: "Encoder-concentration defense layered — concentration is queryable canonical state; reward and influence weight both take concentration as input; encoder dominance is structurally costly but not forbidden", percent: 0 },
           ],
           issues: [
             "Patient capitalized adversaries — nation-state-funded or comparable — cannot be fully priced out at any composition; the residual is accepted, not solved.",
@@ -561,7 +563,7 @@
             { name: "Token classes (genesis vs regular; distinct mint regimes and economic roles)", percent: 0 },
             { name: "Mint-vs-burn balance (deterministic function of network health; long-run sustainable; no external subsidy)", percent: 0 },
             { name: "Work-earns mint accounting (submission, aggregation, training, oracle inference, arbitrary user-inference serving, audit — all earn)", percent: 0 },
-            { name: "Contribution-value reward function (submission earnings scale with calibrated information value; consensus rewards distribute among confirming sources; novel observations earn proportionally to canonical-state shift magnitude + durability; structural sybil-amplification floor)", percent: 0 },
+            { name: "Contribution-value reward function (submission earnings scale with calibrated information value; consensus rewards distribute among confirming sources; novel observations earn proportionally to canonical-state shift magnitude + durability; structural sybil-amplification floor; encoder concentration is one input — low-concentration encoders earn a diversity bonus, biasing the encoder ecosystem toward diversity)", percent: 0 },
             { name: "Earnings-as-stake (no external capital staking; calibrated accumulation is the only path to high influence)", percent: 0 },
             { name: "Genesis-holder compute reservation + privilege marketplace (bootstrap demand + ongoing relevance for genesis tokens)", percent: 0 },
             { name: "Pre-criticality bounded regular-token pre-mint (liquidity + protocol operations during bootstrap)", percent: 0 },
