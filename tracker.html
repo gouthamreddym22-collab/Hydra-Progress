@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HYDRA — Progress</title>
+<meta property="og:title" content="HYDRA — Progress">
+<meta property="og:description" content="A decentralized probabilistic oracle of world state — permissionless, adversarially-robust, calibrated. This is the progress tracker.">
+<style>
+  :root {
+    --bg: #0a1020;
+    --bg-grad-2: #0e1530;
+    --card: #131c2f;
+    --card-elevated: #182241;
+    --card-hover: #1c2849;
+    --border: #2a385a;
+    --border-bright: #3d4f7a;
+    --text: #ecf1f8;
+    --text-mid: #b1bfdb;
+    --text-dim: #7e8eb0;
+    --accent: #5eb8ff;
+    --accent-bright: #7dd3fc;
+    --done: #4ade80;
+    --warn: #fbbf24;
+    --bar-bg: #0a0f1f;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.18);
+    --shadow-md: 0 4px 14px rgba(0,0,0,0.28);
+    --shadow-lg: 0 10px 28px rgba(0,0,0,0.36);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background:
+      radial-gradient(1200px 700px at 20% -10%, rgba(94,184,255,0.07), transparent 60%),
+      radial-gradient(900px 600px at 100% 10%, rgba(125,211,252,0.05), transparent 60%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-grad-2) 100%);
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+  }
+  .container { max-width: 880px; margin: 0 auto; padding: 40px 22px 96px; }
+
+  header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 6px;
+  }
+  .brand-dot {
+    width: 32px; height: 32px; border-radius: 999px;
+    background: radial-gradient(circle at 30% 30%, var(--accent-bright), var(--accent) 60%, #2a6ea8 100%);
+    box-shadow: 0 0 18px rgba(94,184,255,0.45), inset -4px -6px 10px rgba(0,0,0,0.15);
+  }
+  h1 {
+    font-size: 26px; font-weight: 650; margin: 0;
+    letter-spacing: -0.015em;
+    background: linear-gradient(180deg, var(--text) 0%, var(--text-mid) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .subtitle {
+    color: var(--text-dim); font-size: 13px;
+    margin: 6px 0 28px;
+  }
+
+  .about-card {
+    background: linear-gradient(180deg, rgba(94,184,255,0.04) 0%, rgba(19,28,47,0.4) 100%);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 18px;
+  }
+  .about-card p {
+    margin: 0;
+    color: var(--text-mid);
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .about-card p + p { margin-top: 10px; }
+  .about-card strong { color: var(--text); font-weight: 650; }
+  .about-card em { color: var(--accent-bright); font-style: normal; }
+
+  .overall-card {
+    background: linear-gradient(180deg, var(--card-elevated) 0%, var(--card) 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow-md);
+  }
+  .overall-label {
+    font-size: 11px; color: var(--text-dim);
+    text-transform: uppercase; letter-spacing: 0.09em;
+    margin-bottom: 12px; font-weight: 600;
+  }
+  .overall-row {
+    display: flex; align-items: baseline; gap: 14px; margin-bottom: 16px;
+  }
+  .overall-percent {
+    font-size: 40px; font-weight: 650;
+    color: var(--accent-bright);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.025em;
+    line-height: 1;
+  }
+  .overall-name { font-size: 14px; color: var(--text-mid); }
+
+  .bar-track {
+    background: var(--bar-bg);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+    height: 8px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
+  }
+  .bar-fill {
+    background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.5s cubic-bezier(.2,.7,.2,1);
+    box-shadow: 0 0 8px rgba(94,184,255,0.45);
+  }
+  .bar-fill.done {
+    background: linear-gradient(90deg, var(--done), #86efac);
+    box-shadow: 0 0 8px rgba(74,222,128,0.4);
+  }
+  .bar-fill.empty { background: var(--border); box-shadow: none; }
+  .overall-card .bar-track { height: 12px; }
+
+  .expand-hint {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin: 0 4px 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .expand-hint .key {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 11px;
+    color: var(--text-mid);
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+  }
+
+  .module {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s, background 0.18s;
+    box-shadow: var(--shadow-sm);
+  }
+  .module:hover {
+    border-color: var(--border-bright);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+    background: var(--card-hover);
+  }
+  .module.open {
+    border-color: var(--border-bright);
+    box-shadow: var(--shadow-md);
+  }
+  .module-header {
+    padding: 16px 18px;
+    cursor: pointer;
+    user-select: none;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+    align-items: center;
+  }
+  .module-name-row {
+    display: flex; align-items: center; gap: 10px; min-width: 0;
+  }
+  .module-name {
+    font-weight: 550; font-size: 15px; color: var(--text);
+    letter-spacing: -0.005em;
+  }
+  .module-meta { display: flex; align-items: center; gap: 14px; }
+  .module-percent {
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+    font-size: 14px; font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .module-bar { grid-column: 1 / -1; margin-top: 6px; }
+  .module-bar .bar-track { height: 6px; }
+
+  .chevron {
+    color: var(--accent);
+    font-size: 18px;
+    line-height: 1;
+    width: 26px; height: 26px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 8px;
+    background: rgba(94,184,255,0.10);
+    border: 1px solid rgba(94,184,255,0.18);
+    transition: transform 0.22s cubic-bezier(.2,.7,.2,1), background 0.18s;
+    flex-shrink: 0;
+  }
+  .module:hover .chevron { background: rgba(94,184,255,0.20); }
+  .module.open .chevron {
+    transform: rotate(180deg);
+    background: rgba(94,184,255,0.25);
+  }
+
+  .warn-dot {
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: var(--warn);
+    box-shadow: 0 0 6px rgba(251,191,36,0.6);
+    flex-shrink: 0;
+  }
+  .done-dot {
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: var(--done);
+    box-shadow: 0 0 6px rgba(74,222,128,0.55);
+    flex-shrink: 0;
+  }
+  .test-dot {
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: var(--text-dim);
+    box-shadow: 0 0 6px rgba(126,142,176,0.4);
+    flex-shrink: 0;
+  }
+  .testing-header { border-top: 1px dashed var(--border-bright); }
+
+  .module-body {
+    display: none;
+    padding: 18px 20px 22px;
+    border-top: 1px solid var(--border);
+    background: rgba(0,0,0,0.12);
+  }
+  .module.open .module-body { display: block; }
+
+  .section-label {
+    font-size: 10.5px; color: var(--text-dim);
+    text-transform: uppercase; letter-spacing: 0.09em;
+    margin: 0 0 12px;
+    font-weight: 600;
+  }
+  .section-label + .section-label { margin-top: 18px; }
+
+  .sub {
+    padding: 10px 0 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sub:last-of-type { border-bottom: none; }
+  .sub-top {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 12px;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+  .sub-name {
+    color: var(--text-mid);
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+  .sub-percent {
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    font-size: 12.5px; font-weight: 600;
+    letter-spacing: -0.01em;
+    min-width: 38px;
+  }
+  .sub-status {
+    text-align: right;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    min-width: 56px;
+  }
+  .status-done { color: var(--done); }
+  .status-partial { color: var(--accent-bright); }
+  .status-todo { color: var(--text-dim); }
+  .status-untested { color: var(--text-dim); opacity: 0.7; font-style: italic; }
+
+  .confidence-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin: 0 0 12px;
+    font-size: 13px;
+    border: 1px solid var(--border);
+  }
+  .confidence-label {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .confidence-hint {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .confidence-untested {
+    background: rgba(126, 142, 176, 0.06);
+    color: var(--text-dim);
+    border-color: var(--border);
+  }
+  .confidence-untested .confidence-label { font-style: italic; }
+  .confidence-low {
+    background: rgba(239, 68, 68, 0.08);
+    color: #fca5a5;
+    border-color: rgba(239, 68, 68, 0.3);
+  }
+  .confidence-medium {
+    background: rgba(251, 191, 36, 0.08);
+    color: var(--warn);
+    border-color: rgba(251, 191, 36, 0.3);
+  }
+  .confidence-high {
+    background: rgba(74, 222, 128, 0.08);
+    color: var(--done);
+    border-color: rgba(74, 222, 128, 0.3);
+  }
+
+  .sub-bar { padding: 0 0; }
+  .sub-bar .bar-track { height: 4px; }
+
+  .issues-list { margin: 0; padding: 0; list-style: none; }
+  .issue {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 8px 0;
+    font-size: 13px; color: var(--text-mid);
+    line-height: 1.5;
+    border-bottom: 1px solid var(--border);
+  }
+  .issue:last-of-type { border-bottom: none; }
+  .issue-icon {
+    color: var(--warn);
+    flex-shrink: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-top: 1px;
+  }
+
+  footer {
+    margin-top: 36px;
+    color: var(--text-dim);
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 540px) {
+    .container { padding: 28px 16px 80px; }
+    h1 { font-size: 22px; }
+    .overall-percent { font-size: 32px; }
+    .module-name { font-size: 14px; }
+    .sub-status { display: none; }
+    .sub-top { grid-template-columns: 1fr auto; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand-dot" aria-hidden="true"></div>
+      <h1>HYDRA — Progress</h1>
+    </header>
+    <div class="subtitle" id="subtitle"></div>
+
+    <div class="about-card">
+      <p>
+        <strong>HYDRA</strong> is a decentralized protocol that maintains a probabilistic representation
+        of world state &mdash; past, present, and projected &mdash; assembled from the contributions
+        of many independent sources. It is not a price feed, not a prediction market, not a database.
+      </p>
+      <p>
+        Its defining commitment is <em>honesty about uncertainty</em>: distributions, not point estimates;
+        genuine disagreement preserved, not averaged away; reputation tracking calibration, not accuracy.
+        Permissionless, immutable from genesis, adversarially-robust by composition rather than gatekeeping.
+      </p>
+      <p>
+        This tracker measures architectural progress against the vision. Percentages reflect
+        <em>alignment + readiness</em>, not feature completeness against an end-state.
+      </p>
+    </div>
+
+    <div class="overall-card">
+      <div class="overall-label">Overall progress</div>
+      <div class="overall-row">
+        <span class="overall-percent" id="overall-percent">0%</span>
+        <span class="overall-name">across foundational commitments + build modules</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill" id="overall-bar" style="width: 0%"></div></div>
+    </div>
+
+    <div class="expand-hint">
+      <span class="key">Click</span>
+      <span>any section below to expand its sub-items, progress, and open issues</span>
+    </div>
+
+    <div id="modules"></div>
+
+    <footer id="footer"></footer>
+  </div>
+
+  <script>
+    /* =====================================================================
+       DATA — edit this block to update the tracker. Each section maps to
+       a layer of the HYDRA vision; percentages measure architectural
+       alignment + readiness, not feature-completeness.
+       ===================================================================== */
+    const DATA = {
+      generated_at: "2026-05-18",
+      source: "Vision update absorbed; module structure recalibrated. Module 8 split into Tokenomics / Criticality / Compute marketplace (8/9/10); Privacy and Audit renumbered to 11/12. Nothing built yet; all percentages start at 0.",
+      overall_percent: 0,
+      modules: [
+        {
+          name: "Foundational commitments (vision-declared; anchored in code over time)",
+          percent: 0,
+          submodules: [
+            { name: "Honest representation of uncertainty (probability distributions, multi-modal posteriors, no point-estimate collapse)", percent: 0 },
+            { name: "Permissionless participation (no whitelist, no credentials gate; calibration-earned influence)", percent: 0 },
+            { name: "Strong immutability (no governance, no DAO; only deterministic adaptation of bounded parameters)", percent: 0 },
+            { name: "Source-side conversion boundary (off-protocol raw → claim conversion; protocol begins at well-formed claims)", percent: 0 },
+            { name: "Calibration-as-reputation (honesty about uncertainty rewarded, not average accuracy)", percent: 0 },
+            { name: "Whistleblower / minority preservation (retroactive vindication scales with source persistence)", percent: 0 },
+            { name: "Adversarial robustness as foundational (composed defenses scale attack-cost with attack-value)", percent: 0 },
+            { name: "Self-evolution rather than upgrade (load-bearing AI components improve through compute, not governance)", percent: 0 },
+          ],
+          issues: [
+            "All commitments are vision-declared but not yet anchored anywhere in code — design is in working state, implementation has not begun.",
+          ],
+        },
+        {
+          name: "Module 1 — Canonical state & schema",
+          percent: 0,
+          submodules: [
+            { name: "Probabilistic distribution data model (unimodal, multimodal, wide, sharp — represented honestly)", percent: 0 },
+            { name: "Dimension declaration schema (precise enough to make submissions commensurable across sources)", percent: 0 },
+            { name: "Revisability surface (snapshots remain revisable as new evidence arrives)", percent: 0 },
+            { name: "Canonical-state persistence + retrieval (queryable across time, with eventual stability)", percent: 0 },
+            { name: "New-dimension introduction path (narrow community-driven; monotonic, backward-compatible)", percent: 0 },
+          ],
+          issues: [
+            "Schema design is the gating decision for what world-state HYDRA can meaningfully track — the formalization ceiling is real.",
+          ],
+          confidence: null,
+        },
+        {
+          name: "Module 2 — Source submission layer (boundary + intake)",
+          percent: 0,
+          submodules: [
+            { name: "Claim format spec (structured probabilistic submission, well-formed against schema)", percent: 0 },
+            { name: "Permissionless intake endpoint (anyone can submit; no credential check)", percent: 0 },
+            { name: "Submission authentication (source identity bound to submission; no replay)", percent: 0 },
+            { name: "Off-protocol boundary discipline (protocol refuses raw observations; ecosystem-built converters expected)", percent: 0 },
+            { name: "Submission rate gating (calibration-history requirement governs influence-growth rate)", percent: 0 },
+          ],
+          issues: [
+            "Off-protocol conversion ecosystem concentration is outside the protocol's enforceable control — risk lives in the surrounding ecosystem, not in HYDRA itself.",
+          ],
+          confidence: null,
+        },
+        {
+          name: "Module 3 — Calibration & reputation engine",
+          percent: 0,
+          submodules: [
+            { name: "Proper scoring rule implementation (calibration-rewarding, not accuracy-rewarding)", percent: 0 },
+            { name: "Per-source calibration history tracking (rolling, with persistence weighting)", percent: 0 },
+            { name: "Reputation derivation (from calibration history; influence-scaling function)", percent: 0 },
+            { name: "Retroactive vindication mechanism (calibration-history amplifies when divergent claims are vindicated)", percent: 0 },
+            { name: "Specialist support (narrow-confidence on specialty, wide elsewhere — no cross-domain penalty)", percent: 0 },
+            { name: "Novice on-ramp (wide uncertainty honored; influence grows as history grows)", percent: 0 },
+          ],
+          issues: [
+            "Calibration-as-reputation requires source-side statistical literacy — friction, not barrier; ecosystem tooling expected to absorb some of it.",
+          ],
+          confidence: null,
+        },
+        {
+          name: "Module 4 — Aggregation model (self-evolving)",
+          percent: 0,
+          submodules: [
+            { name: "Cluster-bundle ingestion (multi-source submissions about a dimension at an observation time)", percent: 0 },
+            { name: "Calibration + diversity weighting (downweight mechanically-similar coordinated submissions)", percent: 0 },
+            { name: "Disagreement preservation (multi-modal posteriors when sources genuinely disagree)", percent: 0 },
+            { name: "Canonical posterior output (honest representation of what is currently known)", percent: 0 },
+            { name: "Input-robustness selection (evolved resistance to adversarial submissions)", percent: 0 },
+            { name: "Architecture choice (JEPA / LeJEPA / coupled / unified-temporal — research-pending)", percent: 0 },
+          ],
+          issues: [
+            "Architectural choice is the largest unresolved technical area in the design — locking prematurely concentrates risk; deferring entirely blocks launch.",
+            "The protocol's central technical claim: a learned mechanism producing calibrated probabilistic representation from adversarial multi-source input. Validation is multi-year.",
+          ],
+          confidence: null,
+        },
+        {
+          name: "Module 5 — Forecasting model (self-evolving)",
+          percent: 0,
+          submodules: [
+            { name: "Forward projection of canonical state (probabilistic, calibrated)", percent: 0 },
+            { name: "Fitness signal against eventually-stable canonical at predicted times (proper scoring rule)", percent: 0 },
+            { name: "Compute-driven improvement loop (no governance-driven version upgrades)", percent: 0 },
+            { name: "Predictive value surface for paying users (query interface)", percent: 0 },
+            { name: "Architecture choice (shared with or distinct from aggregation — research-pending)", percent: 0 },
+          ],
+          issues: [
+            "Whether forecasting and aggregation share architecture or are coupled by fitness only is part of the multi-year research program.",
+          ],
+          confidence: null,
+        },
+        {
+          name: "Module 6 — Self-evolution infrastructure",
+          percent: 0,
+          submodules: [
+            { name: "Fitness-signal computation (mathematically clean; immutable from genesis)", percent: 0 },
+            { name: "Population-of-architectures management (variation, selection, retention)", percent: 0 },
+            { name: "Mutation operator design (drives architectural exploration without governance)", percent: 0 },
+            { name: "Decentralized-deterministic training (reproducible across nodes — unsolved at HYDRA scale)", percent: 0 },
+            { name: "Population stability over years (training-dynamics discipline)", percent: 0 },
+            { name: "Removal of human-governance attack surface on AI components (the structural commitment)", percent: 0 },
+          ],
+          issues: [
+            "Determinism in self-evolving training across decentralized nodes is the central unsolved engineering problem — fitness signals are clean, training dynamics are open.",
+            "Production-stable implementations do not exist at the scale HYDRA needs; this is the highest single technical risk in the design.",
+          ],
+          confidence: null,
+        },
+        {
+          name: "Module 7 — Adversarial defense composition",
+          percent: 0,
+          submodules: [
+            { name: "Calibration-history gate (rate-limits new sources' growth toward influence)", percent: 0 },
+            { name: "Diversity weighting (catches coordinated submissions whose mechanical similarity gives them away)", percent: 0 },
+            { name: "Behavioral pattern detection (identifies upstream-model fingerprints on synthetic submissions)", percent: 0 },
+            { name: "Retroactive economic accountability via stake-of-earnings (high-leverage attacks become costly)", percent: 0 },
+            { name: "Composition discipline (no layer sufficient alone; combination scales attack-cost with attack-value)", percent: 0 },
+          ],
+          issues: [
+            "Patient capitalized adversaries — nation-state-funded or comparable — cannot be fully priced out at any composition; the residual is accepted, not solved.",
+            "Defense is principled, not absolute; whether it suffices depends on what adversaries actually try.",
+          ],
+          confidence: null,
+        },
+        {
+          name: "Module 8 — Tokenomics & economic accounting (steady-state)",
+          percent: 0,
+          submodules: [
+            { name: "Token classes (genesis vs regular; distinct mint regimes and economic roles)", percent: 0 },
+            { name: "Mint-vs-burn balance (deterministic function of network health; long-run sustainable; no external subsidy)", percent: 0 },
+            { name: "Work-earns mint accounting (submission, aggregation, training, oracle inference, arbitrary user-inference serving, audit — all earn)", percent: 0 },
+            { name: "Contribution-value reward function (submission earnings scale with calibrated information value; consensus rewards distribute among confirming sources; novel observations earn proportionally to canonical-state shift magnitude + durability; structural sybil-amplification floor)", percent: 0 },
+            { name: "Earnings-as-stake (no external capital staking; calibrated accumulation is the only path to high influence)", percent: 0 },
+            { name: "Genesis-holder compute reservation + privilege marketplace (bootstrap demand + ongoing relevance for genesis tokens)", percent: 0 },
+            { name: "Pre-criticality bounded regular-token pre-mint (liquidity + protocol operations during bootstrap)", percent: 0 },
+          ],
+          issues: [
+            "Bootstrap demand is the single largest economic risk and depends on factors outside the protocol's control — narrative resonance, market conditions, execution timing.",
+            "If speculative demand does not materialize, the burn-and-mint balance does not establish, and no internal mechanism can arrest the downward spiral.",
+            "Pre-mint amount of regular tokens for liquidity + protocol operations during bootstrap is open — must be bounded, custodied, and accounted for at genesis.",
+          ],
+          confidence: null,
+        },
+        {
+          name: "Module 9 — Criticality mechanism (bootstrap-to-steady-state transition)",
+          percent: 0,
+          submodules: [
+            { name: "Criticality state-detection (deterministic measurement of sustained net-burn-exceeds-net-mint over locked window)", percent: 0 },
+            { name: "Profitability metric definition (ungameable; pre-genesis locked)", percent: 0 },
+            { name: "Consistency-window length (pre-genesis locked; balances false-trigger risk vs. indefinite recession)", percent: 0 },
+            { name: "Trigger atomic state transition (stop genesis-mint permanently; founder one-time mint; switch to regular-token-only regime — all atomically, encoded in genesis-frozen protocol code)", percent: 0 },
+            { name: "Founder-mint accounting (1:1 mirror of total genesis tokens minted at trigger; founder ends at 50% of all genesis tokens ever)", percent: 0 },
+            { name: "On-chain observability (bootstrap-to-steady-state transition visible to every observer of the chain; not a matter of interpretation)", percent: 0 },
+          ],
+          issues: [
+            "Profitability metric defining criticality must be defined precisely enough to be ungameable; gaming a one-time founder mint is profitable enough to justify substantial adversary investment. Metric definition is open and must be locked pre-genesis.",
+            "Consistency-window length is open and must be locked pre-genesis — too short risks false-trigger; too long risks indefinite recession of the trigger.",
+            "50% founder allocation is a centralization signal in a protocol otherwise committed to decentralization; whether this ratio is correct, and whether the founder allocation should distribute across bootstrap-phase participants instead, is an open design question to be locked at genesis.",
+            "Criticality is genesis-frozen and one-shot — calibration error here cannot be repaired by any later mechanism.",
+          ],
+          confidence: null,
+        },
+        {
+          name: "Module 10 — Generalized compute marketplace",
+          percent: 0,
+          submodules: [
+            { name: "Work-class definition (HYDRA-oracle queries, privacy-tier inference, arbitrary user-submitted inference on any model a user brings)", percent: 0 },
+            { name: "Canonical compute unit (consistent across work classes; multipliers adapt to network state)", percent: 0 },
+            { name: "Query-burns accounting (tokens burned proportional to deterministic computational cost — not declared value)", percent: 0 },
+            { name: "User-bring-your-own-model inference surface (HYDRA tokens pay for any inference job a user wants to run)", percent: 0 },
+            { name: "Marketplace mechanics (job submission, capacity matching, settlement)", percent: 0 },
+            { name: "Positioning discipline (oracle is the protocol's purpose; compute marketplace is the funding mechanism — explicitly not parallel products)", percent: 0 },
+            { name: "User-responsibility boundary (users verify their own inference results; HYDRA guarantees correct execution of declared computations, not appropriateness of what users choose to compute)", percent: 0 },
+          ],
+          issues: [
+            "Generalized compute marketplace expands HYDRA's adversarial surface — arbitrary inference jobs could coordinate attacks against the oracle, generate disallowed content, or otherwise misbehave; audit applies spot-checks + economic deterrence, not exhaustive review.",
+            "Positioning risk: 'decentralized truth oracle' + 'generalized compute marketplace' identities may dilute each other; the discipline 'oracle is purpose, marketplace is funding mechanism' must hold through implementation, not just in the vision document.",
+            "Cross-class multiplier calibration governs how compute cost translates to token burn across work classes — must be honest about real cost differentials without creating gaming surfaces.",
+          ],
+          confidence: null,
+        },
+        {
+          name: "Module 11 — Privacy tier (MPC + ZK)",
+          percent: 0,
+          submodules: [
+            { name: "Default plaintext query tier (ordinary queries, public)", percent: 0 },
+            { name: "Privacy-tier multiparty computation (query content protected from serving nodes — applies to oracle queries AND arbitrary user-submitted inference)", percent: 0 },
+            { name: "Zero-knowledge proofs of correct share computation (correctness without disclosure)", percent: 0 },
+            { name: "Cost differential reflecting real computational overhead (token + capacity premium)", percent: 0 },
+            { name: "Hardware-independence (no TEE / no vendor attestation; pure cryptographic primitives)", percent: 0 },
+            { name: "Primitive-adoption path (frozen audit primitives + monotonic crypto-primitive evolution when current schemes are superseded)", percent: 0 },
+          ],
+          issues: [
+            "Privacy-tier economic viability depends on whether enough users value privacy enough to pay premium rates — may be under-utilized at launch.",
+            "Production-grade malicious-secure MPC + ZK is substantial engineering; cost is real.",
+          ],
+          confidence: null,
+        },
+        {
+          name: "Module 12 — Audit committees & slashing",
+          percent: 0,
+          submodules: [
+            { name: "Frozen audit primitives at genesis (predictable, well-understood; adversaries cannot game via waiting for evolution)", percent: 0 },
+            { name: "Aggregation-bias monitoring (systematic bias detection on canonical-state outputs)", percent: 0 },
+            { name: "Model-training protocol-violation monitoring (training-time misbehavior detection)", percent: 0 },
+            { name: "Inference-serving cheating detection (serving correctness watched continuously)", percent: 0 },
+            { name: "Arbitrary user-inference monitoring (spot-check + economic deterrence; appropriateness-of-compute is user's responsibility, correctness-of-declared-computation is HYDRA's guarantee)", percent: 0 },
+            { name: "Slashing + refund path (compromised work → notify buyers; cheating nodes → slashed; refunds from slash proceeds)", percent: 0 },
+            { name: "Rotating committee membership selected for diversity (duties scale with network health)", percent: 0 },
+          ],
+          issues: [
+            "Frozen audit primitives cannot detect attack categories that do not exist at genesis — partial defense; aggregation's evolved input-robustness catches the practical effect.",
+          ],
+          confidence: null,
+        },
+        {
+          name: "Testing",
+          percent: null,
+          is_testing_section: true,
+          submodules: [
+            { name: "Module 1 — Canonical state & schema", percent: null, is_confidence: true },
+            { name: "Module 2 — Source submission layer", percent: null, is_confidence: true },
+            { name: "Module 3 — Calibration & reputation engine", percent: null, is_confidence: true },
+            { name: "Module 4 — Aggregation model", percent: null, is_confidence: true },
+            { name: "Module 5 — Forecasting model", percent: null, is_confidence: true },
+            { name: "Module 6 — Self-evolution infrastructure", percent: null, is_confidence: true },
+            { name: "Module 7 — Adversarial defense composition", percent: null, is_confidence: true },
+            { name: "Module 8 — Tokenomics & economic accounting (steady-state)", percent: null, is_confidence: true },
+            { name: "Module 9 — Criticality mechanism", percent: null, is_confidence: true },
+            { name: "Module 10 — Generalized compute marketplace", percent: null, is_confidence: true },
+            { name: "Module 11 — Privacy tier (MPC + ZK)", percent: null, is_confidence: true },
+            { name: "Module 12 — Audit committees & slashing", percent: null, is_confidence: true },
+          ],
+          issues: [
+            "No module has been tested yet. Invoke <code>/hydra-test &lt;module&gt;</code> to run an aggressive test pass and produce a confidence score (architecture vs. vision, functionality, security, efficiency). Scores appear here as tests are run.",
+          ],
+        },
+      ],
+    };
+    /* ===== /DATA ===== */
+
+    function el(tag, attrs, children) {
+      const node = document.createElement(tag);
+      if (attrs) {
+        for (const k of Object.keys(attrs)) {
+          const v = attrs[k];
+          if (v == null) continue;
+          if (k === "class") node.className = v;
+          else if (k === "html") node.innerHTML = v;
+          else node.setAttribute(k, v);
+        }
+      }
+      const list = children == null ? [] : (Array.isArray(children) ? children : [children]);
+      for (const child of list) {
+        if (child == null) continue;
+        node.appendChild(typeof child === "string" ? document.createTextNode(child) : child);
+      }
+      return node;
+    }
+
+    function pct(n) { return n == null ? "—" : n + "%"; }
+
+    function statusFor(p, opts) {
+      if (opts && opts.isConfidence && p == null) return { cls: "status-untested", text: "untested" };
+      if (p == null) return { cls: "status-untested", text: "pending" };
+      if (p >= 100) return { cls: "status-done", text: "done" };
+      if (p <= 0) return { cls: "status-todo", text: "todo" };
+      return { cls: "status-partial", text: "partial" };
+    }
+
+    function fillClassFor(p) {
+      if (p == null) return "bar-fill empty";
+      if (p >= 100) return "bar-fill done";
+      if (p <= 0) return "bar-fill empty";
+      return "bar-fill";
+    }
+
+    function confidenceClsFor(c) {
+      if (c == null) return "confidence-untested";
+      if (c >= 70) return "confidence-high";
+      if (c >= 40) return "confidence-medium";
+      return "confidence-low";
+    }
+
+    function confidenceLabel(c) {
+      return c == null ? "Not yet tested" : c + " / 100";
+    }
+
+    function progressBar(percent, fillClass) {
+      const safePct = percent == null ? 0 : Math.max(0, Math.min(100, percent));
+      return el("div", { class: "bar-track" }, [
+        el("div", {
+          class: fillClass || fillClassFor(percent),
+          style: "width: " + safePct + "%",
+        }),
+      ]);
+    }
+
+    function renderHeader() {
+      document.getElementById("overall-percent").textContent = pct(DATA.overall_percent);
+      document.getElementById("overall-bar").style.width = pct(DATA.overall_percent);
+      const fillEl = document.getElementById("overall-bar");
+      fillEl.className = fillClassFor(DATA.overall_percent);
+      const subtitle = document.getElementById("subtitle");
+      subtitle.textContent = "Snapshot: " + DATA.source;
+      document.getElementById("footer").innerHTML =
+        "Last updated " + DATA.generated_at;
+    }
+
+    function renderModule(m, opts) {
+      const openByDefault = !!(opts && opts.openByDefault);
+      const hasIssues = m.issues && m.issues.length > 0;
+      const isTestingSection = !!m.is_testing_section;
+      const hasConfidence = Object.prototype.hasOwnProperty.call(m, "confidence");
+
+      const iconEl = isTestingSection
+        ? el("span", { class: "test-dot", title: "testing section" })
+        : (hasIssues
+            ? el("span", { class: "warn-dot", title: m.issues.length + " open issue(s)" })
+            : (m.percent >= 100 ? el("span", { class: "done-dot", title: "complete" }) : null));
+
+      const nameRow = el("div", { class: "module-name-row" }, [
+        iconEl,
+        el("span", { class: "module-name" }, m.name),
+      ]);
+      const meta = el("div", { class: "module-meta" }, [
+        el("span", { class: "module-percent" }, pct(m.percent)),
+        el("span", { class: "chevron", title: "expand / collapse" }, "▾"),
+      ]);
+      const bar = el("div", { class: "module-bar" }, [
+        progressBar(m.percent),
+      ]);
+      const header = el("div", {
+        class: "module-header" + (isTestingSection ? " testing-header" : ""),
+        role: "button",
+        tabindex: "0",
+        "aria-expanded": openByDefault ? "true" : "false",
+      }, [nameRow, meta, bar]);
+
+      const bodyChildren = [];
+      if (m.submodules && m.submodules.length) {
+        bodyChildren.push(el("div", { class: "section-label" }, isTestingSection ? "Module confidence scores" : "Sub-items"));
+        for (const s of m.submodules) {
+          const isSubConfidence = !!s.is_confidence;
+          const st = statusFor(s.percent, { isConfidence: isSubConfidence });
+          const statusText = isSubConfidence && s.percent == null ? "not yet tested" : st.text;
+          const percentLabel = isSubConfidence
+            ? (s.percent == null ? "—" : s.percent + " / 100")
+            : pct(s.percent);
+          const subTop = el("div", { class: "sub-top" }, [
+            el("span", { class: "sub-name" }, s.name),
+            el("span", { class: "sub-percent" }, percentLabel),
+            el("span", { class: "sub-status " + st.cls }, statusText),
+          ]);
+          const subBar = el("div", { class: "sub-bar" }, [progressBar(s.percent)]);
+          bodyChildren.push(el("div", { class: "sub" }, [subTop, subBar]));
+        }
+      }
+      if (hasConfidence && !isTestingSection) {
+        bodyChildren.push(el("div", { class: "section-label" }, "Test confidence"));
+        const cls = confidenceClsFor(m.confidence);
+        bodyChildren.push(el("div", { class: "confidence-row " + cls }, [
+          el("span", { class: "confidence-label" }, confidenceLabel(m.confidence)),
+          el("span", { class: "confidence-hint" }, m.confidence == null ? "run /hydra-test to score this module" : "score / 100"),
+        ]));
+      }
+      if (hasIssues) {
+        bodyChildren.push(el("div", { class: "section-label" }, isTestingSection ? "Notes" : "Open issues / followups"));
+        const ul = el("ul", { class: "issues-list" });
+        for (const issue of m.issues) {
+          ul.appendChild(el("li", { class: "issue" }, [
+            el("span", { class: "issue-icon" }, isTestingSection ? "ⓘ" : "⚠"),
+            el("span", { html: issue }),
+          ]));
+        }
+        bodyChildren.push(ul);
+      }
+      const body = el("div", { class: "module-body" }, bodyChildren);
+
+      const root = el("div", { class: "module" + (openByDefault ? " open" : "") }, [header, body]);
+
+      function toggle() {
+        const willOpen = !root.classList.contains("open");
+        root.classList.toggle("open");
+        header.setAttribute("aria-expanded", willOpen ? "true" : "false");
+      }
+      header.addEventListener("click", toggle);
+      header.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggle();
+        }
+      });
+      return root;
+    }
+
+    function renderModules() {
+      const host = document.getElementById("modules");
+      DATA.modules.forEach(function (m, idx) {
+        host.appendChild(renderModule(m, { openByDefault: idx === 0 }));
+      });
+    }
+
+    renderHeader();
+    renderModules();
+  </script>
+</body>
+</html>
