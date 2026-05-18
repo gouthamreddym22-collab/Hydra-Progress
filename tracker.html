@@ -418,12 +418,12 @@
        ===================================================================== */
     const DATA = {
       generated_at: "2026-05-18",
-      source: "Vision update absorbed; module structure recalibrated. Module 8 split into Tokenomics / Criticality / Compute marketplace (8/9/10); Privacy and Audit renumbered to 11/12. Nothing built yet; all percentages start at 0.",
-      overall_percent: 0,
+      source: "Session 1 close (2026-05-18). 3 waves of vision revisions absorbed; 9 Hard Rules declared (was 6 at bootstrap); Module 1 (canonical state, data model & emergence) and Module 2 (source submission layer) architecturally locked at first pass; Module 8 split into 8/9/10 with Privacy and Audit renumbered to 11/12. Percentages reflect alignment + readiness, not implementation — no code yet.",
+      overall_percent: 4,
       modules: [
         {
           name: "Foundational commitments (vision-declared; anchored in code over time)",
-          percent: 0,
+          percent: 10,
           submodules: [
             { name: "Honest representation of uncertainty (probability distributions, multi-modal posteriors, no point-estimate collapse)", percent: 0 },
             { name: "Permissionless participation (no whitelist, no credentials gate; calibration-earned influence)", percent: 0 },
@@ -440,7 +440,7 @@
         },
         {
           name: "Module 1 — Canonical state, data model & emergence",
-          percent: 0,
+          percent: 15,
           submodules: [
             { name: "Atomic shape (dimension, observation_time, anchor, distribution, provenance); polymorphic anchor with four locked shapes (entity / coordinate / entity-pair / null); provenance with mandatory + optional + size-bounded extension bag", percent: 0 },
             { name: "Distribution representation registry — 3 types locked at genesis: discrete histograms, weighted sample sets, parametric mixtures; per-dimension type declaration; multi-modality preserved structurally in each", percent: 0 },
@@ -460,16 +460,21 @@
         },
         {
           name: "Module 2 — Source submission layer (boundary + intake)",
-          percent: 0,
+          percent: 15,
           submodules: [
-            { name: "Claim format spec (structured probabilistic submission, well-formed against schema)", percent: 0 },
-            { name: "Permissionless intake endpoint (anyone can submit; no credential check)", percent: 0 },
-            { name: "Submission authentication (source identity bound to submission; no replay)", percent: 0 },
-            { name: "Off-protocol boundary discipline (protocol refuses raw observations; ecosystem-built converters expected)", percent: 0 },
-            { name: "Submission rate gating (calibration-history requirement governs influence-growth rate)", percent: 0 },
+            { name: "Submission primitives — single atom OR batch (Option β, first-class batch construct); batches have batch_id (entity ref) + batch_provenance + batch_signature + ordered atom list; atomic acceptance (all atoms accepted or all rejected); per-atom signatures preserved inside batches; mixed dimensions/anchors allowed within batch", percent: 0 },
+            { name: "Source identity & signature — one signature scheme locked at genesis; signed-transition key rotation allowed; self-revocation atom format + emergent calibration-derived flagging for compromise patterns; first-reference identity via public key embedded in entity-creation provenance", percent: 0 },
+            { name: "Submission lifecycle — synchronous structural validation on receiving node (structure + signature + rate-limit); accepted atoms enter gossip mesh; rejected atoms return error with reason; atom-inclusion consensus is eventual consistency at gossip layer (no formal BFT vote on atom inclusion)", percent: 0 },
+            { name: "Query-time threshold consensus — queries (both atom-read + inference) coordinate at query time across a quorum of nodes; nodes converge on consensus atom set, run deterministic aggregation/forecasting, produce threshold-signed response; consumer receives cryptographic proof of consensus", percent: 0 },
+            { name: "Acknowledgment format — structured node-signed receipt (atom_hash or batch_hash, timestamp, node_id, node_signature); non-repudiable proof of submission timing; enables forecast-atom-timing audit + contribution-value reward grading; rejection receipts include rejected_atom_index + rejection_reason for actionable feedback", percent: 0 },
+            { name: "Submission rate gating — Option α: calibration-modulated rate cap; baseline rate is positive (bootstrap-compatible); cap grows monotonically with calibration history; no proof-of-work; no mandatory stake; sybil resistance from per-identity baseline + identity-creation cost + calibration-weighted influence", percent: 0 },
+            { name: "Off-protocol boundary discipline (protocol refuses raw observations; ecosystem-built encoders produce well-formed probabilistic claims; encoder concentration is queryable canonical state and feeds the layered defense in Modules 3/7/8)", percent: 0 },
+            { name: "Batch as structural-poisoning filter — atomic batch acceptance catches malformed atoms (encoder bugs, trojan-horse attacks where adversaries mix poisoned + legitimate); structural defense layer complementing aggregation-layer epistemic defenses; rejection receipts let audit committees pattern-match buggy/malicious encoders", percent: 0 },
           ],
           issues: [
-            "Off-protocol conversion ecosystem concentration is outside the protocol's enforceable control — risk lives in the surrounding ecosystem, not in HYDRA itself.",
+            "Off-protocol conversion ecosystem concentration is partially addressed by the layered encoder-concentration defense (queryable metric + reward bonus + influence weight downgrading) but residual ecosystem-level risk remains outside the protocol's enforceable surface.",
+            "Wire format details, exact rate-limit function shape, max batch size cap, query-quorum size (N) and threshold (K of N) are all fine-tuning deferred per architecture-first discipline.",
+            "The one-signature-scheme-at-genesis choice means the specific scheme (Ed25519 vs ML-DSA vs other) is a genesis-frozen commitment; crypto-primitive succession is in the narrow community-driven update path.",
           ],
           confidence: null,
         },
