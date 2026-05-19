@@ -6,361 +6,434 @@
 <title>HYDRA — Progress</title>
 <meta property="og:title" content="HYDRA — Progress">
 <meta property="og:description" content="A decentralized probabilistic oracle of world state — permissionless, adversarially-robust, calibrated. This is the progress tracker.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a1020;
-    --bg-grad-2: #0e1530;
-    --card: #131c2f;
-    --card-elevated: #182241;
-    --card-hover: #1c2849;
-    --border: #2a385a;
-    --border-bright: #3d4f7a;
-    --text: #ecf1f8;
-    --text-mid: #b1bfdb;
-    --text-dim: #7e8eb0;
-    --accent: #5eb8ff;
-    --accent-bright: #7dd3fc;
-    --done: #4ade80;
-    --warn: #fbbf24;
-    --bar-bg: #0a0f1f;
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.18);
-    --shadow-md: 0 4px 14px rgba(0,0,0,0.28);
-    --shadow-lg: 0 10px 28px rgba(0,0,0,0.36);
+    --bg: #0d0c0a;
+    --bg-grad-2: #14110d;
+    --surface: #18161200;
+    --surface-elev: #1c1915;
+    --surface-hover: #221f1a;
+    --border: #2a261f;
+    --border-bright: #3d362a;
+    --text: #ede8de;
+    --text-mid: #b0a896;
+    --text-dim: #7a7263;
+    --accent: #c89868;
+    --accent-bright: #e8b888;
+    --accent-soft: #8a6e50;
+    --done: #9bb084;
+    --warn: #d8a050;
+    --bar-bg: #0a0907;
+    --shadow-sm: 0 1px 1px rgba(0,0,0,0.4);
+    --shadow-md: 0 2px 10px rgba(0,0,0,0.5);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.6);
+
+    --font-serif: "Fraunces", Georgia, "Times New Roman", serif;
+    --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Consolas, "Courier New", monospace;
   }
   * { box-sizing: border-box; }
   html, body {
     margin: 0; padding: 0;
     background:
-      radial-gradient(1200px 700px at 20% -10%, rgba(94,184,255,0.07), transparent 60%),
-      radial-gradient(900px 600px at 100% 10%, rgba(125,211,252,0.05), transparent 60%),
+      radial-gradient(1200px 700px at 20% -10%, rgba(200,152,104,0.04), transparent 60%),
+      radial-gradient(900px 600px at 100% 10%, rgba(155,176,132,0.03), transparent 60%),
       linear-gradient(180deg, var(--bg) 0%, var(--bg-grad-2) 100%);
     background-attachment: fixed;
     color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.5;
   }
-  .container { max-width: 880px; margin: 0 auto; padding: 40px 22px 96px; }
+  .container { max-width: 860px; margin: 0 auto; padding: 56px 24px 96px; }
 
   header {
-    display: flex; align-items: center; gap: 14px;
-    margin-bottom: 6px;
+    display: flex; align-items: baseline; gap: 16px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
   }
-  .brand-dot {
-    width: 32px; height: 32px; border-radius: 999px;
-    background: radial-gradient(circle at 30% 30%, var(--accent-bright), var(--accent) 60%, #2a6ea8 100%);
-    box-shadow: 0 0 18px rgba(94,184,255,0.45), inset -4px -6px 10px rgba(0,0,0,0.15);
+  .brand-mark {
+    width: 14px; height: 14px;
+    border: 1px solid var(--accent);
+    border-radius: 1px;
+    position: relative;
+    flex-shrink: 0;
+    top: 1px;
+  }
+  .brand-mark::before {
+    content: ""; position: absolute;
+    inset: 3px;
+    background: var(--accent);
+    opacity: 0.5;
   }
   h1 {
-    font-size: 26px; font-weight: 650; margin: 0;
-    letter-spacing: -0.015em;
-    background: linear-gradient(180deg, var(--text) 0%, var(--text-mid) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    font-family: var(--font-serif);
+    font-size: 32px; font-weight: 500; margin: 0;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    font-feature-settings: "ss01";
+  }
+  h1 .subtitle-em {
+    color: var(--text-dim);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 26px;
   }
   .subtitle {
-    color: var(--text-dim); font-size: 13px;
-    margin: 6px 0 28px;
+    color: var(--text-dim); font-size: 12px;
+    margin: 14px 0 32px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
 
   .about-card {
-    background: linear-gradient(180deg, rgba(94,184,255,0.04) 0%, rgba(19,28,47,0.4) 100%);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: 12px;
-    padding: 18px 22px;
-    margin-bottom: 18px;
+    background: transparent;
+    border: none;
+    border-left: 1px solid var(--accent-soft);
+    padding: 4px 0 4px 24px;
+    margin-bottom: 32px;
   }
   .about-card p {
     margin: 0;
     color: var(--text-mid);
-    font-size: 13.5px;
-    line-height: 1.6;
+    font-size: 14px;
+    line-height: 1.7;
+    font-family: var(--font-serif);
+    font-weight: 400;
   }
-  .about-card p + p { margin-top: 10px; }
-  .about-card strong { color: var(--text); font-weight: 650; }
-  .about-card em { color: var(--accent-bright); font-style: normal; }
+  .about-card p + p { margin-top: 12px; }
+  .about-card strong { color: var(--text); font-weight: 500; }
+  .about-card em { color: var(--accent); font-style: italic; }
 
   .overall-card {
-    background: linear-gradient(180deg, var(--card-elevated) 0%, var(--card) 100%);
+    background: linear-gradient(180deg, var(--surface-elev) 0%, transparent 100%);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px 26px;
-    margin-bottom: 18px;
-    box-shadow: var(--shadow-md);
+    border-radius: 4px;
+    padding: 24px 28px;
+    margin-bottom: 28px;
   }
   .overall-label {
-    font-size: 11px; color: var(--text-dim);
-    text-transform: uppercase; letter-spacing: 0.09em;
-    margin-bottom: 12px; font-weight: 600;
+    font-size: 10px; color: var(--text-dim);
+    text-transform: uppercase; letter-spacing: 0.14em;
+    margin-bottom: 14px; font-weight: 500;
+    font-family: var(--font-mono);
   }
   .overall-row {
-    display: flex; align-items: baseline; gap: 14px; margin-bottom: 16px;
+    display: flex; align-items: baseline; gap: 16px; margin-bottom: 18px;
   }
   .overall-percent {
-    font-size: 40px; font-weight: 650;
+    font-family: var(--font-serif);
+    font-size: 46px; font-weight: 500;
     color: var(--accent-bright);
     font-variant-numeric: tabular-nums;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.03em;
     line-height: 1;
   }
-  .overall-name { font-size: 14px; color: var(--text-mid); }
+  .overall-name {
+    font-size: 13px;
+    color: var(--text-mid);
+    font-style: italic;
+    font-family: var(--font-serif);
+  }
 
   .bar-track {
     background: var(--bar-bg);
-    border-radius: 999px;
+    border-radius: 1px;
     overflow: hidden;
     position: relative;
-    height: 8px;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
+    height: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.5);
   }
   .bar-fill {
-    background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+    background: linear-gradient(90deg, var(--accent-soft), var(--accent));
     height: 100%;
-    border-radius: 999px;
+    border-radius: 1px;
     transition: width 0.5s cubic-bezier(.2,.7,.2,1);
-    box-shadow: 0 0 8px rgba(94,184,255,0.45);
   }
   .bar-fill.done {
-    background: linear-gradient(90deg, var(--done), #86efac);
-    box-shadow: 0 0 8px rgba(74,222,128,0.4);
+    background: linear-gradient(90deg, var(--done), #b8c8a0);
   }
-  .bar-fill.empty { background: var(--border); box-shadow: none; }
-  .overall-card .bar-track { height: 12px; }
+  .bar-fill.empty { background: var(--border); }
+  .overall-card .bar-track { height: 6px; }
 
   .expand-hint {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-dim);
-    margin: 0 4px 14px;
-    display: flex; align-items: center; gap: 8px;
+    margin: 0 4px 16px;
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
   .expand-hint .key {
-    background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: 2px;
     padding: 2px 8px;
-    font-size: 11px;
+    font-size: 10px;
     color: var(--text-mid);
-    font-family: ui-monospace, "SF Mono", Consolas, monospace;
   }
 
   .module {
-    background: var(--card);
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 14px;
-    margin-bottom: 12px;
+    border-radius: 4px;
+    margin-bottom: 8px;
     overflow: hidden;
-    transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s, background 0.18s;
-    box-shadow: var(--shadow-sm);
+    transition: border-color 0.2s, background 0.2s;
   }
   .module:hover {
     border-color: var(--border-bright);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-    background: var(--card-hover);
+    background: rgba(28,25,21,0.5);
   }
   .module.open {
     border-color: var(--border-bright);
-    box-shadow: var(--shadow-md);
+    background: rgba(28,25,21,0.7);
   }
   .module-header {
-    padding: 16px 18px;
+    padding: 16px 20px;
     cursor: pointer;
     user-select: none;
     display: grid;
     grid-template-columns: 1fr auto;
-    gap: 14px;
+    gap: 16px;
     align-items: center;
   }
   .module-name-row {
-    display: flex; align-items: center; gap: 10px; min-width: 0;
+    display: flex; align-items: center; gap: 12px; min-width: 0;
   }
   .module-name {
-    font-weight: 550; font-size: 15px; color: var(--text);
+    font-family: var(--font-serif);
+    font-weight: 500; font-size: 16px; color: var(--text);
     letter-spacing: -0.005em;
+    line-height: 1.3;
   }
   .module-meta { display: flex; align-items: center; gap: 14px; }
   .module-percent {
     color: var(--text);
+    font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
-    font-size: 14px; font-weight: 600;
+    font-size: 13px; font-weight: 500;
     letter-spacing: -0.01em;
   }
-  .module-bar { grid-column: 1 / -1; margin-top: 6px; }
-  .module-bar .bar-track { height: 6px; }
+  .module-bar { grid-column: 1 / -1; margin-top: 10px; }
+  .module-bar .bar-track { height: 3px; }
 
   .chevron {
     color: var(--accent);
-    font-size: 18px;
+    font-size: 14px;
     line-height: 1;
-    width: 26px; height: 26px;
+    width: 22px; height: 22px;
     display: inline-flex; align-items: center; justify-content: center;
-    border-radius: 8px;
-    background: rgba(94,184,255,0.10);
-    border: 1px solid rgba(94,184,255,0.18);
-    transition: transform 0.22s cubic-bezier(.2,.7,.2,1), background 0.18s;
+    border-radius: 2px;
+    background: transparent;
+    border: 1px solid var(--border);
+    transition: transform 0.22s cubic-bezier(.2,.7,.2,1), background 0.18s, border-color 0.18s;
     flex-shrink: 0;
   }
-  .module:hover .chevron { background: rgba(94,184,255,0.20); }
+  .module:hover .chevron { border-color: var(--accent-soft); }
   .module.open .chevron {
     transform: rotate(180deg);
-    background: rgba(94,184,255,0.25);
+    border-color: var(--accent);
+    background: rgba(200,152,104,0.08);
   }
 
   .warn-dot {
-    width: 8px; height: 8px;
-    border-radius: 999px;
+    width: 6px; height: 6px;
+    border-radius: 1px;
     background: var(--warn);
-    box-shadow: 0 0 6px rgba(251,191,36,0.6);
     flex-shrink: 0;
   }
   .done-dot {
-    width: 8px; height: 8px;
-    border-radius: 999px;
+    width: 6px; height: 6px;
+    border-radius: 1px;
     background: var(--done);
-    box-shadow: 0 0 6px rgba(74,222,128,0.55);
     flex-shrink: 0;
   }
   .test-dot {
-    width: 8px; height: 8px;
-    border-radius: 999px;
+    width: 6px; height: 6px;
+    border-radius: 1px;
     background: var(--text-dim);
-    box-shadow: 0 0 6px rgba(126,142,176,0.4);
     flex-shrink: 0;
   }
-  .testing-header { border-top: 1px dashed var(--border-bright); }
+  .testing-header { border-top: 1px solid var(--border); }
 
   .module-body {
     display: none;
-    padding: 18px 20px 22px;
+    padding: 20px 22px 24px;
     border-top: 1px solid var(--border);
-    background: rgba(0,0,0,0.12);
+    background: rgba(10,9,7,0.4);
   }
   .module.open .module-body { display: block; }
 
   .section-label {
-    font-size: 10.5px; color: var(--text-dim);
-    text-transform: uppercase; letter-spacing: 0.09em;
-    margin: 0 0 12px;
-    font-weight: 600;
+    font-size: 10px; color: var(--text-dim);
+    text-transform: uppercase; letter-spacing: 0.14em;
+    margin: 0 0 14px;
+    font-weight: 500;
+    font-family: var(--font-mono);
   }
-  .section-label + .section-label { margin-top: 18px; }
+  .section-label + .section-label { margin-top: 20px; }
 
   .sub {
-    padding: 10px 0 12px;
+    padding: 11px 0 13px;
     border-bottom: 1px solid var(--border);
   }
   .sub:last-of-type { border-bottom: none; }
   .sub-top {
     display: grid;
     grid-template-columns: 1fr auto auto;
-    gap: 12px;
+    gap: 16px;
     align-items: baseline;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
   .sub-name {
     color: var(--text-mid);
-    font-size: 13.5px;
-    line-height: 1.45;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .sub-name .lock-tag {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-right: 6px;
+    font-weight: 500;
+  }
+  .sub-name .pending-tag {
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-right: 6px;
+    font-weight: 500;
+    opacity: 0.8;
+  }
+  .sub-name .resolved-tag {
+    color: var(--done);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-right: 6px;
+    font-weight: 500;
   }
   .sub-percent {
     color: var(--text);
+    font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
     text-align: right;
-    font-size: 12.5px; font-weight: 600;
+    font-size: 12px; font-weight: 500;
     letter-spacing: -0.01em;
     min-width: 38px;
   }
   .sub-status {
     text-align: right;
-    font-size: 11px;
+    font-size: 10px;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-weight: 600;
-    min-width: 56px;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    min-width: 60px;
+    font-family: var(--font-mono);
   }
   .status-done { color: var(--done); }
-  .status-partial { color: var(--accent-bright); }
+  .status-partial { color: var(--accent); }
   .status-todo { color: var(--text-dim); }
-  .status-untested { color: var(--text-dim); opacity: 0.7; font-style: italic; }
+  .status-untested { color: var(--text-dim); opacity: 0.6; font-style: italic; }
 
   .confidence-row {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    padding: 10px 14px;
-    border-radius: 8px;
+    padding: 12px 16px;
+    border-radius: 3px;
     margin: 0 0 12px;
     font-size: 13px;
     border: 1px solid var(--border);
+    font-family: var(--font-mono);
   }
   .confidence-label {
-    font-weight: 600;
+    font-weight: 500;
     font-variant-numeric: tabular-nums;
   }
   .confidence-hint {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--text-dim);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.1em;
   }
   .confidence-untested {
-    background: rgba(126, 142, 176, 0.06);
+    background: rgba(122, 114, 99, 0.04);
     color: var(--text-dim);
     border-color: var(--border);
   }
   .confidence-untested .confidence-label { font-style: italic; }
   .confidence-low {
-    background: rgba(239, 68, 68, 0.08);
-    color: #fca5a5;
-    border-color: rgba(239, 68, 68, 0.3);
+    background: rgba(216, 80, 80, 0.06);
+    color: #d89898;
+    border-color: rgba(216, 80, 80, 0.25);
   }
   .confidence-medium {
-    background: rgba(251, 191, 36, 0.08);
+    background: rgba(216, 160, 80, 0.06);
     color: var(--warn);
-    border-color: rgba(251, 191, 36, 0.3);
+    border-color: rgba(216, 160, 80, 0.25);
   }
   .confidence-high {
-    background: rgba(74, 222, 128, 0.08);
+    background: rgba(155, 176, 132, 0.06);
     color: var(--done);
-    border-color: rgba(74, 222, 128, 0.3);
+    border-color: rgba(155, 176, 132, 0.25);
   }
 
-  .sub-bar { padding: 0 0; }
-  .sub-bar .bar-track { height: 4px; }
+  .sub-bar { padding: 0; }
+  .sub-bar .bar-track { height: 2px; }
 
   .issues-list { margin: 0; padding: 0; list-style: none; }
   .issue {
-    display: flex; align-items: flex-start; gap: 10px;
-    padding: 8px 0;
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 0;
     font-size: 13px; color: var(--text-mid);
-    line-height: 1.5;
+    line-height: 1.6;
     border-bottom: 1px solid var(--border);
+    font-family: var(--font-serif);
+    font-weight: 400;
   }
   .issue:last-of-type { border-bottom: none; }
   .issue-icon {
-    color: var(--warn);
+    color: var(--accent-soft);
     flex-shrink: 0;
     font-size: 13px;
     line-height: 1.5;
-    margin-top: 1px;
+    margin-top: 2px;
+    font-family: var(--font-mono);
   }
 
   footer {
-    margin-top: 36px;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
     color: var(--text-dim);
-    font-size: 12px;
+    font-size: 11px;
     text-align: center;
     line-height: 1.7;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
   }
 
   @media (max-width: 540px) {
-    .container { padding: 28px 16px 80px; }
-    h1 { font-size: 22px; }
-    .overall-percent { font-size: 32px; }
-    .module-name { font-size: 14px; }
+    .container { padding: 32px 18px 80px; }
+    h1 { font-size: 26px; }
+    h1 .subtitle-em { font-size: 20px; }
+    .overall-percent { font-size: 36px; }
+    .module-name { font-size: 14.5px; }
     .sub-status { display: none; }
     .sub-top { grid-template-columns: 1fr auto; }
   }
@@ -369,8 +442,8 @@
 <body>
   <div class="container">
     <header>
-      <div class="brand-dot" aria-hidden="true"></div>
-      <h1>HYDRA — Progress</h1>
+      <div class="brand-mark" aria-hidden="true"></div>
+      <h1>HYDRA <span class="subtitle-em">— a probabilistic oracle of world state</span></h1>
     </header>
     <div class="subtitle" id="subtitle"></div>
 
@@ -378,7 +451,7 @@
       <p>
         <strong>HYDRA</strong> is a decentralized protocol that maintains a probabilistic representation
         of world state &mdash; past, present, and projected &mdash; assembled from the contributions
-        of many independent sources. It is not a price feed, not a prediction market, not a database.
+        of many independent sources.
       </p>
       <p>
         Its defining commitment is <em>honesty about uncertainty</em>: distributions, not point estimates;
@@ -387,7 +460,7 @@
       </p>
       <p>
         This tracker measures architectural progress against the vision. Percentages reflect
-        <em>alignment + readiness</em>, not feature completeness against an end-state.
+        <em>alignment + readiness</em>, not feature-completeness.
       </p>
     </div>
 
@@ -402,7 +475,7 @@
 
     <div class="expand-hint">
       <span class="key">Click</span>
-      <span>any section below to expand its sub-items, progress, and open issues</span>
+      <span>any section to expand sub-items, progress, and open issues</span>
     </div>
 
     <div id="modules"></div>
@@ -412,357 +485,356 @@
 
   <script>
     /* =====================================================================
-       DATA — edit this block to update the tracker. Each section maps to
-       a layer of the HYDRA vision; percentages measure architectural
-       alignment + readiness, not feature-completeness.
+       DATA — edit this block to update the tracker.
+       Submodule tags:
+         LOCKED        — architecturally committed (~70%)
+         CASCADE       — locked but cross-module recalibration pending (~55%)
+         RESEARCH      — open structural question (~10%)
+         TUNING        — within locked structure; awaits simulation (~40%)
+         FINE-TUNE     — parameters within locked structure (~55%)
+         RESOLVED      — folded into another lock (~65%)
        ===================================================================== */
     const DATA = {
       generated_at: "2026-05-19",
-      source: "Session 3 close (2026-05-19). R4 canonical arithmetic specification CLOSED (D1+A.SM3+C1+B.*+E.*+F1). Q2 (Module 4 architecture: NAS-NARROW Set-Transformer + JEPA-AUX) CLOSED. Q5 (Module 5 architecture: NAS-NARROW causal Transformer + UNIFIED objective + F1' horizon-weighted) CLOSED. NEW Module 14 (Network Health & Adaptive Pulse) first-pass complete — state-event-driven pulse replaces fixed periods. R7 (fitness-atom verification) CLOSED. V13.cryptoverify + V13.arithverify CLOSED. R4.B.3 amendment: sqrt added to canonical LUT set. F1' amendment: monotonically-increasing horizon weighting. 14 modules total now, 11 Hard Rules declared. 8 new canonical atom species. Modules 4, 5 substantively architected; Module 6 substrate complete (R1-R6 research-tuning deferred); Module 13 substantively architected. Implementation status: 0% across all modules — no code yet. Vision recalibration pending: Module 14 vision section + cross-module 'period' → 'pulse' terminology.",
-      overall_percent: 42,
+      source: "Session 3 close · 14 modules · 11 Hard Rules · architecture-first design phase · 0% implementation",
+      overall_percent: 50,
       modules: [
         {
-          name: "Foundational commitments — 11 Hard Rules (vision-declared; anchored in code over time)",
-          percent: 13,
+          name: "Foundational commitments — 11 Hard Rules",
+          percent: 30,
           submodules: [
-            { name: "Immutability from genesis (economic invariants, identity commitments, core data model locked forever; no escape hatches)", percent: 0 },
-            { name: "No human governance over load-bearing AI components (self-evolution structural; no community-upgradable model code)", percent: 0 },
-            { name: "Calibration, not accuracy, drives reputation (proper scoring rules over distributions; mathematically distinct from accuracy)", percent: 0 },
-            { name: "Multi-modal posteriors preserved (aggregation never flattens genuine disagreement; load-bearing for vindication mechanism)", percent: 0 },
-            { name: "Permissionless intake (no whitelist, no credentials gate; calibration-modulated rate gating only)", percent: 0 },
-            { name: "Off-protocol source-side conversion (protocol begins at well-formed claims; encoder ecosystem is ecosystem-led)", percent: 0 },
-            { name: "Probabilistic intake (every protocol-accepted submission carries probabilistic content; protocol receives confidence, never computes it from raw observation)", percent: 0 },
-            { name: "Emergent within structure (protocol behaviors emerge from accumulated submissions; structural surface locked at genesis; emergence within locked structure wherever safe)", percent: 0 },
-            { name: "Minimum substrate at ship (smallest possible structural surface at genesis; corollary of immutability — no governance means every commitment is forever, so commitments must be minimized)", percent: 0 },
-            { name: "Defense-in-depth composition (LOCKED 2026-05-19 session 1) — no single defense sufficient against any non-trivial attack class; adversary must defeat composed surface; no future single-point-of-defense", percent: 0 },
-            { name: "No meta-succession (NEW 2026-05-19 session 2) — Module 13 verification functions, locked test specifications, and the succession path enumeration itself cannot themselves succeed; trust derives from genesis-locked correctness of the verification surface", percent: 0 },
+            { name: "HR.1 Immutability from genesis", percent: 30 },
+            { name: "HR.2 No human governance over load-bearing AI components", percent: 30 },
+            { name: "HR.3 Calibration, not accuracy, drives reputation", percent: 30 },
+            { name: "HR.4 Multi-modal posteriors preserved", percent: 30 },
+            { name: "HR.5 Permissionless intake", percent: 30 },
+            { name: "HR.6 Off-protocol source-side conversion", percent: 30 },
+            { name: "HR.7 Probabilistic intake", percent: 30 },
+            { name: "HR.8 Emergent within structure", percent: 30 },
+            { name: "HR.9 Minimum substrate at ship", percent: 30 },
+            { name: "HR.10 Defense-in-depth composition (added session 2026-05-19 #1)", percent: 30 },
+            { name: "HR.11 No meta-succession (added session 2026-05-19 #2)", percent: 30 },
           ],
           issues: [
-            "All 11 commitments are vision-declared but not yet anchored anywhere in code — design is in working state, implementation has not begun.",
-            "Hard Rule #10 (Defense-in-depth composition) added 2026-05-19 session 1, formalizing the composition principle implicit across the encoder-concentration defense, calibration-LCB requirements, Sybil decay, auto-stake, VRF rotation, dispute bond, and vindication mechanisms.",
-            "Hard Rule #11 (No meta-succession) added 2026-05-19 session 2 with Module 13 architecture; ensures the zero-governance succession mechanism has a permanent source of trust (verification functions cannot themselves be replaced through any protocol path).",
+            "All 11 commitments are vision-declared; no code anchoring yet. Implementation has not begun.",
+            "Hard Rule audit pending: does Module 14's adaptive pulse warrant HR.12 (no external clock), or is it implicit in HR.8 + HR.9?",
           ],
         },
         {
           name: "Module 1 — Canonical state, data model & emergence",
-          percent: 25,
+          percent: 50,
           submodules: [
-            { name: "Atomic shape (dimension, observation_time, anchor, distribution, provenance); polymorphic anchor with four locked shapes (entity / coordinate / entity-pair / null); provenance with mandatory + optional + size-bounded extension bag", percent: 0 },
-            { name: "Distribution representation registry — 3 types locked at genesis: discrete histograms, weighted sample sets, parametric mixtures; per-dimension type declaration; multi-modality preserved structurally in each", percent: 0 },
-            { name: "Dimension declaration — name, anchor type, rep type, dimensionality (N ≥ 1), support, schema parameters; sticky from first declaration; in-place edits not allowed", percent: 0 },
-            { name: "Canonical state as 3D time-indexed block (dimension × observation_time × distribution); first-class blanks; revisable in both temporal directions; queryable as atom set with consumer-side query views", percent: 0 },
-            { name: "Entity registry + probabilistic identity — entities auto-create on first reference; auto-merge / auto-split / auto-elevation from coordinate clusters via deterministic thresholds; identity emerges from structural + behavioral evidence", percent: 0 },
-            { name: "Relations as first-class atoms — binary at protocol surface (relation type as dimension, entity-pair as anchor); higher-arity composed via auto-created event entities + binary relations", percent: 0 },
-            { name: "Emergent dimension lifecycle — pending → accepted via calibration-weighted demand threshold; monotonic; deprecation as forward-only marker; never removed; duplicates merged via probabilistic resolution layer", percent: 0 },
-            { name: "Canonical-state persistence + retrieval (LOCKED 2026-05-19) — per-(dimension, anchor-bucket) slicing; global K-of-N erasure coding; deterministic VRF assignment from storage-capable provider pool; per-period (6h) re-assignment; parallel K-of-N retrieval; Merkle commitment family for slice content; storage-attestation atoms earn Q1 reward via challenge-response settlement", percent: 0 },
+            { name: "Atomic shape (dim, observation-time, anchor, distribution, provenance); polymorphic anchor; 4 locked shapes", percent: 70 },
+            { name: "Representation registry — 3 types locked at genesis (histogram / weighted samples / parametric mixture)", percent: 70 },
+            { name: "Dimension declaration — sticky from first declaration; no in-place edits", percent: 70 },
+            { name: "Canonical state as time-indexed block; first-class blanks; bidirectional revisable", percent: 70 },
+            { name: "Entity registry — emergent; probabilistic identity via auto-merge / auto-split / auto-elevation", percent: 70 },
+            { name: "Relations as binary atoms; higher-arity composed via event-entities", percent: 70 },
+            { name: "Emergent dimension lifecycle — pending → accepted via calibration-weighted threshold", percent: 70 },
+            { name: "Persistence & retrieval — sliced + erasure-coded + VRF-assigned + Merkle-committed", percent: 70 },
           ],
           issues: [
-            "Schema design is the gating decision for what world-state HYDRA can meaningfully track — the formalization ceiling is real.",
-            "Representation registry is locked at genesis with no path to add a fourth type — concentrates representation-design risk at launch; mitigated by the three types being jointly chosen to be exhaustive of foreseeable representational needs.",
-            "Probabilistic entity + dimension resolution thresholds, anchor-bucket granularity, erasure coding K/N values, specific Merkle scheme are fine-tuning items deferred to engineering pass.",
+            "Schema design is the gating decision for what world-state HYDRA can meaningfully track.",
+            "Anchor-bucket granularity, K/N erasure params, Merkle scheme = fine-tuning deferred.",
           ],
           confidence: null,
         },
         {
-          name: "Module 2 — Source submission layer (boundary + intake)",
-          percent: 20,
+          name: "Module 2 — Source submission layer",
+          percent: 50,
           submodules: [
-            { name: "Submission primitives — single atom OR batch (Option β, first-class batch construct); batches have batch_id (entity ref) + batch_provenance + batch_signature + ordered atom list; atomic acceptance (all atoms accepted or all rejected); per-atom signatures preserved inside batches; mixed dimensions/anchors allowed within batch", percent: 0 },
-            { name: "Source identity & signature — one signature scheme locked at genesis; signed-transition key rotation allowed; self-revocation atom format + emergent calibration-derived flagging for compromise patterns; first-reference identity via public key embedded in entity-creation provenance", percent: 0 },
-            { name: "Submission lifecycle — synchronous structural validation on receiving node (structure + signature + rate-limit); accepted atoms enter gossip mesh; rejected atoms return error with reason; atom-inclusion consensus is eventual consistency at gossip layer (no formal BFT vote on atom inclusion)", percent: 0 },
-            { name: "Query-time threshold consensus — queries (both atom-read + inference) coordinate at query time across a quorum of nodes; nodes converge on consensus atom set, run deterministic aggregation/forecasting, produce threshold-signed response; consumer receives cryptographic proof of consensus", percent: 0 },
-            { name: "Acknowledgment format — structured node-signed receipt (atom_hash or batch_hash, timestamp, node_id, node_signature); non-repudiable proof of submission timing; enables forecast-atom-timing audit + contribution-value reward grading; rejection receipts include rejected_atom_index + rejection_reason for actionable feedback", percent: 0 },
-            { name: "Submission rate gating — Option α: calibration-modulated rate cap; baseline rate is positive (bootstrap-compatible); cap grows monotonically with calibration history; no proof-of-work; no mandatory stake; sybil resistance from per-identity baseline + identity-creation cost + calibration-weighted influence", percent: 0 },
-            { name: "Off-protocol boundary discipline (protocol refuses raw observations; ecosystem-built encoders produce well-formed probabilistic claims; encoder concentration is queryable canonical state and feeds the layered defense in Modules 3/7/8)", percent: 0 },
-            { name: "Batch as structural-poisoning filter — atomic batch acceptance catches malformed atoms (encoder bugs, trojan-horse attacks where adversaries mix poisoned + legitimate); structural defense layer complementing aggregation-layer epistemic defenses; rejection receipts let audit committees pattern-match buggy/malicious encoders", percent: 0 },
+            { name: "Submission primitives — single atom OR atomic batch; mixed dims/anchors allowed within batch", percent: 70 },
+            { name: "Source identity & signature — one scheme locked at genesis; signed-transition key rotation", percent: 70 },
+            { name: "Lifecycle — sync structural validation; gossip-mesh inclusion; eventual consistency", percent: 70 },
+            { name: "Query-time threshold consensus — quorum nodes converge + threshold-signed response", percent: 70 },
+            { name: "Acknowledgment format — structured node-signed receipt with non-repudiation", percent: 70 },
+            { name: "Calibration-modulated rate gating; no PoW; no mandatory stake", percent: 70 },
+            { name: "Off-protocol boundary discipline — protocol refuses raw observations", percent: 70 },
+            { name: "Batch as structural-poisoning filter — atomic accept/reject", percent: 70 },
           ],
           issues: [
-            "Off-protocol conversion ecosystem concentration is partially addressed by the layered encoder-concentration defense (queryable metric + reward bonus + influence weight downgrading) but residual ecosystem-level risk remains outside the protocol's enforceable surface.",
-            "Wire format details, exact rate-limit function shape, max batch size cap, query-quorum size (N) and threshold (K of N) are all fine-tuning deferred per architecture-first discipline.",
-            "The one-signature-scheme-at-genesis choice means the specific scheme (Ed25519 vs ML-DSA vs other) is a genesis-frozen commitment; crypto-primitive succession is in the narrow community-driven update path.",
+            "Off-protocol encoder ecosystem concentration partially mitigated by layered defense; ecosystem-level residual.",
+            "Wire format, rate-limit shape, batch size cap, query-quorum (K of N) all fine-tuning.",
           ],
           confidence: null,
         },
         {
           name: "Module 3 — Calibration & reputation engine",
-          percent: 25,
+          percent: 50,
           submodules: [
-            { name: "Reference type (LOCKED) — R2 with strict temporal separation: atom scored against canonical-state distribution at coordinate, computed only from atoms with later submission timestamps", percent: 0 },
-            { name: "Settlement timing (LOCKED) — T1 event-triggered: score locks when canonical-state uncertainty at coordinate < threshold OR window-from-observation_time elapses; observed-vs-forecast provenance marker selects mode", percent: 0 },
-            { name: "Scoring-rule family (LOCKED) — F2 family: {CRPS / energy-score, log-score}; per-dimension emergent weighting; B1 weighted-blend across rules", percent: 0 },
-            { name: "Per-rule scalar (LOCKED) — W2a Lower-Confidence-Bound of per-rule calibration posterior; encoder-concentration multiplicative modulation on top", percent: 0 },
-            { name: "Calibration-history aggregation (LOCKED) — rolling window, per-dimension, partitioned by anchor type (entity / coordinate / entity-pair / null)", percent: 0 },
-            { name: "Bootstrap (LOCKED) — 2A flat-prior with Bayesian update; no separate cold-start surface; new-source wide-posterior naturally yields low LCB → low influence", percent: 0 },
-            { name: "Specialist / novice on-ramp (LOCKED) — 3A no separate surface; behaviors emerge from per-dim partition + LCB-influence machinery; permissionless intake preserved", percent: 0 },
-            { name: "Retroactive vindication (LOCKED) — 4C vindication-credit ledger; V2 mode-emergence trigger; earliness × match grading; per-claim emergent window using dimension_timescale; vindication purely economic, NOT reputational (aggregation improvement comes from multi-modal-preserving aggregation Hard Rule)", percent: 0 },
+            { name: "Reference type — R2 strict temporal separation (canonical at coord, later-only)", percent: 70 },
+            { name: "Settlement timing — T1 event-triggered (uncertainty threshold OR window-from-observation)", percent: 70 },
+            { name: "Scoring-rule family — F2 (CRPS/energy-score, log-score); B1 weighted blend per-dim emergent", percent: 70 },
+            { name: "Per-rule scalar — W2a LCB of per-rule calibration posterior; encoder-concentration modulation", percent: 70 },
+            { name: "Calibration-history aggregation — rolling window, per-dim, partitioned by anchor type", percent: 70 },
+            { name: "Bootstrap — 2A flat-prior Bayesian update; no separate cold-start surface", percent: 70 },
+            { name: "Specialist/novice on-ramp — 3A no separate surface; emerges from LCB-influence machinery", percent: 70 },
+            { name: "Retroactive vindication — 4C vindication-credit ledger; V2 mode-emergence trigger; economic only, not reputational", percent: 70 },
           ],
           issues: [
-            "Calibration-as-reputation requires source-side statistical literacy — friction, not barrier; ecosystem tooling expected to absorb some of it.",
-            "Function curve specifics (LCB confidence level α, encoder-concentration modulation curve, settlement-threshold function, dimension_timescale emergence parameters) are fine-tuning deferred.",
+            "Calibration-as-reputation requires source-side statistical literacy — friction, not barrier.",
+            "LCB confidence α, encoder-concentration curve, settlement threshold = fine-tuning.",
           ],
           confidence: null,
         },
         {
           name: "Module 4 — Aggregation model (self-evolving)",
-          percent: 75,
+          percent: 65,
           submodules: [
-            { name: "Q1 Granularity (LOCKED 2026-05-19 session 2) — G1 per-(dimension, observation-time, anchor) local function; no cross-cluster context at aggregation surface; cross-correlations handled by source-level calibration history + encoder concentration + identity resolution + forecasting model + defense composition", percent: 0 },
-            { name: "Q7 Specialization grain (LOCKED) — S2 three models, one per representation type (histogram / weighted samples / parametric mixtures); three independent ES populations; mirrors representation registry 1-to-1; within-type cross-dimension transfer automatic", percent: 0 },
-            { name: "Q8 Inference path (LOCKED) — I2 per-pulse materialization at pulse boundaries; queries serve latest materialized canonical; within-pulse staleness up to one pulse for newly-arriving atoms (pulse-terminology recalibrated from period-based)", percent: 0 },
-            { name: "Q4 Fitness operationalization (LOCKED) — F1 score(M(atoms_in_cluster_at_T), materialized_canonical_at_T+dim_timescale); B1-blended CRPS/log-score; structural lookback using already-locked dim_timescale (in pulse units)", percent: 0 },
-            { name: "Q3 Output representation (LOCKED) — O1 output matches dimension's declared representation type and schema (bin layout / max sample count / kernel family + max components); one posterior per (dim, observation-time, anchor) cluster", percent: 0 },
-            { name: "Calibration + encoder-concentration weighting at input (inherited from Module 3) — multiplicative per-source LCB × per-encoder concentration; applied before aggregation; no learned weighting", percent: 0 },
-            { name: "Q2.1 Architecture search space (LOCKED 2026-05-19 session 3) — NAS-NARROW within Set-Transformer family (ISAB + PMA); ES evolves depth, heads, embedding, ISAB inducing points within shared hyperparameter search space; R4.B.3 amended (sqrt added to canonical LUT set for layernorm)", percent: 0 },
-            { name: "Q2.2 Training objective (LOCKED) — JEPA-AUX: F1 fitness + masked-source SS auxiliary; SS objective predicts held-out source's distribution from rest of cluster; MS-RANDOM masking; calibration-gated training data; CRPS/log-score SS loss family; ES uses scalar (w_fitness × F1 + w_aux × SS) blend; weights are parameters deferred", percent: 0 },
-            { name: "Q2.3 Per-type coupling (LOCKED) — shared hyperparameter range across three populations; full population isolation (no cross-population information flow); shared SS objective form with type-specific operationalization; adversarial isolation property emerges from no-cross-flow", percent: 0 },
-            { name: "Q2.4 Calibration-output mechanism (LOCKED) — Q2.4-DIRECT: architecture outputs representation-type parameters directly; calibration emerges from training under proper scoring rules (no auxiliary calibration head or loss; proper scoring rules mathematically guarantee calibration-optimality)", percent: 0 },
-            { name: "Q5 ES population structure (RESEARCH-TUNING) — genome (weights / weights+topology), population size, selection rule, mutation operators within locked Q2.1 NAS-NARROW search space; needs simulation tooling", percent: 0 },
-            { name: "Q3-internals Mode-preservation mechanism (LARGELY ADDRESSED by Q2.1+Q2.3) — Set-Transformer attention preserves multi-modal structure; three independent populations preserve per-type distinctions", percent: 0 },
+            { name: "Q1 Granularity — G1 per-(dim, obs-time, anchor) local function; cross-correlations handled externally", percent: 70 },
+            { name: "Q7 Specialization — S2 three models per representation type; three independent ES populations", percent: 70 },
+            { name: "Q8 Inference path — I2 per-pulse materialization (pulse-terminology recalibrated)", percent: 55 },
+            { name: "Q4 Fitness — F1 score vs materialized canonical at T + dim_timescale; B1-blended CRPS/log-score", percent: 70 },
+            { name: "Q3 Output — O1 matches dim's declared representation type and schema", percent: 70 },
+            { name: "Input weighting — calibration-LCB × encoder-concentration (inherited from Module 3)", percent: 70 },
+            { name: "Q2.1 Architecture (LOCKED s3) — NAS-NARROW within Set-Transformer family (ISAB + PMA)", percent: 70 },
+            { name: "Q2.2 Training — JEPA-AUX: F1 + masked-source SS auxiliary; calibration-gated; scalar blend", percent: 70 },
+            { name: "Q2.3 Per-type coupling — shared hyperparameter range; full population isolation", percent: 70 },
+            { name: "Q2.4 Calibration-output — Q2.4-DIRECT; proper scoring rules guarantee calibration", percent: 70 },
+            { name: "Q5 ES population structure — within Q2.1 NAS search space; needs simulation tooling", percent: 40 },
+            { name: "Q3-internals Mode preservation — attention + isolated populations resolve structurally", percent: 65 },
           ],
           issues: [
-            "Substantive architecture COMPLETE 2026-05-19 session 3 (Q2.1 + Q2.2 + Q2.3 + Q2.4 closed). Research-tuning (Q5 ES population specifics within NAS-NARROW search space) deferred — requires simulation tooling.",
-            "Locked architecture constraints any Module 4 internal must honor: (1) G1 per-cluster local; (2) S2 per-type specialization; (3) I2 per-pulse materialization; (4) F1 lagged-fitness; (5) O1 type-matching output; (6) Q2.1 Set-Transformer family; (7) Q2.2 JEPA-AUX dual signal; (8) Q2.3 full population isolation; (9) Q2.4 direct calibration; (10) multi-modal preservation Hard Rule; (11) R4 substrate compliance; (12) one-way dependency to forecasting.",
-            "Q2.1 family choice (Set-Transformer) is a permanent commitment; if Set-Transformer-class proves wrong years post-launch, no path exists to change it (Module 13 doesn't offer an architecture-succession path). Stretches HR.2 (acknowledged).",
+            "Substantive architecture COMPLETE (interface + Q2.1-2.4). ES population specifics deferred to research-tuning.",
+            "Q2.1 family choice (Set-Transformer) is permanent; Module 13 doesn't offer architecture-succession path. HR.2 stretching acknowledged.",
           ],
           confidence: null,
         },
         {
           name: "Module 5 — Forecasting model (self-evolving)",
-          percent: 75,
+          percent: 65,
           submodules: [
-            { name: "G1' Granularity (LOCKED 2026-05-19 session 2) — per-(dimension, anchor) function with anchor's history as context, producing posterior for (dim, anchor, future-T)", percent: 0 },
-            { name: "S2' Specialization grain (LOCKED) — three forecasting models, one per representation type; six adaptive models total at genesis (3 aggregation + 3 forecasting)", percent: 0 },
-            { name: "I2' Inference path (LOCKED) — per-pulse materialization within structural forecast horizon; queries read materialized; on-demand extensions emergent post-genesis (pulse-terminology recalibrated)", percent: 0 },
-            { name: "H Forecast horizon (LOCKED) — horizon = K × dim_timescale per dimension (in pulse units); scales with locked dim_timescale; beyond horizon no protocol-committed forecast", percent: 0 },
-            { name: "F1' Fitness (LOCKED) — score(forecast_at_T_for_T+Δ, materialized_canonical_at_(T+Δ + dim_timescale)); B1-blended CRPS/log-score; lag = Δ + dim_timescale (in pulses)", percent: 0 },
-            { name: "F1' AMENDMENT (LOCKED 2026-05-19 session 3) — monotonically-increasing w(Δ) horizon weighting multiplies score; calibration property preserved (proper scoring rule × constant per-Δ); selection bias toward long-horizon-capable architectures; specific w shape (linear/log/power/sigmoid) is parameter, deferred", percent: 0 },
-            { name: "O1' Output representation (LOCKED) — output matches dimension's declared type and schema; same shape as Module 4 O1", percent: 0 },
-            { name: "One-way dependency on aggregation (CLARIFIED) — forecasting's fitness target is aggregation's materialized output; aggregation independent of forecasting; not symmetric 'shared fitness'", percent: 0 },
-            { name: "Q5.1 Architecture search space (LOCKED 2026-05-19 session 3) — NAS-NARROW within causal Transformer family (multi-head self-attention + FFN blocks + causal masking); ES evolves depth, heads, embedding, context window, FFN ratio; same R4 substrate as Module 4; no R4.B.3 amendments needed beyond Q2.1's sqrt", percent: 0 },
-            { name: "Q5.2 Training objective (LOCKED) — Q5.2-UNIFIED: F1' (with w(Δ)) evaluated across ALL forecast atoms as their targets materialize; past-horizon and future-horizon predictions feed the same proper-scoring-rule loss; no separate SS objective (Module 5's symmetry collapses what Module 4 needs as auxiliary); naturally adoption-paced under Module 14 pulse; retrospective scoring handles cold-start", percent: 0 },
-            { name: "Q5.3 Per-time-step distribution encoding (LOCKED) — histogram: linear projection of probability vector; weighted samples: Set-Transformer-class set encoder (family shared with Module 4; weights distinct); parametric mixture: linear projection. PE-PULSE-DELTA positional encoding. BLANK-MASK explicit no-info sentinel tokens per type (HR.4 first-class blanks preserved). META-NONE (no anchor metadata in input)", percent: 0 },
-            { name: "Q5.4 Per-type coupling + calibration (LOCKED) — shared hyperparameter range; full population isolation; cross-MODULE family shared with M4 (Set-Transformer for weighted-samples encoder); Q5.4-DIRECT calibration via proper scoring rules. Total independent populations across M4+M5: six", percent: 0 },
-            { name: "Q5.5 ES population structure (RESEARCH-TUNING) — within Module 6 R-items; needs simulation tooling", percent: 0 },
-            { name: "Q5.3-internals Mode-preservation mechanism (LARGELY ADDRESSED) — causal Transformer attention preserves multi-modal forecast structure", percent: 0 },
+            { name: "G1' Granularity — per-(dim, anchor) with anchor history as context", percent: 70 },
+            { name: "S2' Specialization — three models per type; six adaptive models total at genesis", percent: 70 },
+            { name: "I2' Inference path — per-pulse materialization within horizon (pulse-recalibrated)", percent: 55 },
+            { name: "H Forecast horizon — K × dim_timescale per dim (in pulse units); no committed forecast beyond", percent: 55 },
+            { name: "F1' Fitness — score(forecast_at_T_for_T+Δ, canonical_at_(T+Δ+dim_timescale)); B1-blended", percent: 70 },
+            { name: "F1' AMENDMENT (LOCKED s3) — monotonically-increasing w(Δ) horizon weighting; rewards long-horizon skill", percent: 70 },
+            { name: "O1' Output — matches dim's type and schema", percent: 70 },
+            { name: "One-way dependency on aggregation — fitness target is M4 output; not symmetric", percent: 70 },
+            { name: "Q5.1 Architecture (LOCKED s3) — NAS-NARROW within causal Transformer family", percent: 70 },
+            { name: "Q5.2 Training (LOCKED s3) — Q5.2-UNIFIED: F1' across all forecast atoms as targets materialize", percent: 70 },
+            { name: "Q5.3 Per-time-step encoding — per-type token construction; PE-PULSE-DELTA; BLANK-MASK; META-NONE", percent: 70 },
+            { name: "Q5.4 Per-type coupling + calibration — shared range; full isolation; Q5.4-DIRECT", percent: 70 },
+            { name: "Q5.5 ES population structure — within Module 6 R-items; needs simulation", percent: 40 },
+            { name: "Mode preservation — attention + isolated populations resolve structurally", percent: 65 },
           ],
           issues: [
-            "Substantive architecture COMPLETE 2026-05-19 session 3 (Q5.1 + F1' amendment + Q5.2 + Q5.3 + Q5.4 closed). Research-tuning (ES population specifics) deferred to Module 6 R-items.",
-            "Forecasting fitness depends on aggregation's output (one-way dependency); when aggregation's ES evolves, forecasting's target shifts and forecasting must adapt. Aggregation ES doesn't see forecasting.",
-            "Q5.1 family choice (causal Transformer) is permanent; Module 13 doesn't offer architecture-succession path. Same HR.2 stretching as Q2.1 (acknowledged).",
-            "Locked architecture constraints: (1-7) inherited interface locks; (8) F1' horizon-weighted w(Δ); (9) Q5.1 causal Transformer family; (10) Q5.2 UNIFIED single objective with retrospective scoring; (11) Q5.3 per-type token construction with PE-PULSE-DELTA + BLANK-MASK; (12) Q5.4 full population isolation; (13) Q5.4-DIRECT calibration via proper scoring rule mathematics.",
+            "Substantive architecture COMPLETE (interface + F1' amendment + Q5.1-5.4). Six independent populations across M4+M5.",
+            "Forecasting fitness depends on aggregation's output; when M4 ES evolves, M5 target shifts and M5 must adapt.",
+            "Q5.1 family choice (causal Transformer) is permanent; same HR.2 stretching as Q2.1 (acknowledged).",
           ],
           confidence: null,
         },
         {
           name: "Module 6 — Self-evolution infrastructure",
-          percent: 72,
+          percent: 60,
           submodules: [
-            { name: "W Training work-unit (LOCKED 2026-05-19 session 2) — fitness atom = (candidate_model, cluster) → score; one atom per evaluation; E1 atom unification; maps cleanly to operator pool Q1", percent: 0 },
-            { name: "P Training settlement (LOCKED) — S1 replicated quorum; same canonical arithmetic + same model + same atoms = same score on all replicas; tamper-resistant", percent: 0 },
-            { name: "C Canonical model version (LOCKED) — best-fitness member of most-recent fully-scored generation; deterministic tie-break by weight-hash; promoted at pulse boundary (pulse-terminology recalibrated); all nodes deterministically agree on next-pulse canonical model", percent: 0 },
-            { name: "E Population evolution (LOCKED) — deterministic function of accumulated fitness atoms in a generation; pseudo-random operations seeded by hash of generation state via R4.E.1-CMH RNG; any node can independently compute next generation; no consensus protocol needed beyond fitness-atom replication", percent: 0 },
-            { name: "G Generation cadence (LOCKED) — decoupled from pulse cadence; generations advance when enough fitness atoms accumulate; canonical model promotion checks at pulse boundaries; ES iteration and pulse cadence independent", percent: 0 },
-            { name: "S Population state persistence (LOCKED) — current generation persistent via Module 1 machinery; past M generations in audit window; older GC'd; population members are atoms", percent: 0 },
-            { name: "D Determinism substrate (LOCKED) — canonical arithmetic family + deterministic algorithm family at genesis; cross-cuts Modules 1, 4, 5", percent: 0 },
-            { name: "A1 Canonical arithmetic family (LOCKED within D) — integer-only / quantized arithmetic; no FP in protocol-canonical operations; succession via Module 13 if hardware shifts demand", percent: 0 },
-            { name: "R4 Canonical arithmetic specification within A1 (LOCKED 2026-05-19 session 3) — 6 sub-locks closed: D1 single shared STARK-suite hash + A.SM3 MXINT block-floating-point (32-block, 8-bit shared exponent) + C1 free-order reduction with associative-by-construction wraparound + B.1-MIN minimal primitives + B.2-RLUT reciprocal LUT division + B.3-LUT canonical activation LUTs (5: sigmoid/tanh/GELU/exp/sqrt; sqrt added for Q2.1 layernorm) + E.1-CMH counter-mode hash RNG + E.2-PER-CALL context-keyed seeding + E.3-CONTEXT parallel streams + F1 test-vectors-only verification + F1.LOC-MERKLE corpus off-chain with Merkle root committed", percent: 0 },
-            { name: "R7 Fitness-atom verification protocol (LOCKED 2026-05-19 session 3) — 6 sub-locks closed: CM-BITWISE consensus under R4 + VRF-selected per-job quorum from stake-qualified training-compute pool + dissenter-slashed disagreement resolution (persistent disagreement escalates to Module 13 arithmetic-evidence path) + fitness-atom payload (1 new species) + CS1+CS4 hybrid cluster sampling (random VRF + permissionless cluster-challenge atoms; 1 new species) + oracle-compute path settlement with info-provider pool compensation", percent: 0 },
-            { name: "R1 Specific ES algorithm (RESEARCH-TUNING) — within locked NAS-NARROW search spaces from Q2.1+Q5.1; needs simulation tooling", percent: 0 },
-            { name: "R2 Mutation operators (RESEARCH-TUNING) — within Set-Transformer + causal Transformer hyperparameter spaces", percent: 0 },
-            { name: "R3 Selection-rule specifics (RESEARCH-TUNING) — tournament size, elitism fraction, population size", percent: 0 },
-            { name: "R5 Cross-population dynamics (RESOLVED at Q2.3+Q5.4) — six independent populations; no cross-population information flow; adversarial-isolation defense layer", percent: 0 },
-            { name: "R6 Cold-start training (LARGELY RESOLVED) — Module 4: handled by JEPA-AUX dense SS signal; Module 5: handled by Q5.2-UNIFIED retrospective scoring on already-materialized canonical history. Specific synthetic-data-pretraining off-protocol still research-tuning", percent: 0 },
+            { name: "W Training work-unit — fitness atom = (candidate_model, cluster) → score", percent: 70 },
+            { name: "P Training settlement — S1 replicated quorum; bitwise-deterministic", percent: 70 },
+            { name: "C Canonical model version — best-fitness of most-recent fully-scored generation; promoted at pulse boundary", percent: 55 },
+            { name: "E Population evolution — deterministic function of accumulated fitness atoms; RNG seeded by gen-state hash", percent: 70 },
+            { name: "G Generation cadence — decoupled from pulse cadence", percent: 70 },
+            { name: "S Population state persistence — current gen persistent via Module 1; past M generations audit window", percent: 70 },
+            { name: "D Determinism substrate — canonical arithmetic family + deterministic algorithm family at genesis", percent: 70 },
+            { name: "A1 Canonical arithmetic family — integer-only / quantized; no FP in protocol-canonical ops", percent: 70 },
+            { name: "R4 (LOCKED s3) — R4.D D1 shared STARK-suite hash", percent: 70 },
+            { name: "R4 (LOCKED s3) — R4.A A.SM3 MXINT block-floating-point (32-block, 8-bit shared exponent)", percent: 70 },
+            { name: "R4 (LOCKED s3) — R4.C C1 free-order reduction with associative wraparound + tie-break rules", percent: 70 },
+            { name: "R4 (LOCKED s3) — R4.B minimal primitives + B.2-RLUT reciprocal + B.3-LUT 5 activation LUTs (sigmoid/tanh/GELU/exp/sqrt)", percent: 70 },
+            { name: "R4 (LOCKED s3) — R4.E counter-mode-hash RNG with context-keyed per-call seeding", percent: 70 },
+            { name: "R4 (LOCKED s3) — R4.F test-vectors-only verification; corpus off-chain with Merkle root canonical", percent: 70 },
+            { name: "R7 (LOCKED s3) — fitness-atom verification: CM-BITWISE consensus; VRF-selected quorum; CS1+CS4 sampling", percent: 70 },
+            { name: "R1 Specific ES algorithm — within locked NAS-NARROW spaces; needs simulation", percent: 40 },
+            { name: "R2 Mutation operators — within Set-Transformer + causal Transformer hyperparameter spaces", percent: 40 },
+            { name: "R3 Selection-rule specifics — tournament size, elitism, population size", percent: 40 },
+            { name: "R5 Cross-population dynamics — RESOLVED: six independent populations; no cross-flow; adversarial isolation", percent: 65 },
+            { name: "R6 Cold-start training — RESOLVED: M4 JEPA-AUX dense signal + M5 retrospective scoring on materialized history", percent: 65 },
           ],
           issues: [
-            "Substrate COMPLETE 2026-05-19 session 3 (interface + A1 family + R4 + R7 all locked). Remaining R-items (R1, R2, R3) are research-tuning within locked structural surface — require simulation tooling to settle parameters.",
-            "Determinism guaranteed by R4 (D1 shared hash + A.SM3 MXINT BFP + C1 free-order with accumulator-bounds + F1 test-vector-only verification with Merkle commitment). Module 13 arithmetic-succession path provides escape valve if A.SM3 spec proves wrong; one-way per HR.11.",
-            "Production-stable implementations of NAS-style ES on quantized BFP NN do not yet exist at HYDRA scale; this remains the highest single technical risk in the design. Multi-year research investment before launch is responsible.",
-            "Module 13 (session 2) + R4 substrate (this session) jointly reduce the A1 lock-risk: family permanent, specifications within A.SM3 can succeed via verification-function-driven adoption.",
+            "Substrate COMPLETE (interface + A1 + R4 + R7). R1/R2/R3 are research-tuning within locked surface — needs simulation tooling.",
+            "Determinism guaranteed by R4 (D1 + A.SM3 + C1 + F1 + Merkle commitment). Module 13 arithmetic-succession is the escape valve if R4.A spec proves wrong.",
+            "Production-stable NAS-style ES on quantized BFP NN does not yet exist at HYDRA scale — highest single technical risk in the design.",
           ],
           confidence: null,
         },
         {
           name: "Module 7 — Adversarial defense composition",
-          percent: 25,
+          percent: 50,
           submodules: [
-            { name: "Defense-in-depth Hard Rule #10 (LOCKED 2026-05-19) — no single defense sufficient against any non-trivial attack class; adversary must defeat composed surface; no single-point-of-defense permitted post-genesis", percent: 0 },
-            { name: "Calibration-LCB requirement (Module 3) — rate-limits new sources' growth toward influence via wide-posterior bootstrap; encoder-concentration multiplicative modulation downweights concentrated encoders", percent: 0 },
-            { name: "Sybil power-law decay (Module 3, within Q1) — coordinated confirming-source attacks diluted across coalition; first-informative source rewarded most, subsequent ones power-law-decayed", percent: 0 },
-            { name: "Calibration-modulated submission rate gating (Module 2) — spam + flood attacks bounded by per-source calibration history", percent: 0 },
-            { name: "Vindication-credit retroactive compensation (Module 3) — whistleblower-vs-mimic partial defense; economic incentive for early-correct claims; mode-emergence trigger + earliness × match grading", percent: 0 },
-            { name: "Encoder-concentration three-layer defense (session 1) — concentration is queryable canonical state (transparency); reward function takes concentration as input (economic disincentive); influence weight downweighted (epistemic disincentive)", percent: 0 },
-            { name: "Auto-stake from operator earnings (Module 10, LOCKED 2026-05-19) — operator-side atoms have fraction s of RT earnings auto-locked; vests V periods; slashable on caught-misbehavior; per-category fractions (auditor highest)", percent: 0 },
-            { name: "VRF rotation (Modules 10, 11) — audit committees selected per-dispute; MPC participants selected per-job; storage providers selected per-period; prevents persistent committee capture", percent: 0 },
-            { name: "Dispute bond mechanism (Module 12) — filer locks D RT; bond burned if dispute loses, returned + whistleblower share if wins; prevents frivolous-dispute spam", percent: 0 },
-            { name: "Bootstrap audit gap-fill (LOCKED 2026-05-19) — D1 cross-dimension audit pool during bootstrap (eligible-pool expands to addresses with any-dimension calibration until audit-specific pool reaches threshold M); D2 deferred dispute resolution if pool < M", percent: 0 },
-            { name: "Crypto-primitive succession (Emergent within structure Hard Rule reserved governance path) — conservative genesis choice (STARK, no trusted setup); succession is the only modification path; emergency-faster-than-succession is acknowledged residual", percent: 0 },
+            { name: "HR.10 Defense-in-depth composition — no single defense sufficient; composed surface required", percent: 70 },
+            { name: "Calibration-LCB requirement — wide-posterior bootstrap rate-limits new-source influence", percent: 70 },
+            { name: "Sybil power-law decay — coordinated confirming-source attacks diluted across coalition", percent: 70 },
+            { name: "Calibration-modulated submission rate gating — spam + flood attacks bounded", percent: 70 },
+            { name: "Vindication-credit retroactive — whistleblower-vs-mimic partial defense (economic)", percent: 70 },
+            { name: "Encoder-concentration three-layer defense — queryable + reward + influence weighting", percent: 70 },
+            { name: "Auto-stake from operator earnings — fraction s of RT auto-locked; vests V pulses; slashable", percent: 70 },
+            { name: "VRF rotation — audit per-dispute; MPC per-job; storage per-pulse; prevents committee capture", percent: 70 },
+            { name: "Dispute bond mechanism — filer locks D RT; bond burned if lost; refund + whistleblower share if won", percent: 70 },
+            { name: "Bootstrap audit gap-fill — D1 cross-dimension audit pool + D2 deferred resolution", percent: 70 },
+            { name: "Crypto-primitive succession (Module 13 path) — conservative genesis choice + succession only modification path", percent: 70 },
           ],
           issues: [
-            "Three structural residuals acknowledged (no escape hatches): R1 audit-primitive frozenness (novel attack categories not anticipated at genesis cannot be detected); R2 off-protocol encoder concentration ecosystem residual (defense reduces protocol-level cost; cannot eliminate ecosystem-level concentration); R3 whistleblower-vs-mimic at submission time (information-theoretically hard; partial defense via vindication-credit).",
-            "Patient capitalized adversaries — nation-state-funded or comparable — cannot be fully priced out at any composition; defense is principled, not absolute.",
-            "Crypto-primitive emergency faster than succession path can complete: acknowledged residual; conservative genesis choice is the structural defense (no D5 multi-primitive layering substrate due to permanent cost).",
+            "Three structural residuals acknowledged: R1 audit-primitive frozenness; R2 encoder-concentration ecosystem; R3 whistleblower-vs-mimic information-theoretically hard.",
+            "Patient capitalized adversaries cannot be fully priced out — defense is principled, not absolute.",
           ],
           confidence: null,
         },
         {
-          name: "Module 8 — Tokenomics & economic accounting (steady-state)",
-          percent: 25,
+          name: "Module 8 — Tokenomics & economic accounting",
+          percent: 50,
           submodules: [
-            { name: "Token structure (LOCKED 2026-05-19) — T3 distinct non-fungible assets: GT (never burned; permanent compute privilege) + RT (gas, burned on use). Single fungible suite within each class.", percent: 0 },
-            { name: "Mint mechanism (LOCKED) — per-6h-period budget proportional to burn: mint = α(demand) · burn + bootstrap_subsidy(D_netburn). 60-40 split between operator pool / info-provider pool. Q1 reward function becomes relative weighting within pool, not absolute mint magnitude.", percent: 0 },
-            { name: "Demand-responsive α(demand) (LOCKED) — bounded sigmoid, monotonically decreasing in demand. α > 1 in low-demand periods (subsidize); α = 1 at equilibrium; α < 1 in high-demand periods (deflationary pressure rewards holders). Homeostatic.", percent: 0 },
-            { name: "X(demand) per-unit compute price (LOCKED) — bounded sigmoid, monotonically increasing in demand. Paid-user burn rate; also serves as floor for rental-burn to prevent GT-holder market undercutting.", percent: 0 },
-            { name: "GT_factor decay (LOCKED) — D-netburn × F-exp; GT mint rate decays with cumulative-net-burn; goes to zero at criticality event; independent of α function.", percent: 0 },
-            { name: "Contribution-value reward function (LOCKED) — C2 multi-stream additive: calibration-LCB-blended + shift-magnitude + vindication; each stream Q1-scored; S2 power-law Sybil decay; D1 single-durability-snapshot at settlement + dimension_timescale; uniform GT_factor across streams; at-firing emission for vindication", percent: 0 },
-            { name: "Auto-stake (LOCKED) — operator-side atom earnings (compute, storage, audit, quote): fraction s of RT (only — not GT) auto-locked at emission; vests V periods if no slash; per-category fractions (s_auditor highest, s_storage and s_compute lower); slashable on proven misbehavior via three-way split (whistleblower + refund + burn)", percent: 0 },
-            { name: "Founder allocation via ZK-claim pool (LOCKED) — 50% of cumulative GT minted to date allocated at criticality event; hash-of-secret commitment at genesis + STARK ZK proof + protocol-native gas-less claim + replay protection; identity-protection is STRUCTURAL via fresh-address per claim, not operational wallet-hygiene", percent: 0 },
-            { name: "Cold-start additive bootstrap subsidy (LOCKED) — handles zero-burn launch; D-netburn × F-exp decay; goes to zero as cumulative-net-burn grows; passes through 60-40 split + pool distribution identically", percent: 0 },
-            { name: "No bootstrap pre-mint (LOCKED) — flywheel self-sufficient under T3 + subsidy + investor bid walls; first contribution-reward enters circulation within first block window", percent: 0 },
+            { name: "Token structure — T3 distinct non-fungible: GT (permanent compute privilege) + RT (gas, burned)", percent: 70 },
+            { name: "Mint mechanism — per-pulse budget = α(demand) · burn + bootstrap subsidy; 60/40 op/info split (pulse-recalibrated)", percent: 55 },
+            { name: "Demand-responsive α(demand) — bounded sigmoid; α>1 low demand, α<1 high demand", percent: 70 },
+            { name: "X(demand) per-unit compute price — bounded sigmoid; serves paid-user + rental-burn floor", percent: 70 },
+            { name: "GT_factor decay — D-netburn × F-exp; zero at criticality event", percent: 70 },
+            { name: "Contribution-value reward — C2 multi-stream additive; LCB-blended + shift + vindication; S2 sybil decay", percent: 70 },
+            { name: "Auto-stake (operator earnings) — fraction s RT auto-locked; vests V pulses; slashable three-way split", percent: 70 },
+            { name: "Founder allocation — 50% cumulative GT at criticality via ZK-claim pool", percent: 70 },
+            { name: "Bootstrap subsidy — D-netburn × F-exp decay; goes to zero as cumulative-net-burn grows", percent: 70 },
+            { name: "Per-pulse entitlement-atoms — auto-mint at pulse boundaries; NO ROLLOVER EVER (pulse-recalibrated)", percent: 55 },
           ],
           issues: [
-            "Bootstrap demand is the single largest economic risk and depends on factors outside the protocol's control — partially mitigated by additive bootstrap subsidy that handles cold-start without permanent inflation.",
-            "Demand-collapse death-spiral is substantially dampened by demand-responsive α (low demand → α > 1 → subsidizes contributors → capacity stays online → user confidence has time to recover) but not fully eliminated.",
-            "Function curve parameters (α_min, α_max, X_min, X_max, sigmoid curvatures, GT_factor decay rate, bootstrap subsidy decay rate, RT_factor magnitude, stake fractions, vesting V, slash magnitude m) all fine-tuning deferred — must converge before genesis.",
+            "Bootstrap demand depends on factors outside the protocol's control — largest economic risk.",
+            "Demand-collapse death-spiral dampened by demand-responsive α but not fully eliminated.",
+            "Pulse-terminology recalibration pending: period → pulse in vision text + module spec.",
+            "All function curve parameters + scalar parameters = fine-tuning deferred.",
           ],
           confidence: null,
         },
         {
-          name: "Module 9 — Criticality mechanism (bootstrap-to-steady-state transition)",
-          percent: 25,
+          name: "Module 9 — Criticality mechanism",
+          percent: 50,
           submodules: [
-            { name: "Criticality STATE (LOCKED 2026-05-19) — defined as α(period) < 1 sustained over K consecutive periods AND cumulative-net-burn ≥ floor. Both conditions must hold. Cumulative-net-burn floor prevents premature criticality from low-volume manipulated demand.", percent: 0 },
-            { name: "Criticality EVENT (LOCKED) — first entry into criticality state. One-time discrete. Irreversible (once fired, never re-fires; even if demand collapses post-criticality and α > 1 again, only RT mint subsidy responds; GT supply permanently fixed).", percent: 0 },
-            { name: "Atomic event actions (LOCKED) — at period boundary where K-sustained + floor condition first met: (1) snapshot cumulative GT minted to date; (2) allocate founder ZK-pool = 50% of snapshot; (3) GT_factor permanently set to 0; (4) bootstrap subsidy formally set to 0; (5) canonical_state.criticality_status = post-criticality with event-period stamped", percent: 0 },
-            { name: "Atomicity ordering (LOCKED) — mint distribution for period N happens FIRST; K-sustained check runs SECOND; atomic event fires after if condition met. Ensures founder snapshot includes the final pre-criticality period's mint.", percent: 0 },
-            { name: "State representation (LOCKED) — single boolean criticality_status ∈ {pre, post} + event-period reference + zero subsidy + zero GT_factor. Observable in canonical state for any query.", percent: 0 },
-            { name: "Post-criticality dynamics (LOCKED) — α continues responding to demand on RT-only mint; can rise above 1 (RT supply expands) or stay below 1 (RT supply contracts); no further events; permanent homeostatic equilibrium around demand", percent: 0 },
-            { name: "Edge case: protocol may never criticalize (ACCEPTED RESIDUAL) — if demand never grows enough, GT_factor asymptotes to near-zero without event firing; founder ZK-pool never activates. Vision-aligned with 'slow start is the honest expectation.'", percent: 0 },
+            { name: "Criticality STATE — α<1 sustained over K pulses AND cumulative-net-burn ≥ floor (pulse-recalibrated)", percent: 55 },
+            { name: "Criticality EVENT — first entry into state; one-time discrete; irreversible", percent: 70 },
+            { name: "Atomic event actions — GT_factor → 0; founder ZK-pool activates at 50% cumulative GT; subsidy → 0", percent: 70 },
+            { name: "Atomicity ordering — mint distribution FIRST, K-sustained check SECOND, event fires after", percent: 70 },
+            { name: "State representation — boolean criticality_status + event-pulse stamp; observable in canonical state", percent: 70 },
+            { name: "Post-criticality dynamics — α continues responding; no further structural events", percent: 70 },
+            { name: "Edge case: protocol may never criticalize — accepted residual", percent: 70 },
           ],
           issues: [
-            "K period count and cumulative-net-burn floor specific values are fine-tuning — must be locked pre-genesis; K large enough that organic-attack-cost dominates noise (suggestive 14-28 periods = 3.5-7 days at 6h periods).",
-            "Criticality predictability under demand-responsive α: criticality threshold depends on α dynamics, not on pre-determined trajectory. Less structurally predictable than fixed-trajectory but more honest about actual network maturity.",
-            "50% founder allocation ratio at criticality is locked as design commitment; centralization signal accepted as trade for bootstrap incentive alignment + structural identity-protection via ZK-claim pool.",
-            "Criticality is genesis-frozen and one-shot — calibration error here cannot be repaired by any later mechanism.",
+            "K pulse count + cumulative-net-burn floor specific values are fine-tuning; must lock pre-genesis.",
+            "50% founder allocation locked as design commitment; centralization signal accepted as trade.",
+            "Criticality is genesis-frozen and one-shot — calibration error cannot be repaired post-launch.",
           ],
           confidence: null,
         },
         {
           name: "Module 10 — Generalized compute marketplace",
-          percent: 25,
+          percent: 50,
           submodules: [
-            { name: "E1 atom-based unification (LOCKED 2026-05-19) — all services (compute, storage, audit, info, quotes, rentals, disputes, entitlements) modeled as atoms; protocol has no formal 'node' role; calibration history per-dimension distinguishes roles emergently", percent: 0 },
-            { name: "Three settlement paths (LOCKED) — S1 oracle (always-replicated quorum; N replicas converge on canonical state at coordinate) + S2 private (MPC + ZK; covers both oracle-private AND arbitrary-private compute; cryptographically resolved, not auditable) + S3 arbitrary (provisional-then-disputed with Option B delayed reward emission)", percent: 0 },
-            { name: "E1-β full user-burn billing (LOCKED) — all paid-user RT destroyed on use; no direct flow to provider; provider compensation entirely from Q1 mint at compute-completion atom settlement", percent: 0 },
-            { name: "Per-period entitlement-atoms (LOCKED) — at each 6h period start, auto-mint quota-entitlement atoms for each GT holder proportional to their GT balance (50% of total period capacity allocated across GT holders). NO ROLLOVER EVER (Hard Rule property): unused entitlements auto-expire at period end.", percent: 0 },
-            { name: "Quota rental via signed transition atoms (LOCKED) — GT holder transfers entitlement to renter; renter pays Y RT; demand-proportional burn B = X(demand) · c equivalent to paid-user rate; GT holder receives Y - B; structurally prevents undercutting paid market. Long-term contracts emerge from repeated per-period rentals + off-protocol coordination (L1, no multi-period commitment substrate).", percent: 0 },
-            { name: "Storage challenge-response (LOCKED) — storage-attestation atoms settle via challenge-response from any node; valid Merkle proof = positive settlement; failed/no-response = negative settlement (slash trigger). Per-period attestation cadence.", percent: 0 },
-            { name: "VRF rotation per dispute / per job (LOCKED) — audit committee selected per dispute (VRF + canonical-state digest + dispute-atom-id); MPC participants selected per job from MPC-capability-declared pool; bootstrap-permissionless audit until eligible-pool reaches threshold M (cross-dimension pool D1 expansion during bootstrap)", percent: 0 },
-            { name: "Auto-stake from operator earnings (LOCKED) — operator-side atom earnings have fraction s of RT auto-locked at emission; vests V periods if no slash; per-category fractions (s_auditor highest); slashable on caught-misbehavior (negative-settlement verdict) or VRF-selected non-response", percent: 0 },
-            { name: "Slash three-way distribution (LOCKED) — whistleblower share + refund pool + burn; refund pool target trigger-dependent (S3 dispute → user who paid; storage → other erasure-coded providers; non-response → other auditors)", percent: 0 },
-            { name: "Positioning discipline — oracle is the protocol's purpose; compute marketplace is the funding mechanism (vision wave 1; must hold through implementation)", percent: 0 },
+            { name: "E1 atom-based unification — all services modeled as atoms; no formal 'node' role", percent: 70 },
+            { name: "Three settlement paths — S1 oracle (quorum) + S2 private (MPC+ZK) + S3 arbitrary (provisional+disputed)", percent: 70 },
+            { name: "E1-β full user-burn — paid-user RT destroyed on use; no direct flow to provider", percent: 70 },
+            { name: "Per-pulse entitlement-atoms — auto-mint at pulse boundaries proportional to GT (pulse-recalibrated)", percent: 55 },
+            { name: "Quota rental via signed transitions — burn B = X(demand) · c; prevents undercutting paid market", percent: 70 },
+            { name: "Storage challenge-response — Merkle proof = positive settlement; failed/no-response = slash", percent: 70 },
+            { name: "VRF rotation per dispute / per job — audit + MPC + storage selection prevents capture", percent: 70 },
+            { name: "Auto-stake from operator earnings — fraction s RT; vests V pulses; per-category fractions", percent: 70 },
+            { name: "Slash three-way — whistleblower + refund + burn; refund target trigger-dependent", percent: 70 },
+            { name: "Positioning discipline — oracle is purpose; compute marketplace is funding mechanism", percent: 70 },
           ],
           issues: [
-            "Generalized compute marketplace expands HYDRA's adversarial surface — arbitrary inference jobs could coordinate attacks against the oracle, generate disallowed content, or otherwise misbehave; audit applies spot-checks + economic deterrence, not exhaustive review.",
-            "Positioning risk: 'decentralized truth oracle' + 'generalized compute marketplace' identities may dilute each other; the discipline 'oracle is purpose, marketplace is funding mechanism' must hold through implementation, not just in the vision document.",
-            "S3 arbitrary-compute provisional settlements have a dimension_timescale window of vulnerability before audit-committee verdict can override (whistleblower-style detection economically incentivized); bounded by dimension_timescale + audit committee responsiveness.",
-            "Fine-tuning deferred: N (replication factor for S1), M-of-N (privacy MPC threshold), K (audit committee size), V vesting period, M audit-pool eligibility threshold, s per-category stake fractions, m_base slash magnitude, D dispute bond, privacy_multiplier for S2 cost.",
+            "Generalized compute marketplace expands adversarial surface; audit applies spot-checks + economic deterrence.",
+            "S3 arbitrary-compute has dimension_timescale-window vulnerability before audit-committee verdict can override.",
+            "Fine-tuning deferred: N replication, M-of-N privacy, K audit size, V vesting, M eligibility, s fractions.",
           ],
           confidence: null,
         },
         {
           name: "Module 11 — Privacy tier (MPC + ZK)",
-          percent: 25,
+          percent: 50,
           submodules: [
-            { name: "STARK ZK proof system at genesis (LOCKED 2026-05-19) — no trusted setup; post-quantum security; conservative genesis choice. Specific STARK construction is engineering-pass detail.", percent: 0 },
-            { name: "MPC1 threshold secret-sharing family (LOCKED) — M-of-N threshold; any M-1 colluding participants cannot recover query plaintext; at least N-M+1 honest required for correctness. Network never sees query plaintext. Specific scheme (BGW, GMW, SPDZ) deferred to engineering.", percent: 0 },
-            { name: "Coverage scope (LOCKED) — S2 substrate covers BOTH oracle-private inference AND arbitrary-private compute (user brings their own model/code; runs privately on protocol's MPC network)", percent: 0 },
-            { name: "Joint proof composition (LOCKED) — each MPC participant contributes to joint ZK proof; aggregated; no single trust anchor among participants. Robustness over coordination simplicity.", percent: 0 },
-            { name: "Cost structure (LOCKED) — privacy compute carries X(demand) · privacy_multiplier · c premium; multiplier > 1 reflecting MPC coordination overhead + ZK proof generation cost + N-fold provider participation. Value fine-tuning.", percent: 0 },
-            { name: "Participant selection (LOCKED) — VRF rotation per job from MPC-capability-declared pool (providers signal capability via quote-atoms). Same anti-collusion pattern as audit committee VRF.", percent: 0 },
-            { name: "Shared crypto suite at genesis (LOCKED) — single primitive suite (STARK + MPC1 + STARK-friendly encryption) used across S2 oracle private + S2 arbitrary private + Q7 founder ZK-claim + result encryption to user. Single succession event needed for any future upgrade.", percent: 0 },
-            { name: "MPC participant earnings (LOCKED) — equal split among N VRF-selected participants per compute_private job; auto-stake applies to operator-side earnings; slashable on proof failure or non-completion", percent: 0 },
-            { name: "Result encryption to user (LOCKED) — result committed/encrypted using same crypto suite; only requesting user can decrypt; network never sees plaintext", percent: 0 },
-            { name: "MPC privacy-leak detection (MPC-A LOCKED) — out-of-scope at protocol; rely on threshold security (M-of-N collusion required) + reputation effects + ZK correctness; no protocol-level leak-evidence atom (avoids false-leak-claim attack surface)", percent: 0 },
-            { name: "Crypto-primitive succession (Emergent within structure Hard Rule reserved path) — locked primitives can be succeeded via designated governance path if/when current schemes are superseded; emergency-faster-than-succession is acknowledged residual", percent: 0 },
+            { name: "STARK ZK proof system at genesis — no trusted setup; post-quantum security", percent: 70 },
+            { name: "MPC1 threshold secret-sharing — M-of-N threshold; M-1 collusion cannot recover plaintext", percent: 70 },
+            { name: "Coverage scope — S2 substrate covers BOTH oracle-private AND arbitrary-private compute", percent: 70 },
+            { name: "Joint proof composition — each MPC participant contributes; aggregated; no single trust anchor", percent: 70 },
+            { name: "Cost structure — privacy compute carries X(demand) · privacy_multiplier · c premium", percent: 70 },
+            { name: "Participant selection — VRF per job from MPC-capability-declared pool", percent: 70 },
+            { name: "Shared crypto suite at genesis — STARK + MPC1 + STARK-friendly encryption", percent: 70 },
+            { name: "MPC participant earnings — equal split among N VRF-selected; auto-stake; slashable on failure", percent: 70 },
+            { name: "Result encryption to user — same crypto suite; only user can decrypt", percent: 70 },
+            { name: "MPC-A privacy-leak detection — out-of-scope at protocol; rely on threshold + reputation + ZK", percent: 70 },
+            { name: "Crypto-primitive succession via Module 13 — emergent within structure reserved path", percent: 70 },
           ],
           issues: [
-            "Privacy-tier economic viability depends on whether enough users value privacy enough to pay premium rates — may be under-utilized at launch.",
-            "Production-grade malicious-secure MPC + ZK is substantial engineering; cost is real. Specific scheme choices (within locked families) deferred to engineering pass.",
-            "Joint-proof composition coordination complexity: engineering-pass design must produce a working coordination protocol; risk in implementation details.",
-            "MPC privacy-leak attack surface: protocol relies on threshold-security + reputation effects rather than cryptographic leak-detection; sociotechnical residual.",
+            "Privacy-tier economic viability depends on user willingness to pay premium; may be under-utilized at launch.",
+            "Production-grade malicious-secure MPC + ZK is substantial engineering; specific scheme choices fine-tuning.",
+            "MPC privacy-leak attack surface relies on threshold-security + reputation rather than crypto leak-detection.",
           ],
           confidence: null,
         },
         {
           name: "Module 12 — Audit committees & slashing",
-          percent: 25,
+          percent: 50,
           submodules: [
-            { name: "Audit scope (LOCKED 2026-05-19, Q12.A) — explicitly limited to S3 arbitrary-compute disputes + storage-attestation challenges. All other atom-types (S1 oracle, S2 private, audit verdicts themselves, compute quotes, info-provider atoms, quota rentals) resolved via standard R2+T1+Q1 machinery, not via audit committee.", percent: 0 },
-            { name: "VRF-selected audit committee per dispute (LOCKED) — committee selected fresh per dispute via VRF(canonical_state_digest + dispute_atom_id); calibration-LCB × VRF output weighted selection; committee size K fine-tuning. Bootstrap-permissionless until eligible-pool reaches threshold M; D1 cross-dimension pool expansion during bootstrap.", percent: 0 },
-            { name: "Dispute bond mechanism (LOCKED, Q12.B) — filer locks D RT as bond at filing; bond burned if dispute loses; bond returned + whistleblower share of slash if dispute wins; prevents frivolous dispute spam. Symmetric for new entrants (no calibration history requirement).", percent: 0 },
-            { name: "Calibration-LCB-weighted verdict consensus (LOCKED) — verdict atoms accumulate at disputed coordinate; canonical state at coordinate computed via same Q1 calibration-LCB-blending as elsewhere; original disputed atom settled against this canonical state. Reuses Module 3 machinery.", percent: 0 },
-            { name: "Non-response slash (LOCKED) — VRF-selected auditor MUST submit verdict within dimension_timescale; failure to respond → automatic stake slash distributed to OTHER auditors in same committee + burn fraction", percent: 0 },
-            { name: "Slash magnitude proportional to divergence (LOCKED, Q12.C) — slash fraction m = m_base · divergence_factor(post-audit canonical state, original claim); greater divergence → bigger slash; curve fine-tuning, structural form locked", percent: 0 },
-            { name: "Refund pool distribution (LOCKED, Q12.D) — trigger-dependent target: S3 disputes → user who paid for failed compute; storage failures → other K-1 erasure-coded providers for same slice; non-response → other auditors in committee. Plus burn fraction in each case.", percent: 0 },
-            { name: "No cascading disputes (LOCKED, Q12.F) — audit-verdict atoms NOT explicitly disputable; settled via canonical-state evolution at originally-disputed coordinate; verdict auditors' calibration-LCB drops if wrong + their auto-stake at risk. Implicit cascade via canonical state + calibration + stake; no recursive audit machinery.", percent: 0 },
-            { name: "Audit-primitive frozenness as structural residual (LOCKED, Q12.E) — audit surface is frozen at genesis; novel attack categories not anticipated at genesis cannot be detected. No governance escape hatches. Mitigation through Defense-in-depth composition (Hard Rule #10), not via audit-primitive evolution.", percent: 0 },
+            { name: "Audit scope — narrow: S3 arbitrary-compute disputes + storage-attestation challenges only", percent: 70 },
+            { name: "VRF-selected audit committee per dispute — LCB × VRF; bootstrap-permissionless until pool ≥ M", percent: 70 },
+            { name: "Dispute bond — filer locks D RT; burned if lost, returned + whistleblower share if won", percent: 70 },
+            { name: "LCB-weighted verdict consensus — verdict atoms accumulate; same Q1 LCB-blending as elsewhere", percent: 70 },
+            { name: "Non-response slash — VRF auditor MUST verdict within dim_timescale; failure → auto slash", percent: 70 },
+            { name: "Slash magnitude proportional to divergence — m_base · divergence_factor", percent: 70 },
+            { name: "Refund pool distribution — trigger-dependent target (user / providers / other auditors) + burn", percent: 70 },
+            { name: "No cascading disputes — audit-verdict atoms not explicitly disputable; implicit cascade via state + LCB", percent: 70 },
+            { name: "Audit-primitive frozenness (HR.10 mitigation) — structural residual; novel attack categories may slip", percent: 70 },
           ],
           issues: [
-            "Audit-primitive frozenness is acknowledged structural residual — protocol commits to the audit surface as it exists at genesis; novel attack patterns may slip through. Mitigation via composed defenses across the protocol, not via single audit primitive.",
-            "Bootstrap-phase audit gaming (before audit-specific eligible-pool reaches threshold M) is bounded by D1 cross-dimension pool expansion + D2 deferred resolution + calibration-LCB-weighting + stake-at-risk. Patient adversary residual accepted.",
-            "Fine-tuning deferred: D dispute bond amount, K audit committee size, M eligibility threshold, m_base slash magnitude, refund-pool fractions per trigger type.",
+            "Audit-primitive frozenness is acknowledged structural residual — mitigation via composed defenses, not via audit-primitive evolution.",
+            "Bootstrap-phase audit gaming bounded by D1 cross-dim pool + D2 deferred resolution + LCB-weighting + stake.",
+            "Fine-tuning deferred: D bond, K committee size, M eligibility, m_base slash, refund fractions.",
           ],
           confidence: null,
         },
         {
           name: "Module 13 — Community-driven succession paths",
-          percent: 75,
+          percent: 65,
           submodules: [
-            { name: "Two succession paths only (LOCKED) — crypto-primitive succession + canonical-arithmetic succession. New dimensions are NOT a succession path. No third path; no new paths added through any mechanism the protocol provides.", percent: 0 },
-            { name: "Q13.1 Verification function form (LOCKED) — V1 checklist verifier with three categories: required-evidence-thresholds + zero successful break-test atoms + time-tested non-fault period. Trust derives from structure, not embedded judgment.", percent: 0 },
-            { name: "Q13.2 Evidence atom structure (LOCKED) — A2: three atom species: crypto-evidence, arithmetic-evidence, candidate-spec. Evidence-type-tag in-schema. All settle S1 replicated quorum.", percent: 0 },
-            { name: "Q13.3 Test specification (LOCKED) — T3: locked baseline (per-path categorical structure: crypto = cross-implementer + formal-verification + backward-compat + benchmark; arithmetic = bitwise-equivalence + backward-compat + extended-coverage + benchmark) + permissionless break-tests.", percent: 0 },
-            { name: "Q13.4 Competing successors (LOCKED) — C2 parallel candidates allowed; deterministic hash-tiebreak on simultaneous-verification.", percent: 0 },
-            { name: "Q13.5 Activation transition (LOCKED) — D1 atomic at pulse boundary (pulse-terminology recalibrated from period); backward-compatible; mirrors criticality mint-first-then-event pattern.", percent: 0 },
-            { name: "Q13.6 Failure handling (LOCKED) — F1 no rollback ever (structural residual from immutability Hard Rule). Mitigations live entirely in V1.", percent: 0 },
-            { name: "Q13.7 / HR.11 No meta-succession (LOCKED) — verification functions, locked test specifications, path enumeration itself cannot succeed.", percent: 0 },
-            { name: "V13.A Evidence atom payload + verification (LOCKED 2026-05-19 session 3) — per-subcategory atoms with protocol-canonical verification (5 of 6 subcategory classes: cross-implementer, bitwise-equivalence, backward-compat, extended-coverage, benchmark — all R4-deterministically verifiable) + Module-12-audit verification for formal-verification subcategory (the one inherently-subjective class)", percent: 0 },
-            { name: "V13.B Category aggregation (LOCKED) — AGG1 per-subcategory threshold conjunction; all subcategories must meet min_evidence_count for category satisfaction; deterministic + minimum substrate", percent: 0 },
-            { name: "V13.C Break-test atom payload + verification (LOCKED) — per-break-category atoms; crypto break categories (collision, preimage, soundness violation, knowledge soundness violation, distinguisher) + arithmetic break categories (divergent computation, hardware-non-portable, spec-violation); failed-break burns stake (anti-spam); successful-break returns stake + whistleblower share from candidate's accumulated evidence-stake pool. 2 new canonical atom species: crypto-break-test, arithmetic-break-test", percent: 0 },
-            { name: "V13.D Time-tested duration (LOCKED) — TT1 continuous strict: ANY fault during T_test disqualifies candidate permanently; re-submission required as fresh candidate-spec atom (new candidate_id; T_test clock reset to zero). Adversarial-defense against fault-recovery gaming", percent: 0 },
-            { name: "V13.E Activation threshold (LOCKED) — ACT1 all-of conjunction across three category-classes (required-evidence + zero-break-tests + time-tested-non-fault). Structurally orthogonal categories; score-blending would muddle them.", percent: 0 },
-            { name: "V13.F Verification execution timing (LOCKED) — per-pulse evaluation; atomic activation at pulse boundary; parallel-candidate hash-tiebreak per C2 lock. Composes with Module 14 pulse cadence", percent: 0 },
-            { name: "Total Module 13 atom species at genesis: 5 — crypto-evidence, arithmetic-evidence, candidate-spec, crypto-break-test, arithmetic-break-test", percent: 0 },
-            { name: "Locked test specification CONTENT (FINE-TUNING / pre-genesis spec authoring) — specific test vectors for V13.arithverify; specific formal-verification properties for V13.cryptoverify; specific benchmark thresholds; specific hardware-class enumeration; specific T_test duration in pulses; specific min_evidence_count per subcategory", percent: 0 },
+            { name: "Two succession paths — crypto-primitive + canonical-arithmetic. New dimensions NOT a succession path", percent: 70 },
+            { name: "Q13.1 V1 verifier — checklist with 3 categories: evidence-thresholds + zero-break-tests + time-tested-non-fault", percent: 70 },
+            { name: "Q13.2 A2 evidence atoms — crypto-evidence, arithmetic-evidence, candidate-spec; type-tag in-schema", percent: 70 },
+            { name: "Q13.3 T3 test specification — locked baseline per-path + permissionless break-tests", percent: 70 },
+            { name: "Q13.4 C2 parallel candidates — deterministic hash-tiebreak on simultaneous-verification", percent: 70 },
+            { name: "Q13.5 D1 activation — atomic at pulse boundary; backward-compatible (pulse-recalibrated)", percent: 55 },
+            { name: "Q13.6 F1 failure handling — no rollback ever; structural residual from HR.1", percent: 70 },
+            { name: "Q13.7 / HR.11 No meta-succession — verification functions + test specs + path enumeration cannot succeed", percent: 70 },
+            { name: "V13.A (LOCKED s3) — per-subcategory atoms with protocol-canonical verification (5/6) + audit-committee for formal-verification", percent: 70 },
+            { name: "V13.B (LOCKED s3) — AGG1 per-subcategory threshold conjunction", percent: 70 },
+            { name: "V13.C (LOCKED s3) — per-break-category atoms; failed-break burns stake; successful-break + whistleblower share", percent: 70 },
+            { name: "V13.D (LOCKED s3) — TT1 continuous strict; any fault disqualifies; re-submission required", percent: 70 },
+            { name: "V13.E (LOCKED s3) — ACT1 all-of conjunction across three category-classes", percent: 70 },
+            { name: "V13.F (LOCKED s3) — per-pulse evaluation; atomic activation; parallel-candidate hash-tiebreak per C2", percent: 70 },
+            { name: "Module 13 atom species at genesis — 5 total (3 evidence/spec + 2 break-test)", percent: 70 },
+            { name: "Test specification CONTENT — specific test vectors, formal-verification properties, benchmarks, hardware-class enumeration", percent: 50 },
           ],
           issues: [
-            "Substantive architecture COMPLETE 2026-05-19 session 3 (V13.A-V13.F closed for both V13.cryptoverify and V13.arithverify). Test specification CONTENT remains as pre-genesis spec authoring item.",
-            "Trust core: verification function is locked at genesis, cannot itself succeed (HR.11). If verification function has a design flaw, the protocol cannot patch it. Mitigation: extreme conservatism at genesis design + permissionless break-test atoms expand the test space beyond what the locked baseline can foresee + TT1 continuous-strict semantics prevent fault-recovery gaming.",
-            "Acknowledged residuals: F1 no-rollback ever (structural); verification-function-flaw permanent (mitigated by V1 conservatism + adversarial probing); emergency window exposure if primitive breaks faster than verification can complete; novel attack patterns require community to actively propose break-test atoms (protocol safety partially depends on ecosystem behavior).",
-            "Substrate cost: 5 atom species + 1 Hard Rule (HR.11) + 2 verification functions + locked test specifications. Bounded relative to succession's failure mode (permanent broken crypto/arithmetic). V13.A's reuse of Module 12 audit machinery for formal-verification subcategory keeps the substrate growth minimal.",
-            "Pattern worth flagging for future reference: protocol-canonical verification for most subcategories + audit-committee for the inherently-subjective subcategory is a clean decomposition that might generalize.",
+            "Substantive architecture COMPLETE (V13.A-V13.F closed for both V13.cryptoverify and V13.arithverify). Test spec content remains pre-genesis spec authoring.",
+            "Trust core: verification function locked at genesis; cannot itself succeed (HR.11). Mitigation: V1 conservatism + permissionless break-tests + TT1 continuous-strict.",
+            "Acknowledged residuals: F1 no-rollback; verification-function-flaw permanent; emergency-window if primitive breaks faster than verification completes.",
           ],
           confidence: null,
         },
         {
-          name: "Module 14 — Network Health & Adaptive Pulse (NEW 2026-05-19 session 3)",
-          percent: 40,
+          name: "Module 14 — Network Health & Adaptive Pulse",
+          percent: 45,
           submodules: [
-            { name: "Q14.1 Pulse trigger semantics (LOCKED) — T4 hybrid state-event dual signals: pulse fires when EITHER cumulative compute-consumed-since-last-pulse ≥ M_compute OR cumulative atom-submissions-since-last-pulse ≥ M_atoms (whichever first); both reset on pulse. No external clock dependency; no underlying-substrate block dependency. Pulse rate is purely emergent from network state.", percent: 0 },
-            { name: "Q14.2 Network health metric (LOCKED) — pulse-interval state IS the health surface; no separate composite metric. Downstream modules read recent pulse intervals directly when they need a health signal.", percent: 0 },
-            { name: "Q14.3 Pulse rate bounds (LOCKED) — B1 soft bounds via M magnitudes only; no hard rate-clamps. M tuned at genesis so steady-state pulse rate is reasonable. Pulse rate adapts to hardware/adoption naturally.", percent: 0 },
-            { name: "Q14.4 Cross-module pulse interface (LOCKED) — I3 both event-driven and state-read: pulse boundary fires as a canonical pulse-boundary-atom (1 new species); pulse-interval state queryable from canonical state by any module. Settlement actions fire on event; parameter scaling reads state.", percent: 0 },
-            { name: "Q14.5 Genesis cold-start (LOCKED) — C4 pure state-event from day 1; dormant-until-used. No bootstrap-specific machinery, no special-case rule, no founder seeding, no subsidy-counts-as-activity hack. Atoms accumulate pre-first-pulse and ALL settle at first pulse when activity organically crosses threshold. Protocol is genuinely dormant if no users arrive.", percent: 0 },
-            { name: "Q14.6 Adversarial robustness (LOCKED) — no Module 14-specific defense mechanism. Pulse-acceleration via spam costs full burn (no exploit; spam IS economic activity). Pulse-stalling = censorship-resistance (covered by HR.5 + Module 7). Pulse-manipulation via signal-falsification impossible under R4 bitwise-determinism (caught at quorum settlement).", percent: 0 },
-            { name: "Cross-module cascades (terminology recalibration pending; handoff drafting): Module 1 (pending-dim promotion per pulse); Module 3 (calibration scoring at pulse boundary); Module 4 F1 lag (pulses); Module 5 F1' lag (pulses, with w(Δ)); Module 6 generation cadence (still decoupled per G lock); Module 8 (mint/burn settlement, α + X evaluation, per-pulse entitlement-atoms); Module 9 (α<1 sustained K pulses, cumulative-net-burn floor unchanged); Module 10 (pulse budget partition); Module 13 (activation at pulse boundary). Module 11/12 use per-job/per-dispute rotation (not pulse-paced); unchanged.", percent: 0 },
-            { name: "Vision section drafting (HANDOFF DEFERRED) — Module 14 has no corresponding vision section yet. Architecture is correct; vision text needs to catch up. Drafting + cross-module 'period' → 'pulse' terminology pass deferred per principal instruction.", percent: 0 },
-            { name: "Hard Rule audit pending — does 'Pulse is state-event-driven; no external clock; no governance-overridable cadence' warrant HR.12? Or implicit in HR.8 emergent-within-structure + HR.9 minimum substrate? Fresh-eyes audit at next session.", percent: 0 },
+            { name: "Q14.1 Pulse trigger (LOCKED s3) — T4 hybrid state-event dual signals (compute consumed OR atom submissions)", percent: 70 },
+            { name: "Q14.2 Health metric (LOCKED s3) — pulse-interval state IS the health surface; no separate composite", percent: 70 },
+            { name: "Q14.3 Pulse rate bounds (LOCKED s3) — B1 soft bounds via M magnitudes only", percent: 70 },
+            { name: "Q14.4 Cross-module interface (LOCKED s3) — I3 both event-driven (pulse-boundary atom) and state-read", percent: 70 },
+            { name: "Q14.5 Genesis cold-start (LOCKED s3) — C4 pure state-event from day 1; dormant-until-used", percent: 70 },
+            { name: "Q14.6 Adversarial robustness (LOCKED s3) — no Module 14-specific defense; covered by HR.10 composition", percent: 70 },
+            { name: "Vision section drafting — handoff deferred; architecture out-pacing vision text", percent: 25 },
+            { name: "Cross-module 'period' → 'pulse' terminology recalibration — affects M1/M3/M4/M5/M8/M9/M10/M13", percent: 25 },
+            { name: "Hard Rule audit pending — does Module 14 warrant HR.12 (no external clock)? Fresh-eyes review", percent: 15 },
           ],
           issues: [
-            "First-pass architecture COMPLETE 2026-05-19 session 3 (Q14.1 + Q14.2 + Q14.3 + Q14.4 + Q14.5 + Q14.6 all locked). Vision section drafting + cross-module terminology pass deferred to handoff per principal instruction.",
-            "Why this module matters: a fixed-pulse protocol committed permanently to 2026-era hardware/scale will, decades from now, either underperform massively (pulse too slow) or break (pulse too fast). Neither correctable post-genesis under HR.1 immutability. Adaptive pulse converts the problem from a forever-correctly-tuned constant to a forever-correctly-tuned function of network state — pure HR.8.",
-            "Acknowledged residuals: pulse-function (the M_compute + M_atoms thresholds rule) is genesis-locked; no succession path for the pulse mechanism itself (HR.11). Initial M values are forever-set. Mitigation: choose generously such that hardware can scale through them; if hardware vastly outpaces M, pulse rate accelerates accordingly (which is the desired property).",
-            "Fine-tuning deferred: M_compute, M_atoms specific magnitudes; r_min liveness floor (if any); pulse-boundary-atom payload schema.",
+            "First-pass architecture COMPLETE. Vision section drafting + cross-module terminology pass deferred to handoff per principal instruction.",
+            "Why this module matters: fixed-pulse protocol locked permanently at 2026-era scale will either underperform or break decades-out — neither correctable under HR.1.",
+            "Pulse-function (M_compute + M_atoms rule) is genesis-locked; no succession path for the pulse mechanism itself (HR.11).",
+            "Fine-tuning deferred: M_compute, M_atoms magnitudes; r_min liveness floor; pulse-boundary-atom payload schema.",
           ],
           confidence: null,
         },
@@ -778,7 +850,7 @@
             { name: "Module 5 — Forecasting model", percent: null, is_confidence: true },
             { name: "Module 6 — Self-evolution infrastructure", percent: null, is_confidence: true },
             { name: "Module 7 — Adversarial defense composition", percent: null, is_confidence: true },
-            { name: "Module 8 — Tokenomics & economic accounting (steady-state)", percent: null, is_confidence: true },
+            { name: "Module 8 — Tokenomics & economic accounting", percent: null, is_confidence: true },
             { name: "Module 9 — Criticality mechanism", percent: null, is_confidence: true },
             { name: "Module 10 — Generalized compute marketplace", percent: null, is_confidence: true },
             { name: "Module 11 — Privacy tier (MPC + ZK)", percent: null, is_confidence: true },
@@ -787,7 +859,7 @@
             { name: "Module 14 — Network Health & Adaptive Pulse", percent: null, is_confidence: true },
           ],
           issues: [
-            "No module has been tested yet. Invoke <code>/hydra-test &lt;module&gt;</code> to run an aggressive test pass and produce a confidence score (architecture vs. vision, functionality, security, efficiency). Scores appear here as tests are run.",
+            "No module has been tested yet. Invoke <code>/hydra-test &lt;module&gt;</code> to run an aggressive test pass and produce a confidence score.",
           ],
         },
       ],
@@ -857,7 +929,7 @@
       const fillEl = document.getElementById("overall-bar");
       fillEl.className = fillClassFor(DATA.overall_percent);
       const subtitle = document.getElementById("subtitle");
-      subtitle.textContent = "Snapshot: " + DATA.source;
+      subtitle.textContent = DATA.source;
       document.getElementById("footer").innerHTML =
         "Last updated " + DATA.generated_at;
     }
@@ -924,7 +996,7 @@
         const ul = el("ul", { class: "issues-list" });
         for (const issue of m.issues) {
           ul.appendChild(el("li", { class: "issue" }, [
-            el("span", { class: "issue-icon" }, isTestingSection ? "ⓘ" : "⚠"),
+            el("span", { class: "issue-icon" }, isTestingSection ? "ⓘ" : "·"),
             el("span", { html: issue }),
           ]));
         }
