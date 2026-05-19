@@ -496,8 +496,8 @@
        ===================================================================== */
     const DATA = {
       generated_at: "2026-05-19",
-      source: "Session 3 close · 14 modules · 11 Hard Rules · architecture-first design phase · 0% implementation",
-      overall_percent: 50,
+      source: "Session 4 close · 14 modules · 11 Hard Rules · vision recalibration applied · 0% implementation",
+      overall_percent: 53,
       modules: [
         {
           name: "Foundational commitments — 11 Hard Rules",
@@ -517,7 +517,7 @@
           ],
           issues: [
             "All 11 commitments are vision-declared; no code anchoring yet. Implementation has not begun.",
-            "Hard Rule audit pending: does Module 14's adaptive pulse warrant HR.12 (no external clock), or is it implicit in HR.8 + HR.9?",
+            "HR.12 audit resolved (session 4): no new Hard Rule — pulse-state-event-determinism flows from HR.8 ∧ HR.9. Door left open for principal reconsideration.",
           ],
         },
         {
@@ -583,7 +583,7 @@
           submodules: [
             { name: "Q1 Granularity — G1 per-(dim, obs-time, anchor) local function; cross-correlations handled externally", percent: 70 },
             { name: "Q7 Specialization — S2 three models per representation type; three independent ES populations", percent: 70 },
-            { name: "Q8 Inference path — I2 per-pulse materialization (pulse-terminology recalibrated)", percent: 55 },
+            { name: "Q8 Inference path — I2 per-pulse materialization", percent: 70 },
             { name: "Q4 Fitness — F1 score vs materialized canonical at T + dim_timescale; B1-blended CRPS/log-score", percent: 70 },
             { name: "Q3 Output — O1 matches dim's declared representation type and schema", percent: 70 },
             { name: "Input weighting — calibration-LCB × encoder-concentration (inherited from Module 3)", percent: 70 },
@@ -606,8 +606,8 @@
           submodules: [
             { name: "G1' Granularity — per-(dim, anchor) with anchor history as context", percent: 70 },
             { name: "S2' Specialization — three models per type; six adaptive models total at genesis", percent: 70 },
-            { name: "I2' Inference path — per-pulse materialization within horizon (pulse-recalibrated)", percent: 55 },
-            { name: "H Forecast horizon — K × dim_timescale per dim (in pulse units); no committed forecast beyond", percent: 55 },
+            { name: "I2' Inference path — per-pulse materialization within horizon", percent: 70 },
+            { name: "H Forecast horizon — K × dim_timescale per dim (in pulse units); no committed forecast beyond", percent: 70 },
             { name: "F1' Fitness — score(forecast_at_T_for_T+Δ, canonical_at_(T+Δ+dim_timescale)); B1-blended", percent: 70 },
             { name: "F1' AMENDMENT (LOCKED s3) — monotonically-increasing w(Δ) horizon weighting; rewards long-horizon skill", percent: 70 },
             { name: "O1' Output — matches dim's type and schema", percent: 70 },
@@ -685,7 +685,7 @@
           percent: 50,
           submodules: [
             { name: "Token structure — T3 distinct non-fungible: GT (permanent compute privilege) + RT (gas, burned)", percent: 70 },
-            { name: "Mint mechanism — per-pulse budget = α(demand) · burn + bootstrap subsidy; 60/40 op/info split (pulse-recalibrated)", percent: 55 },
+            { name: "Mint mechanism — per-pulse budget = α(demand) · burn + bootstrap subsidy; 60/40 op/info split", percent: 70 },
             { name: "Demand-responsive α(demand) — bounded sigmoid; α>1 low demand, α<1 high demand", percent: 70 },
             { name: "X(demand) per-unit compute price — bounded sigmoid; serves paid-user + rental-burn floor", percent: 70 },
             { name: "GT_factor decay — D-netburn × F-exp; zero at criticality event", percent: 70 },
@@ -693,12 +693,11 @@
             { name: "Auto-stake (operator earnings) — fraction s RT auto-locked; vests V pulses; slashable three-way split", percent: 70 },
             { name: "Founder allocation — 50% cumulative GT at criticality via ZK-claim pool", percent: 70 },
             { name: "Bootstrap subsidy — D-netburn × F-exp decay; goes to zero as cumulative-net-burn grows", percent: 70 },
-            { name: "Per-pulse entitlement-atoms — auto-mint at pulse boundaries; NO ROLLOVER EVER (pulse-recalibrated)", percent: 55 },
+            { name: "Per-pulse entitlement-atoms — auto-mint at pulse boundaries; NO ROLLOVER EVER", percent: 70 },
           ],
           issues: [
             "Bootstrap demand depends on factors outside the protocol's control — largest economic risk.",
             "Demand-collapse death-spiral dampened by demand-responsive α but not fully eliminated.",
-            "Pulse-terminology recalibration pending: period → pulse in vision text + module spec.",
             "All function curve parameters + scalar parameters = fine-tuning deferred.",
           ],
           confidence: null,
@@ -707,7 +706,7 @@
           name: "Module 9 — Criticality mechanism",
           percent: 50,
           submodules: [
-            { name: "Criticality STATE — α<1 sustained over K pulses AND cumulative-net-burn ≥ floor (pulse-recalibrated)", percent: 55 },
+            { name: "Criticality STATE — α<1 sustained over K pulses AND cumulative-net-burn ≥ floor", percent: 70 },
             { name: "Criticality EVENT — first entry into state; one-time discrete; irreversible", percent: 70 },
             { name: "Atomic event actions — GT_factor → 0; founder ZK-pool activates at 50% cumulative GT; subsidy → 0", percent: 70 },
             { name: "Atomicity ordering — mint distribution FIRST, K-sustained check SECOND, event fires after", percent: 70 },
@@ -729,7 +728,7 @@
             { name: "E1 atom-based unification — all services modeled as atoms; no formal 'node' role", percent: 70 },
             { name: "Three settlement paths — S1 oracle (quorum) + S2 private (MPC+ZK) + S3 arbitrary (provisional+disputed)", percent: 70 },
             { name: "E1-β full user-burn — paid-user RT destroyed on use; no direct flow to provider", percent: 70 },
-            { name: "Per-pulse entitlement-atoms — auto-mint at pulse boundaries proportional to GT (pulse-recalibrated)", percent: 55 },
+            { name: "Per-pulse entitlement-atoms — auto-mint at pulse boundaries proportional to GT", percent: 70 },
             { name: "Quota rental via signed transitions — burn B = X(demand) · c; prevents undercutting paid market", percent: 70 },
             { name: "Storage challenge-response — Merkle proof = positive settlement; failed/no-response = slash", percent: 70 },
             { name: "VRF rotation per dispute / per job — audit + MPC + storage selection prevents capture", percent: 70 },
@@ -797,7 +796,7 @@
             { name: "Q13.2 A2 evidence atoms — crypto-evidence, arithmetic-evidence, candidate-spec; type-tag in-schema", percent: 70 },
             { name: "Q13.3 T3 test specification — locked baseline per-path + permissionless break-tests", percent: 70 },
             { name: "Q13.4 C2 parallel candidates — deterministic hash-tiebreak on simultaneous-verification", percent: 70 },
-            { name: "Q13.5 D1 activation — atomic at pulse boundary; backward-compatible (pulse-recalibrated)", percent: 55 },
+            { name: "Q13.5 D1 activation — atomic at pulse boundary; backward-compatible", percent: 70 },
             { name: "Q13.6 F1 failure handling — no rollback ever; structural residual from HR.1", percent: 70 },
             { name: "Q13.7 / HR.11 No meta-succession — verification functions + test specs + path enumeration cannot succeed", percent: 70 },
             { name: "V13.A (LOCKED s3) — per-subcategory atoms with protocol-canonical verification (5/6) + audit-committee for formal-verification", percent: 70 },
@@ -818,7 +817,7 @@
         },
         {
           name: "Module 14 — Network Health & Adaptive Pulse",
-          percent: 45,
+          percent: 65,
           submodules: [
             { name: "Q14.1 Pulse trigger (LOCKED s3) — T4 hybrid state-event dual signals (compute consumed OR atom submissions)", percent: 70 },
             { name: "Q14.2 Health metric (LOCKED s3) — pulse-interval state IS the health surface; no separate composite", percent: 70 },
@@ -826,15 +825,16 @@
             { name: "Q14.4 Cross-module interface (LOCKED s3) — I3 both event-driven (pulse-boundary atom) and state-read", percent: 70 },
             { name: "Q14.5 Genesis cold-start (LOCKED s3) — C4 pure state-event from day 1; dormant-until-used", percent: 70 },
             { name: "Q14.6 Adversarial robustness (LOCKED s3) — no Module 14-specific defense; covered by HR.10 composition", percent: 70 },
-            { name: "Vision section drafting — handoff deferred; architecture out-pacing vision text", percent: 25 },
-            { name: "Cross-module 'period' → 'pulse' terminology recalibration — affects M1/M3/M4/M5/M8/M9/M10/M13", percent: 25 },
-            { name: "Hard Rule audit pending — does Module 14 warrant HR.12 (no external clock)? Fresh-eyes review", percent: 15 },
+            { name: "Vision section drafting (DONE s4) — `### Network health and adaptive pulse` inserted before Tokenomics section", percent: 100 },
+            { name: "Cross-module 'period' → 'pulse' terminology recalibration (DONE s4) — 12 swaps + 2 substantive fixes (L119, L149) + 1 idiom preserved", percent: 100 },
+            { name: "Hard Rule audit (DONE s4) — resolved: no HR.12; pulse-state-event-determinism flows from HR.8 ∧ HR.9", percent: 100 },
           ],
           issues: [
-            "First-pass architecture COMPLETE. Vision section drafting + cross-module terminology pass deferred to handoff per principal instruction.",
-            "Why this module matters: fixed-pulse protocol locked permanently at 2026-era scale will either underperform or break decades-out — neither correctable under HR.1.",
+            "First-pass architecture COMPLETE AND vision-integrated. Module is in mutually-coherent vision/architecture state.",
+            "Why this module matters: fixed-pulse protocol locked permanently at 2026-era scale would underperform or break decades-out — neither correctable under HR.1.",
             "Pulse-function (M_compute + M_atoms rule) is genesis-locked; no succession path for the pulse mechanism itself (HR.11).",
             "Fine-tuning deferred: M_compute, M_atoms magnitudes; r_min liveness floor; pulse-boundary-atom payload schema.",
+            "HR.12 reconsideration door: left open per audit-counterargument. Default: no.",
           ],
           confidence: null,
         },
