@@ -496,8 +496,8 @@
        ===================================================================== */
     const DATA = {
       generated_at: "2026-05-19",
-      source: "Session 6 close · 14 modules · 11 Hard Rules · 7 crates · 244 tests passing · M1: 70 · M2: 57 · M3: 57 (first) · M4: 65 (+23 v2) · M14: 85 (first) · central feedback loop closed end-to-end · calibration-weighted aggregation + LCB + grading-ledger + entity-registry + Module 14 substrate",
-      overall_percent: 60,
+      source: "Session 7 close · 14 modules · 11 Hard Rules · 7 crates · 267 tests passing · M1: 77 (+7 v2; entity-registry baseline refresh; v0 domain tags closed) · M2: 57 · M3: 57 · M4: 65 (+23 v2) · M14: 88 (+3 v2; pulse-atom shape vision-locked) · 2 vision edits (pulse-atom shape subsection + acknowledged-risk centralization bullet)",
+      overall_percent: 63,
       modules: [
         {
           name: "Foundational commitments — 11 Hard Rules",
@@ -527,8 +527,8 @@
             { name: "Atomic shape (dim, observation-time, anchor, distribution, provenance); polymorphic anchor; 4 locked shapes — CODE LANDED s5", percent: 85 },
             { name: "Representation registry — 3 types locked at genesis (histogram / weighted samples / parametric mixture) — CODE LANDED s5", percent: 85 },
             { name: "Dimension declaration — sticky from first declaration; no in-place edits — CODE LANDED s5", percent: 80 },
-            { name: "Canonical state as time-indexed block; first-class blanks; bidirectional revisable — CODE LANDED s5 (hydra-state)", percent: 75 },
-            { name: "Entity registry — emergent; probabilistic identity via auto-merge / auto-split / auto-elevation", percent: 70 },
+            { name: "Canonical state as time-indexed block; first-class blanks; bidirectional revisable — CODE LANDED s5; AtomStore validates substrate (s7 v2 PASS)", percent: 80 },
+            { name: "Entity registry — emergent; structural index (EntityRecord + by_entity + 4 queries) CODE LANDED s6; probabilistic resolution (auto-merge/auto-split/auto-elevation) research-pending", percent: 75 },
             { name: "Relations as binary atoms; higher-arity composed via event-entities — CODE LANDED s5 (EntityPair anchor)", percent: 80 },
             { name: "Emergent dimension lifecycle — pending → accepted via calibration-weighted threshold", percent: 70 },
             { name: "Persistence & retrieval — sliced + erasure-coded + VRF-assigned + Merkle-committed", percent: 70 },
@@ -536,11 +536,12 @@
           issues: [
             "Schema design is the gating decision for what world-state HYDRA can meaningfully track.",
             "Anchor-bucket granularity, K/N erasure params, Merkle scheme = fine-tuning deferred.",
-            "First test pass (2026-05-19): outward drift on submodules 5, 7, 8 — expected MRE-stage gap.",
-            "Pre-genesis v0 domain tags need a documented genesis-lock plan.",
+            "Second test pass 2026-05-19 (v2): 77/100, Δ+7. v0 domain tags closed by mechanism (tags landed in final unsuffixed form). Submodule 4 PARTIAL→PASS; Submodule 5 NOT IMPL→PARTIAL via entity-registry skeleton.",
+            "Pre-genesis v0 domain tags: CLOSED — tags landed as b\"hydra.atom\"/b\"hydra.dimension\"/etc. without version suffix.",
             "ParametricMixture uniform-params decision needs to be deliberate (uniform vs per-kernel).",
+            "v2 SM1: decode-prealloc DoS surface generalized — all CanonicalDecode impls use Vec::with_capacity(attacker_controlled_u32). Per-type MAX_DECODE caps recommended pre-genesis.",
           ],
-          confidence: 70,
+          confidence: 77,
         },
         {
           name: "Module 2 — Source submission layer",
@@ -837,23 +838,25 @@
             { name: "Vision section drafting (DONE s4) — `### Network health and adaptive pulse` inserted before Tokenomics section", percent: 100 },
             { name: "Cross-module 'period' → 'pulse' terminology recalibration (DONE s4) — 12 swaps + 2 substantive fixes (L119, L149) + 1 idiom preserved", percent: 100 },
             { name: "Hard Rule audit (DONE s4) — resolved: no HR.12; pulse-state-event-determinism flows from HR.8 ∧ HR.9", percent: 100 },
+            { name: "Pulse-boundary atom shape (LOCKED s7) — anchor=Null; 2-bin DiscreteHistogram (bin 0 atoms-trigger, bin 1 compute-trigger); obs_time=sequence; sentinel protocol provenance; totals NOT encoded (HR.9)", percent: 100 },
           ],
           issues: [
             "First-pass architecture COMPLETE AND vision-integrated. Module is in mutually-coherent vision/architecture state.",
             "Why this module matters: fixed-pulse protocol locked permanently at 2026-era scale would underperform or break decades-out — neither correctable under HR.1.",
             "Pulse-function (M_compute + M_atoms rule) is genesis-locked; no succession path for the pulse mechanism itself (HR.11).",
-            "Fine-tuning deferred: M_compute, M_atoms magnitudes; r_min liveness floor; pulse-boundary-atom payload schema.",
+            "Pulse-boundary atom shape genesis-locked s7 (Vision_v1.md M14 section): anchor, 2-bin distribution, obs_time=sequence, sentinel provenance, totals-not-encoded. Closes v2 S1 inward-drift finding.",
+            "Fine-tuning deferred: M_compute, M_atoms magnitudes; r_min liveness floor.",
             "HR.12 reconsideration door: left open per audit-counterargument. Default: no.",
-            "First test pass 2026-05-19: 85/100. MRE substrate (hydra-pulse) covers 7/9 submodules PASS + 1 PARTIAL (Q14.4 canonical pulse-boundary atom not yet emitted to canonical state) + 1 PASS-by-structural-choice. 26 tests pass; clippy clean. No critical/high; 1 medium (counter saturation deterministic-divergence theory).",
+            "Second test pass 2026-05-19 (v2): 88/100, Δ+3. Q14.4 PARTIAL closed by mechanism — PulseRecord::to_atom() emits canonical pulse-boundary atom with content-addressed schema/dim/provenance; AtomStore-read pattern documented. 9/9 submodules PASS. 47 tests pass; clippy clean. No critical/high; 1 medium carryover (counter saturation deterministic-divergence theory).",
           ],
-          confidence: 85,
+          confidence: 88,
         },
         {
           name: "Testing",
           percent: null,
           is_testing_section: true,
           submodules: [
-            { name: "Module 1 — Canonical state & schema", percent: 70, is_confidence: true },
+            { name: "Module 1 — Canonical state & schema", percent: 77, is_confidence: true },
             { name: "Module 2 — Source submission layer", percent: 57, is_confidence: true },
             { name: "Module 3 — Calibration & reputation engine", percent: 57, is_confidence: true },
             { name: "Module 4 — Aggregation model", percent: 65, is_confidence: true },
@@ -866,7 +869,7 @@
             { name: "Module 11 — Privacy tier (MPC + ZK)", percent: null, is_confidence: true },
             { name: "Module 12 — Audit committees & slashing", percent: null, is_confidence: true },
             { name: "Module 13 — Community-driven succession paths", percent: null, is_confidence: true },
-            { name: "Module 14 — Network Health & Adaptive Pulse", percent: 85, is_confidence: true },
+            { name: "Module 14 — Network Health & Adaptive Pulse", percent: 88, is_confidence: true },
           ],
           issues: [
             "Module 1 first test pass: 70/100. Architecture-vs-vision: 4/8 submodules covered, 1 partial, 3 outward-drift (expected MRE-stage). Two High-severity suggestions surfaced: lock v0 domain-tag plan; decide uniform-vs-per-kernel mixture params.",
