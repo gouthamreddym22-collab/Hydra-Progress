@@ -496,8 +496,8 @@
        ===================================================================== */
     const DATA = {
       generated_at: "2026-05-19",
-      source: "Session 4 close · 14 modules · 11 Hard Rules · vision recalibration applied · 0% implementation",
-      overall_percent: 53,
+      source: "Session 5 close · 14 modules · 11 Hard Rules · MRE code lands (6 crates: core/crypto/state/submission/aggregation/calibration) · 150 tests passing · Module 1 test: 70/100 · Module 2 test: 57/100 · Module 4 test: 42/100",
+      overall_percent: 55,
       modules: [
         {
           name: "Foundational commitments — 11 Hard Rules",
@@ -522,41 +522,47 @@
         },
         {
           name: "Module 1 — Canonical state, data model & emergence",
-          percent: 50,
+          percent: 55,
           submodules: [
-            { name: "Atomic shape (dim, observation-time, anchor, distribution, provenance); polymorphic anchor; 4 locked shapes", percent: 70 },
-            { name: "Representation registry — 3 types locked at genesis (histogram / weighted samples / parametric mixture)", percent: 70 },
-            { name: "Dimension declaration — sticky from first declaration; no in-place edits", percent: 70 },
-            { name: "Canonical state as time-indexed block; first-class blanks; bidirectional revisable", percent: 70 },
+            { name: "Atomic shape (dim, observation-time, anchor, distribution, provenance); polymorphic anchor; 4 locked shapes — CODE LANDED s5", percent: 85 },
+            { name: "Representation registry — 3 types locked at genesis (histogram / weighted samples / parametric mixture) — CODE LANDED s5", percent: 85 },
+            { name: "Dimension declaration — sticky from first declaration; no in-place edits — CODE LANDED s5", percent: 80 },
+            { name: "Canonical state as time-indexed block; first-class blanks; bidirectional revisable — CODE LANDED s5 (hydra-state)", percent: 75 },
             { name: "Entity registry — emergent; probabilistic identity via auto-merge / auto-split / auto-elevation", percent: 70 },
-            { name: "Relations as binary atoms; higher-arity composed via event-entities", percent: 70 },
+            { name: "Relations as binary atoms; higher-arity composed via event-entities — CODE LANDED s5 (EntityPair anchor)", percent: 80 },
             { name: "Emergent dimension lifecycle — pending → accepted via calibration-weighted threshold", percent: 70 },
             { name: "Persistence & retrieval — sliced + erasure-coded + VRF-assigned + Merkle-committed", percent: 70 },
           ],
           issues: [
             "Schema design is the gating decision for what world-state HYDRA can meaningfully track.",
             "Anchor-bucket granularity, K/N erasure params, Merkle scheme = fine-tuning deferred.",
+            "First test pass (2026-05-19): outward drift on submodules 5, 7, 8 — expected MRE-stage gap.",
+            "Pre-genesis v0 domain tags need a documented genesis-lock plan.",
+            "ParametricMixture uniform-params decision needs to be deliberate (uniform vs per-kernel).",
           ],
-          confidence: null,
+          confidence: 70,
         },
         {
           name: "Module 2 — Source submission layer",
-          percent: 50,
+          percent: 45,
           submodules: [
-            { name: "Submission primitives — single atom OR atomic batch; mixed dims/anchors allowed within batch", percent: 70 },
-            { name: "Source identity & signature — one scheme locked at genesis; signed-transition key rotation", percent: 70 },
-            { name: "Lifecycle — sync structural validation; gossip-mesh inclusion; eventual consistency", percent: 70 },
+            { name: "Submission primitives — single atom OR atomic batch — single-atom CODE LANDED s5; batch deferred", percent: 60 },
+            { name: "Source identity & signature — Ed25519 CODE LANDED s5; key-rotation surface deferred", percent: 60 },
+            { name: "Lifecycle — sync structural validation CODE LANDED s5; gossip-mesh + eventual consistency deferred", percent: 60 },
             { name: "Query-time threshold consensus — quorum nodes converge + threshold-signed response", percent: 70 },
             { name: "Acknowledgment format — structured node-signed receipt with non-repudiation", percent: 70 },
-            { name: "Calibration-modulated rate gating; no PoW; no mandatory stake", percent: 70 },
-            { name: "Off-protocol boundary discipline — protocol refuses raw observations", percent: 70 },
+            { name: "Calibration-modulated rate gating; no PoW; no mandatory stake — structural part satisfied; rate gating depends on Module 3", percent: 70 },
+            { name: "Off-protocol boundary discipline — protocol refuses raw observations — ENFORCED BY TYPE SYSTEM s5", percent: 85 },
             { name: "Batch as structural-poisoning filter — atomic accept/reject", percent: 70 },
           ],
           issues: [
             "Off-protocol encoder ecosystem concentration partially mitigated by layered defense; ecosystem-level residual.",
             "Wire format, rate-limit shape, batch size cap, query-quorum (K of N) all fine-tuning.",
+            "First test pass (2026-05-19): 57/100. 5/8 submodules partial-or-not-implemented (batch, key rotation, gossip, quorum, acks, rate gating).",
+            "Two High-severity suggestions: signed-acknowledgment receipts (S1); bound submission size at decode time (S2).",
+            "HR.10 defense-in-depth is partial at Module 2 level — full composition requires Modules 3/7/8/12.",
           ],
-          confidence: null,
+          confidence: 57,
         },
         {
           name: "Module 3 — Calibration & reputation engine",
@@ -580,6 +586,7 @@
         {
           name: "Module 4 — Aggregation model (self-evolving)",
           percent: 65,
+          confidence: 42,
           submodules: [
             { name: "Q1 Granularity — G1 per-(dim, obs-time, anchor) local function; cross-correlations handled externally", percent: 70 },
             { name: "Q7 Specialization — S2 three models per representation type; three independent ES populations", percent: 70 },
@@ -597,8 +604,9 @@
           issues: [
             "Substantive architecture COMPLETE (interface + Q2.1-2.4). ES population specifics deferred to research-tuning.",
             "Q2.1 family choice (Set-Transformer) is permanent; Module 13 doesn't offer architecture-succession path. HR.2 stretching acknowledged.",
+            "First test pass (2026-05-19): 42/100. 1/12 PASS, 3 PARTIAL, 8 NOT IMPLEMENTED. Naive equal-weighted aggregator is a documented MRE placeholder; Set-Transformer + JEPA-AUX + ES populations are research-pending.",
+            "Two High suggestions: (S1) add anchor-aware aggregation granularity (currently collapses anchors at (dim, time)); (S2) strengthen 'do not wire into production' discipline for naive aggregator.",
           ],
-          confidence: null,
         },
         {
           name: "Module 5 — Forecasting model (self-evolving)",
@@ -843,10 +851,10 @@
           percent: null,
           is_testing_section: true,
           submodules: [
-            { name: "Module 1 — Canonical state & schema", percent: null, is_confidence: true },
-            { name: "Module 2 — Source submission layer", percent: null, is_confidence: true },
+            { name: "Module 1 — Canonical state & schema", percent: 70, is_confidence: true },
+            { name: "Module 2 — Source submission layer", percent: 57, is_confidence: true },
             { name: "Module 3 — Calibration & reputation engine", percent: null, is_confidence: true },
-            { name: "Module 4 — Aggregation model", percent: null, is_confidence: true },
+            { name: "Module 4 — Aggregation model", percent: 42, is_confidence: true },
             { name: "Module 5 — Forecasting model", percent: null, is_confidence: true },
             { name: "Module 6 — Self-evolution infrastructure", percent: null, is_confidence: true },
             { name: "Module 7 — Adversarial defense composition", percent: null, is_confidence: true },
@@ -859,7 +867,8 @@
             { name: "Module 14 — Network Health & Adaptive Pulse", percent: null, is_confidence: true },
           ],
           issues: [
-            "No module has been tested yet. Invoke <code>/hydra-test &lt;module&gt;</code> to run an aggressive test pass and produce a confidence score.",
+            "Module 1 first test pass: 70/100. Architecture-vs-vision: 4/8 submodules covered, 1 partial, 3 outward-drift (expected MRE-stage). Two High-severity suggestions surfaced: lock v0 domain-tag plan; decide uniform-vs-per-kernel mixture params.",
+            "Other modules await first test pass.",
           ],
         },
       ],
