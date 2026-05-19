@@ -500,8 +500,8 @@
          RESOLVED      — folded into another lock (~65%)
        ===================================================================== */
     const DATA = {
-      generated_at: "2026-05-20",
-      source: "CURRENT_STATE.md + Vision_v1.md @ 2026-05-20 session 1 close",
+      generated_at: "2026-05-21",
+      source: "CURRENT_STATE.md + Vision_v1.md @ /hydra-test batch (M1 v3, M3 v4, M5, M6)",
       overall_percent: 78,
       modules: [
         {
@@ -546,9 +546,10 @@
             "Anchor-bucket granularity, K/N erasure params, Merkle scheme — fine-tuning deferred.",
             "Persistence-layer implementation deferred to post-genesis-crypto-suite decision.",
             "ParametricMixture uniform-params + ProbabilityMass denominator — vision-lift pending.",
-            "Encoder-concentration window magnitude K (range: 128–1024 pulses) and modulation α — pre-genesis tuning.",
+            "Encoder-concentration query landed (Slice B); encoder-concentration window magnitude K (range: 128–1024 pulses) and modulation α — pre-genesis tuning.",
+            "Probabilistic identity resolution (submodule 5) is the largest M1 research-pending block; deserves a dedicated memo when surfaced.",
           ],
-          confidence: 77,
+          confidence: 87,
         },
         {
           name: "Module 2 — Source submission layer",
@@ -585,9 +586,10 @@
           issues: [
             "Sample-set CRPS grading integration deferred (primitive landed; CalibrationEntry shape OQ for sample-set entries surfaced s11).",
             "B1 α emergence rule research-pending (proposal v1 in docs/design).",
+            "Encoder-concentration modulation wired into weight_for_atom_modulated + lcb_weight_for_atom_modulated (M3 S8 closure); migrating aggregation paths to consume the modulated form is follow-up.",
             "Calibration-as-reputation requires source-side statistical literacy — friction, not barrier.",
           ],
-          confidence: 85,
+          confidence: 91,
         },
         {
           name: "Module 4 — Aggregation model (self-evolving)",
@@ -635,12 +637,13 @@
             { name: "Mode preservation — attention + isolated populations resolve structurally", percent: 65 },
           ],
           issues: [
-            "Multi-horizon shape locked at genesis (per-dim bucket sets, max 4 buckets per dim, single population, multi-output); code implementation pending.",
+            "Multi-horizon shape locked at genesis (per-dim bucket sets, max 4 buckets per dim, single population, multi-output); Slice B code landed (BucketSet + BucketedForecast + BucketedFitnessTracker).",
             "Forecasting fitness depends on aggregation's output — adapts as M4 ES evolves.",
             "Per-bucket fitness atom settlement couples with M6 OQ-9 — forecasting fitness class settles via single-provider + dispute window (Slice C in M6 dependency).",
             "Causal Transformer family choice is permanent; same HR.2 stretching as M4 (acknowledged).",
+            "BucketedFitnessTracker grows unbounded at MRE (same posture as RateGate); production needs eviction policy.",
           ],
-          confidence: null,
+          confidence: 88,
         },
         {
           name: "Module 6 — Self-evolution infrastructure",
@@ -673,12 +676,13 @@
           ],
           issues: [
             "Role surface + per-class settlement locked; ES tuning (algorithm / mutation / selection) needs simulation tooling.",
-            "Dispute-window mechanics for forecasting fitness — new structural surface; may warrant follow-up memo before Slice C implementation.",
+            "Slice C.1 dispute atom species + lifecycle state machine landed; Slice C.2 SignedDisputeAtom + admission pipeline pending.",
             "Module 12 audit-committee adjudication seam — referenced by the dispute path; concrete shape deferred to M12 substantive work.",
             "Module 13 arithmetic-succession is the escape valve if MXINT spec proves wrong.",
             "Production-stable NAS-style ES on quantized BFP NN does not yet exist at HYDRA scale — highest single technical risk.",
+            "ProposerRateGate + FitnessAtomLifecycleTracker grow unbounded at MRE (same posture as RateGate); production needs eviction policy.",
           ],
-          confidence: null,
+          confidence: 82,
         },
         {
           name: "Module 7 — Adversarial defense composition",
@@ -865,12 +869,12 @@
           percent: null,
           is_testing_section: true,
           submodules: [
-            { name: "Module 1 — Canonical state & schema", percent: 77, is_confidence: true },
+            { name: "Module 1 — Canonical state & schema", percent: 87, is_confidence: true },
             { name: "Module 2 — Source submission layer", percent: 80, is_confidence: true },
-            { name: "Module 3 — Calibration & reputation engine", percent: 85, is_confidence: true },
+            { name: "Module 3 — Calibration & reputation engine", percent: 91, is_confidence: true },
             { name: "Module 4 — Aggregation model", percent: 70, is_confidence: true },
-            { name: "Module 5 — Forecasting model", percent: null, is_confidence: true },
-            { name: "Module 6 — Self-evolution infrastructure", percent: null, is_confidence: true },
+            { name: "Module 5 — Forecasting model", percent: 88, is_confidence: true },
+            { name: "Module 6 — Self-evolution infrastructure", percent: 82, is_confidence: true },
             { name: "Module 7 — Adversarial defense composition", percent: null, is_confidence: true },
             { name: "Module 8 — Tokenomics & economic accounting", percent: null, is_confidence: true },
             { name: "Module 9 — Criticality mechanism", percent: null, is_confidence: true },
