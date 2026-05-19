@@ -496,8 +496,8 @@
        ===================================================================== */
     const DATA = {
       generated_at: "2026-05-19",
-      source: "Session 5 close · 14 modules · 11 Hard Rules · MRE code lands (6 crates: core/crypto/state/submission/aggregation/calibration) · 150 tests passing · Module 1 test: 70/100 · Module 2 test: 57/100 · Module 4 test: 42/100",
-      overall_percent: 55,
+      source: "Session 6 close · 14 modules · 11 Hard Rules · 7 crates · 244 tests passing · M1: 70 · M2: 57 · M3: 57 (first) · M4: 65 (+23 v2) · M14: 85 (first) · central feedback loop closed end-to-end · calibration-weighted aggregation + LCB + grading-ledger + entity-registry + Module 14 substrate",
+      overall_percent: 60,
       modules: [
         {
           name: "Foundational commitments — 11 Hard Rules",
@@ -580,13 +580,14 @@
           issues: [
             "Calibration-as-reputation requires source-side statistical literacy — friction, not barrier.",
             "LCB confidence α, encoder-concentration curve, settlement threshold = fine-tuning.",
+            "First test pass 2026-05-19: 57/100. Brier-only MRE; high-severity LCB drift opens single-perfect-entry sybil amplification. Vindication ledger + rolling window + F2 family deferred.",
           ],
-          confidence: null,
+          confidence: 57,
         },
         {
           name: "Module 4 — Aggregation model (self-evolving)",
           percent: 65,
-          confidence: 42,
+          confidence: 65,
           submodules: [
             { name: "Q1 Granularity — G1 per-(dim, obs-time, anchor) local function; cross-correlations handled externally", percent: 70 },
             { name: "Q7 Specialization — S2 three models per representation type; three independent ES populations", percent: 70 },
@@ -604,8 +605,8 @@
           issues: [
             "Substantive architecture COMPLETE (interface + Q2.1-2.4). ES population specifics deferred to research-tuning.",
             "Q2.1 family choice (Set-Transformer) is permanent; Module 13 doesn't offer architecture-succession path. HR.2 stretching acknowledged.",
-            "First test pass (2026-05-19): 42/100. 1/12 PASS, 3 PARTIAL, 8 NOT IMPLEMENTED. Naive equal-weighted aggregator is a documented MRE placeholder; Set-Transformer + JEPA-AUX + ES populations are research-pending.",
-            "Two High suggestions: (S1) add anchor-aware aggregation granularity (currently collapses anchors at (dim, time)); (S2) strengthen 'do not wire into production' discipline for naive aggregator.",
+            "v1 test pass (2026-05-19): 42/100. 1/12 PASS, 3 PARTIAL, 8 NOT IMPLEMENTED.",
+            "v2 re-test (2026-05-19): 65/100 (Δ +23). Both High findings closed by mechanism: anchor-aware aggregation (aggregate_at_anchored) and calibration-weighted aggregation (aggregate_weighted). 3 PASS, 2 PARTIAL, 7 NOT IMPLEMENTED. Outward drift on Set-Transformer + JEPA-AUX + ES populations remains research-pending. Inherits M3 H1 LCB drift via calibration.weight_for; the central sybil-defense is mechanism-complete but bound-incomplete pending M3 S1.",
           ],
         },
         {
@@ -843,8 +844,9 @@
             "Pulse-function (M_compute + M_atoms rule) is genesis-locked; no succession path for the pulse mechanism itself (HR.11).",
             "Fine-tuning deferred: M_compute, M_atoms magnitudes; r_min liveness floor; pulse-boundary-atom payload schema.",
             "HR.12 reconsideration door: left open per audit-counterargument. Default: no.",
+            "First test pass 2026-05-19: 85/100. MRE substrate (hydra-pulse) covers 7/9 submodules PASS + 1 PARTIAL (Q14.4 canonical pulse-boundary atom not yet emitted to canonical state) + 1 PASS-by-structural-choice. 26 tests pass; clippy clean. No critical/high; 1 medium (counter saturation deterministic-divergence theory).",
           ],
-          confidence: null,
+          confidence: 85,
         },
         {
           name: "Testing",
@@ -853,8 +855,8 @@
           submodules: [
             { name: "Module 1 — Canonical state & schema", percent: 70, is_confidence: true },
             { name: "Module 2 — Source submission layer", percent: 57, is_confidence: true },
-            { name: "Module 3 — Calibration & reputation engine", percent: null, is_confidence: true },
-            { name: "Module 4 — Aggregation model", percent: 42, is_confidence: true },
+            { name: "Module 3 — Calibration & reputation engine", percent: 57, is_confidence: true },
+            { name: "Module 4 — Aggregation model", percent: 65, is_confidence: true },
             { name: "Module 5 — Forecasting model", percent: null, is_confidence: true },
             { name: "Module 6 — Self-evolution infrastructure", percent: null, is_confidence: true },
             { name: "Module 7 — Adversarial defense composition", percent: null, is_confidence: true },
@@ -864,7 +866,7 @@
             { name: "Module 11 — Privacy tier (MPC + ZK)", percent: null, is_confidence: true },
             { name: "Module 12 — Audit committees & slashing", percent: null, is_confidence: true },
             { name: "Module 13 — Community-driven succession paths", percent: null, is_confidence: true },
-            { name: "Module 14 — Network Health & Adaptive Pulse", percent: null, is_confidence: true },
+            { name: "Module 14 — Network Health & Adaptive Pulse", percent: 85, is_confidence: true },
           ],
           issues: [
             "Module 1 first test pass: 70/100. Architecture-vs-vision: 4/8 submodules covered, 1 partial, 3 outward-drift (expected MRE-stage). Two High-severity suggestions surfaced: lock v0 domain-tag plan; decide uniform-vs-per-kernel mixture params.",
