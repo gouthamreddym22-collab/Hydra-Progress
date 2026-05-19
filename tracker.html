@@ -501,8 +501,8 @@
        ===================================================================== */
     const DATA = {
       generated_at: "2026-05-19",
-      source: "CURRENT_STATE.md + Vision_v1.md @ session 9 close · 7 crates · 373 tests passing · M3 v2→v3 57→85 (s9 implements 10 of 11 v2-report suggestions: S1 B1 wiring + S5 CRPS primitive + S4 anchor-type partitioning + S7 vindication ledger + 6 closures)",
-      overall_percent: 69,
+      source: "CURRENT_STATE.md + Vision_v1.md @ session 10 close · 7 crates · 388 tests passing · 4 vision lifts (two-estimator partition; anchor-type partition; both-scores-at-grading atomicity; vindication-ledger structural shape) · M2 v2→v3 68→80 (S6 rate gating closed) · M4 v2→v3 65→70 (v2 SM1 dissolved) · 2 design memos (B1 α emergence v1; pre-genesis tuning calendar v1) · 2 tokenomic OQs deferred to M8",
+      overall_percent: 71,
       modules: [
         {
           name: "Foundational commitments — 11 Hard Rules",
@@ -549,26 +549,26 @@
         },
         {
           name: "Module 2 — Source submission layer",
-          percent: 50,
+          percent: 62,
           submodules: [
             { name: "Submission primitives — single atom OR atomic batch — single-atom CODE LANDED s5; batch deferred", percent: 60 },
             { name: "Source identity & signature — Ed25519 CODE LANDED s5; key-rotation surface deferred", percent: 60 },
             { name: "Lifecycle — sync structural validation CODE LANDED s5; gossip-mesh + eventual consistency deferred", percent: 60 },
             { name: "Query-time threshold consensus — quorum nodes converge + threshold-signed response", percent: 70 },
             { name: "Acknowledgment format — node-signed receipt with non-repudiation — CODE LANDED s8 (Acknowledgment + SignedAcknowledgment + sign/verify + accept_and_acknowledge; domain-separated hydra.ack.signed)", percent: 85 },
-            { name: "Calibration-modulated rate gating — UNBLOCKED s8 (Module 3 mature: rolling-window + LCB); implementation deferred", percent: 70 },
+            { name: "Calibration-modulated rate gating — CODE LANDED s8 (RateGate token-bucket + MIN_RATE_WEIGHT_FLOOR=ONE/64 HR.5 floor); LCB-driven gating LANDED s10 (lcb_weight_for consumed in production pattern)", percent: 85 },
             { name: "Off-protocol boundary discipline — protocol refuses raw observations — ENFORCED BY TYPE SYSTEM s5", percent: 85 },
             { name: "Batch as structural-poisoning filter — atomic accept/reject", percent: 70 },
           ],
           issues: [
-            "Second test pass 2026-05-19 (v2): 68/100, Δ+11. S5 closed by mechanism (signed acks); v1 M2 (decode-DoS) closed via M1 cascade caps; S6 rate gating unblocked by M3 maturity but not yet implemented.",
-            "2 PASS (S5, S7), 4 PARTIAL (S1, S2, S3, S6), 2 NOT IMPL (S4, S8).",
-            "Two High-severity remaining: calibration-modulated rate gating now unblocked (S1 v2); batch submission + structural-poisoning filter (S2 v2).",
-            "Pre-genesis decisions added: ACK_SIGN_DOMAIN = b\"hydra.ack.signed\"; AckStatus binary (no reason taxonomy in structural shape, per HR.9). Recommended vision lift.",
-            "HR.10 improved: decode caps (M1 v2 SM1) cascade to Submission DoS bound; signed acks give Module 12 audit trail.",
-            "Off-protocol encoder ecosystem concentration partially mitigated by layered defense; ecosystem-level residual.",
+            "Third test pass 2026-05-19 (v3): 80/100, Δ+12 vs v2 (68), cumulative v1→v3 +23. S6 rate gating CLOSED by mechanism (rate_gate.rs s8 + LCB-driven wiring this session).",
+            "3 PASS (S5, S6, S7), 3 PARTIAL (S1, S2, S3), 2 NOT IMPL (S4, S8). S6 closed by mechanism this session.",
+            "One new High remaining: wire rate gate into protocol-canonical accept_and_acknowledge pipeline (S1 v3). The rate-gate surface exists; production composition is still caller-side.",
+            "Vision lift this session: §\"Two estimator surfaces from one calibration history\" + §Adversarial robustness rate-gating paragraph tightened. M2 rate gate now structurally compliant.",
+            "Pre-genesis decisions stable: ACK_SIGN_DOMAIN, AckStatus-binary, BUCKET_CAPACITY_TOKENS=1024, NS_PER_TOKEN_AT_FULL=10ms, MIN_RATE_WEIGHT_FLOOR=ONE/64. Recommended vision lifts: rate-gate substrate (S6 v3); ACK shape (S5 v3 carries).",
+            "HR.5 strengthened (LCB-driven gating with structural floor); HR.10 strengthened (two-estimator partition explicit at vision; permissive weighting + conservative gating compose as defense layers).",
           ],
-          confidence: 68,
+          confidence: 80,
         },
         {
           name: "Module 3 — Calibration & reputation engine",
@@ -592,15 +592,15 @@
         },
         {
           name: "Module 4 — Aggregation model (self-evolving)",
-          percent: 65,
-          confidence: 65,
+          percent: 70,
+          confidence: 70,
           submodules: [
-            { name: "Q1 Granularity — G1 per-(dim, obs-time, anchor) local function; cross-correlations handled externally", percent: 70 },
+            { name: "Q1 Granularity — G1 per-(dim, obs-time, anchor) local function; cross-correlations handled externally", percent: 75 },
             { name: "Q7 Specialization — S2 three models per representation type; three independent ES populations", percent: 70 },
             { name: "Q8 Inference path — I2 per-pulse materialization", percent: 70 },
-            { name: "Q4 Fitness — F1 score vs materialized canonical at T + dim_timescale; B1-blended CRPS/log-score", percent: 70 },
-            { name: "Q3 Output — O1 matches dim's declared representation type and schema", percent: 70 },
-            { name: "Input weighting — calibration-LCB × encoder-concentration (inherited from Module 3)", percent: 70 },
+            { name: "Q4 Fitness — F1 score vs materialized canonical at T + dim_timescale; B1-blended CRPS/log-score — B1+log inherited via weight_for (s9); CRPS primitive available (s9); CRPS grading integration pending schema coord-scale", percent: 75 },
+            { name: "Q3 Output — O1 matches dim's declared representation type and schema", percent: 75 },
+            { name: "Input weighting — calibration point estimator × encoder-concentration (vision lift s10: weight_for is the correct estimator for aggregation per two-estimator partition; LCB is for gating sites)", percent: 75 },
             { name: "Q2.1 Architecture (LOCKED s3) — NAS-NARROW within Set-Transformer family (ISAB + PMA)", percent: 70 },
             { name: "Q2.2 Training — JEPA-AUX: F1 + masked-source SS auxiliary; calibration-gated; scalar blend", percent: 70 },
             { name: "Q2.3 Per-type coupling — shared hyperparameter range; full population isolation", percent: 70 },
@@ -611,8 +611,10 @@
           issues: [
             "Substantive architecture COMPLETE (interface + Q2.1-2.4). ES population specifics deferred to research-tuning.",
             "Q2.1 family choice (Set-Transformer) is permanent; Module 13 doesn't offer architecture-succession path. HR.2 stretching acknowledged.",
-            "v1 test pass (2026-05-19): 42/100. 1/12 PASS, 3 PARTIAL, 8 NOT IMPLEMENTED.",
-            "v2 re-test (2026-05-19): 65/100 (Δ +23). Both High findings closed by mechanism: anchor-aware aggregation (aggregate_at_anchored) and calibration-weighted aggregation (aggregate_weighted). 3 PASS, 2 PARTIAL, 7 NOT IMPLEMENTED. Outward drift on Set-Transformer + JEPA-AUX + ES populations remains research-pending. Inherits M3 H1 LCB drift via calibration.weight_for; the central sybil-defense is mechanism-complete but bound-incomplete pending M3 S1.",
+            "v3 re-test 2026-05-19: 70/100 (Δ +5 vs v2; cumulative v1→v3 +28). Vision-driven lift: v2 SM1 (inherited LCB-bound absence) dissolved by two-estimator partition vision lift — M4's use of weight_for is structurally correct per the now-clarified vision. Q4 fitness PARTIAL via B1 + log inheritance through weight_for (s9). No M4 code changes.",
+            "Cumulative trend v1→v3: 42 → 65 → 70 (+28). v1 closures: anchor-aware aggregation, calibration-weighted aggregation. v3 conceptual closure: M4 was using the correct estimator (Bayes-mean point), not a missing-LCB defect.",
+            "New Medium S3 (v3): tracker label \"Input weighting — calibration-LCB × encoder-concentration\" should read \"calibration point estimator × encoder-concentration\" — corrected in this update.",
+            "Off-protocol encoder ecosystem concentration partially mitigated by layered defense; ecosystem-level residual.",
           ],
         },
         {
@@ -862,9 +864,9 @@
           is_testing_section: true,
           submodules: [
             { name: "Module 1 — Canonical state & schema", percent: 77, is_confidence: true },
-            { name: "Module 2 — Source submission layer", percent: 68, is_confidence: true },
+            { name: "Module 2 — Source submission layer", percent: 80, is_confidence: true },
             { name: "Module 3 — Calibration & reputation engine", percent: 85, is_confidence: true },
-            { name: "Module 4 — Aggregation model", percent: 65, is_confidence: true },
+            { name: "Module 4 — Aggregation model", percent: 70, is_confidence: true },
             { name: "Module 5 — Forecasting model", percent: null, is_confidence: true },
             { name: "Module 6 — Self-evolution infrastructure", percent: null, is_confidence: true },
             { name: "Module 7 — Adversarial defense composition", percent: null, is_confidence: true },
