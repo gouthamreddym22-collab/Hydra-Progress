@@ -501,8 +501,8 @@
        ===================================================================== */
     const DATA = {
       generated_at: "2026-05-19",
-      source: "CURRENT_STATE.md + Vision_v1.md @ session 8 close · 7 crates · 341 tests passing · 3 vision lifts (acks; wire-decode bounds + rate gating; rolling-window) · M2 v2 +11 · M3 stale (major s8 work)",
-      overall_percent: 67,
+      source: "CURRENT_STATE.md + Vision_v1.md @ session 9 close · 7 crates · 373 tests passing · M3 v2→v3 57→85 (s9 implements 10 of 11 v2-report suggestions: S1 B1 wiring + S5 CRPS primitive + S4 anchor-type partitioning + S7 vindication ledger + 6 closures)",
+      overall_percent: 69,
       modules: [
         {
           name: "Foundational commitments — 11 Hard Rules",
@@ -572,23 +572,23 @@
         },
         {
           name: "Module 3 — Calibration & reputation engine",
-          percent: 60,
+          percent: 78,
           submodules: [
             { name: "Reference type — R2 strict temporal separation (canonical at coord, later-only)", percent: 70 },
             { name: "Settlement timing — T1 event-triggered (uncertainty threshold OR window-from-observation)", percent: 70 },
-            { name: "Scoring-rule family — F2 (CRPS/energy-score, log-score); B1 weighted blend per-dim emergent — log-score + B1 blend interface LANDED s8; CRPS/SampleSet deferred", percent: 80 },
-            { name: "Per-rule scalar — W2a LCB of per-rule calibration posterior; encoder-concentration modulation", percent: 70 },
-            { name: "Calibration-history aggregation — rolling window, per-dim, partitioned by anchor type — rolling-window FIFO LANDED s8; anchor partitioning deferred", percent: 80 },
-            { name: "Bootstrap — 2A flat-prior Bayesian update; no separate cold-start surface", percent: 80 },
-            { name: "Specialist/novice on-ramp — 3A no separate surface; emerges from LCB-influence machinery", percent: 70 },
-            { name: "Retroactive vindication — 4C vindication-credit ledger; V2 mode-emergence trigger; economic only, not reputational", percent: 70 },
+            { name: "Scoring-rule family — F2 (CRPS/energy-score, log-score); B1 weighted blend per-dim emergent — Brier + log + B1 wired through grade_observed_point (s9); CRPS for SampleSet primitive LANDED (s9); CRPS grading-integration deferred pending schema coord-scale", percent: 90 },
+            { name: "Per-rule scalar — W2a LCB of per-rule calibration posterior; encoder-concentration modulation — flat-prior shrinkage closes central sybil-amplification path; literal α-LCB deferred (small-n invariant tension); encoder-concentration pending taxonomy", percent: 75 },
+            { name: "Calibration-history aggregation — rolling window, per-dim, partitioned by anchor type — rolling-window FIFO + anchor-type partitioning LANDED (s9)", percent: 95 },
+            { name: "Bootstrap — 2A flat-prior Bayesian update; no separate cold-start surface — COLD_START now derivable from from_history(empty)", percent: 85 },
+            { name: "Specialist/novice on-ramp — 3A no separate surface; emerges from LCB-influence machinery — emerges via from_history shrinkage", percent: 80 },
+            { name: "Retroactive vindication — 4C vindication-credit ledger; V2 mode-emergence trigger; economic only, not reputational — interface LANDED (s9); trigger logic research-pending", percent: 80 },
           ],
           issues: [
+            "v3 re-test (2026-05-19 session 9, post-impl): 85/100 (Δ +28 from v1 baseline 57; Δ +11 from v2). 10 of 11 v2-report suggestions implemented; S8 encoder-concentration deferred pending Module 1 encoder taxonomy.",
             "Calibration-as-reputation requires source-side statistical literacy — friction, not barrier.",
-            "Test confidence stale (57) — major s8 work (log-score, B1 blend, rolling-window) not yet captured. Re-test recommended.",
-            "Remaining deferred: CRPS for SampleSet, mixture scoring, encoder-concentration modulation, vindication-credit ledger, B1 α emergence layer.",
+            "Remaining deferred: literal α-LCB (small-n vs HR.5 floor tension), CRPS grading integration (pending schema coord-scale), encoder-concentration (pending taxonomy), B1 α emergence layer, F4 single-mode realized_bin seam (pending vindication trigger logic).",
           ],
-          confidence: 57,
+          confidence: 85,
         },
         {
           name: "Module 4 — Aggregation model (self-evolving)",
@@ -863,7 +863,7 @@
           submodules: [
             { name: "Module 1 — Canonical state & schema", percent: 77, is_confidence: true },
             { name: "Module 2 — Source submission layer", percent: 68, is_confidence: true },
-            { name: "Module 3 — Calibration & reputation engine", percent: 57, is_confidence: true },
+            { name: "Module 3 — Calibration & reputation engine", percent: 85, is_confidence: true },
             { name: "Module 4 — Aggregation model", percent: 65, is_confidence: true },
             { name: "Module 5 — Forecasting model", percent: null, is_confidence: true },
             { name: "Module 6 — Self-evolution infrastructure", percent: null, is_confidence: true },
