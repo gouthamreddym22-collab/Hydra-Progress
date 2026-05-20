@@ -500,15 +500,15 @@
          RESOLVED      — folded into another lock (~65%)
        ===================================================================== */
     const DATA = {
-      generated_at: "2026-05-21",
-      source: "CURRENT_STATE.md + Vision_v1.md @ /hydra-test batch (M1 v3, M3 v4, M5, M6)",
-      overall_percent: 78,
+      generated_at: "2026-05-20",
+      source: "CURRENT_STATE.md + Vision_v1.md @ session 3 close",
+      overall_percent: 84,
       modules: [
         {
           name: "Foundational commitments — 11 Hard Rules",
           percent: 72,
           submodules: [
-            { name: "HR.1 Immutability from genesis", percent: 78 },
+            { name: "HR.1 Immutability from genesis", percent: 82 },
             { name: "HR.2 No human governance over load-bearing AI components", percent: 25 },
             { name: "HR.3 Calibration, not accuracy, drives reputation", percent: 78 },
             { name: "HR.4 Multi-modal posteriors preserved", percent: 72 },
@@ -528,7 +528,7 @@
         },
         {
           name: "Module 1 — Canonical state, data model & emergence",
-          percent: 63,
+          percent: 67,
           submodules: [
             { name: "Atomic shape — (dim, observation-time, anchor, distribution, provenance, encoder); polymorphic anchor; mandatory encoder identifier", percent: 85 },
             { name: "Representation registry — 3 types locked at genesis (histogram / weighted samples / parametric mixture)", percent: 85 },
@@ -566,13 +566,13 @@
           ],
           issues: [
             "Batch primitive, key-rotation, gossip-mesh, query-time threshold consensus — deferred.",
-            "Pre-genesis magnitudes: BUCKET_CAPACITY_TOKENS, NS_PER_TOKEN_AT_FULL, MIN_RATE_WEIGHT_FLOOR.",
+            "Pre-genesis magnitudes: BUCKET_CAPACITY_TOKENS, NS_PER_TOKEN_AT_FULL, MIN_RATE_WEIGHT_FLOOR; rate-gate MAX_IDLE_NS threshold (caller-policy magnitude for the evict_idle_since surface).",
           ],
           confidence: 80,
         },
         {
           name: "Module 3 — Calibration & reputation engine",
-          percent: 83,
+          percent: 90,
           submodules: [
             { name: "Reference type — strict temporal separation (canonical at coord, later-only)", percent: 70 },
             { name: "Settlement timing — event-triggered (uncertainty threshold OR window-from-observation)", percent: 70 },
@@ -586,7 +586,6 @@
           issues: [
             "Sample-set CRPS grading integration deferred (primitive landed; CalibrationEntry shape OQ for sample-set entries surfaced s11).",
             "B1 α emergence rule research-pending (proposal v1 in docs/design).",
-            "Encoder-concentration modulation wired into weight_for_atom_modulated + lcb_weight_for_atom_modulated (M3 S8 closure); migrating aggregation paths to consume the modulated form is follow-up.",
             "Calibration-as-reputation requires source-side statistical literacy — friction, not barrier.",
           ],
           confidence: 91,
@@ -641,13 +640,12 @@
             "Forecasting fitness depends on aggregation's output — adapts as M4 ES evolves.",
             "Per-bucket fitness atom settlement couples with M6 OQ-9 — forecasting fitness class settles via single-provider + dispute window (Slice C in M6 dependency).",
             "Causal Transformer family choice is permanent; same HR.2 stretching as M4 (acknowledged).",
-            "BucketedFitnessTracker grows unbounded at MRE (same posture as RateGate); production needs eviction policy.",
           ],
           confidence: 88,
         },
         {
           name: "Module 6 — Self-evolution infrastructure",
-          percent: 78,
+          percent: 92,
           submodules: [
             { name: "Training work-unit — fitness atom = (candidate_model, cluster) → score", percent: 70 },
             { name: "Training-participant roles — candidate-proposer (new atom species) + fitness-scorer (generic compute); permissionless under flat-prior shrinkage", percent: 75 },
@@ -676,11 +674,12 @@
           ],
           issues: [
             "Role surface + per-class settlement locked; ES tuning (algorithm / mutation / selection) needs simulation tooling.",
-            "Slice C.1 dispute atom species + lifecycle state machine landed; Slice C.2 SignedDisputeAtom + admission pipeline pending.",
-            "Module 12 audit-committee adjudication seam — referenced by the dispute path; concrete shape deferred to M12 substantive work.",
+            "Dispute path structurally complete (Slice C.1-C.4): atom species + lifecycle state machine + admission pipeline + settlement primitives + M12 audit-committee trait seam all locked.",
+            "FitnessAtom admission pipeline (forecasting single-provider scoring) — next M6 admission slice; composes with proposer-admission and dispute-admission pipelines.",
+            "Per-class FitnessAtom verification dispatcher — only Forecasting class uses the lifecycle tracker so far; Aggregation (threshold quorum) + Succession (full replicated) need parallel admission + verification primitives.",
+            "M12 substantive committee design (selection / eligibility / rotation / compensation) — AuditCommittee trait seam now consumable.",
             "Module 13 arithmetic-succession is the escape valve if MXINT spec proves wrong.",
             "Production-stable NAS-style ES on quantized BFP NN does not yet exist at HYDRA scale — highest single technical risk.",
-            "ProposerRateGate + FitnessAtomLifecycleTracker grow unbounded at MRE (same posture as RateGate); production needs eviction policy.",
           ],
           confidence: 82,
         },
@@ -708,7 +707,7 @@
         },
         {
           name: "Module 8 — Tokenomics & economic accounting",
-          percent: 50,
+          percent: 55,
           submodules: [
             { name: "Token structure — T3 distinct non-fungible: GT (permanent compute privilege) + RT (gas, burned)", percent: 70 },
             { name: "Mint mechanism — per-pulse budget = α(demand) · burn + bootstrap subsidy; 60/40 op/info split", percent: 70 },
@@ -725,6 +724,7 @@
             "Bootstrap demand depends on factors outside the protocol's control — largest economic risk.",
             "Demand-collapse death-spiral dampened by demand-responsive α but not fully eliminated.",
             "All function curve parameters + scalar parameters = fine-tuning deferred.",
+            "Dispute settlement primitives ready for an M8 stake-management surface (bounty / slash / sink amounts produced as abstract u64); the consuming stake-plumbing surface is the M8 substantive next step.",
           ],
           confidence: null,
         },
@@ -794,7 +794,7 @@
         },
         {
           name: "Module 12 — Audit committees & slashing",
-          percent: 60,
+          percent: 70,
           submodules: [
             { name: "Audit scope — S3 arbitrary-compute disputes + storage-attestation challenges + forecasting-fitness disputes (M6 dispute path)", percent: 75 },
             { name: "VRF-selected audit committee per dispute — LCB × VRF; bootstrap-permissionless until pool ≥ M", percent: 70 },
@@ -812,7 +812,7 @@
             "Bootstrap-phase audit gaming bounded by D1 cross-dim pool + D2 deferred resolution + LCB-weighting + stake.",
             "Per-kind dispute economics (bond vs slash, refund pool vs bounty) reflect different dispute kinds' different cost structures; surface complexity vs HR.9 single-primitive trade resolved in favor of per-kind specialization.",
             "Fine-tuning deferred: D bond (S3/storage), forecasting-fitness slash magnitude, K committee size, M eligibility pool size, m_base slash, dispute window magnitude.",
-            "Committee selection / eligibility pool / rotation details deferred to M12 substantive work; M6 dispute mechanics memo locks the seam only.",
+            "AuditCommittee trait seam landed (M6 dispute Slice C.4) with UnavailableAuditCommittee fail-closed stub; substantive committee implementation (VRF-selected membership, LCB-weighted verdict consensus, deterministic re-computation, member-divergence slashing) is M12 next.",
           ],
           confidence: null,
         },
