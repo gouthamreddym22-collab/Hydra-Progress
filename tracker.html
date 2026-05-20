@@ -507,7 +507,7 @@
        ===================================================================== */
     const DATA = {
       generated_at: "2026-05-20",
-      source: "CURRENT_STATE.md + Vision_v1.md @ /hydra-test module_6 v2",
+      source: "CURRENT_STATE.md + Vision_v1.md @ session 4 close",
       overall_percent: 84,
       modules: [
         {
@@ -657,15 +657,15 @@
         },
         {
           name: "Module 6 — Self-evolution infrastructure",
-          percent: 92,
+          percent: 94,
           weight: 2,
           submodules: [
-            { name: "Training work-unit — fitness atom = (candidate_model, cluster) → score", percent: 70 },
-            { name: "Training-participant roles — candidate-proposer (new atom species) + fitness-scorer (generic compute); permissionless under flat-prior shrinkage", percent: 75 },
+            { name: "Training work-unit — fitness atom = (candidate_model, cluster) → score", percent: 75 },
+            { name: "Training-participant roles — candidate-proposer + fitness-scorer + disputer; permissionless under flat-prior shrinkage; 4-way disjoint calibration partitions", percent: 85 },
             { name: "Off-protocol candidate weights — 32-byte content-addr ref on canonical state; full payload in storage substrate", percent: 70 },
-            { name: "Fitness-atom settlement — per-class: aggregation = threshold quorum (T-of-N), forecasting = single-provider + dispute window, succession = full replicated quorum", percent: 75 },
-            { name: "Proposer calibration — (proposer, fitness-class) partition; canonical-promotion rate as win metric; LCB rate-gate composition", percent: 70 },
-            { name: "Slash trigger — bitwise-consensus failure on FitnessAtom; scorer-side only", percent: 70 },
+            { name: "Fitness-atom settlement — per-class: aggregation = threshold quorum (T-of-N), forecasting = single-provider + dispute window, succession = full replicated quorum; all 3 state-machine primitives now landed", percent: 85 },
+            { name: "Proposer/disputer/scorer calibration — three (provenance, fitness-class) partitions; canonical-fitness-class rate as win metric; LCB rate-gate composition", percent: 80 },
+            { name: "Slash trigger — bitwise-consensus failure on FitnessAtom; scorer-side; primitives unit-agnostic pending M8 stake-plumbing", percent: 75 },
             { name: "Canonical model version — best-fitness of most-recent fully-scored generation; promoted at pulse boundary", percent: 55 },
             { name: "Population evolution — deterministic function of accumulated fitness atoms; RNG seeded by gen-state hash", percent: 70 },
             { name: "Generation cadence — decoupled from pulse cadence", percent: 70 },
@@ -678,7 +678,7 @@
             { name: "Primitives — minimal set + reciprocal LUT + 5 activation LUTs (sigmoid/tanh/GELU/exp/sqrt)", percent: 70 },
             { name: "RNG — counter-mode-hash with context-keyed per-call seeding", percent: 70 },
             { name: "Verification — test-vectors-only; corpus off-chain with Merkle root canonical", percent: 70 },
-            { name: "Fitness-atom verification — per-class consensus dispatched by FitnessClass enum (threshold / dispute / replicated)", percent: 75 },
+            { name: "Fitness-atom verification — per-class consensus state machines landed (ThresholdQuorum / FitnessAtomLifecycle / FullReplicatedQuorum); admission-time dispatcher remaining slice", percent: 85 },
             { name: "ES algorithm — within locked NAS-NARROW spaces; needs simulation", percent: 40 },
             { name: "Mutation operators — within Set-Transformer + causal Transformer hyperparameter spaces", percent: 40 },
             { name: "Selection-rule specifics — tournament size, elitism, population size", percent: 40 },
@@ -688,8 +688,8 @@
           issues: [
             "Role surface + per-class settlement locked; ES tuning (algorithm / mutation / selection) needs simulation tooling.",
             "Dispute path structurally complete (Slice C.1-C.4): atom species + lifecycle state machine + admission pipeline + settlement primitives + M12 audit-committee trait seam all locked.",
-            "FitnessAtom admission pipeline landed — uniform admission across all three fitness classes (verify → well-formedness → scorer-LCB rate-gate); per-class settlement diverges downstream.",
-            "Per-class FitnessAtom verification dispatcher — only Forecasting settles via dispute window; Aggregation (threshold quorum) + Succession (full replicated quorum) settlement primitives still missing. Newly visible as actionable gap post-admission uniformity.",
+            "FitnessAtom admission pipeline landed (verify → well-formedness → scorer-LCB rate-gate; uniform across 3 classes); per-class settlement state machines (ThresholdQuorum Aggregation + FullReplicatedQuorum Succession) parallel to FitnessAtomLifecycleTracker Forecasting now all landed.",
+            "Admission-time dispatcher remaining — three settlement state machines exist; caller currently routes by FitnessClass via match. A composition wrapper that auto-dispatches admitted FitnessAtoms by class would close the last structural-usability gap.",
             "M12 substantive committee design (selection / eligibility / rotation / compensation) — AuditCommittee trait seam now consumable.",
             "Module 13 arithmetic-succession is the escape valve if MXINT spec proves wrong.",
             "Production-stable NAS-style ES on quantized BFP NN does not yet exist at HYDRA scale — highest single technical risk.",
