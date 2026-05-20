@@ -467,6 +467,12 @@
         This tracker measures architectural progress against the vision. Percentages reflect
         <em>alignment + readiness</em>, not feature-completeness.
       </p>
+      <p>
+        <strong>Overall progress weighs in test confidence.</strong> Each module's bar shows
+        its raw build progress; the overall figure folds in the latest <em>/hydra-test</em>
+        confidence per module &mdash; strong-confidence modules (&ge;80) get full credit,
+        moderate (60&ndash;79) take a 15% discount, weak or untested work takes a 30% discount.
+      </p>
     </div>
 
     <div class="overall-card">
@@ -501,12 +507,13 @@
        ===================================================================== */
     const DATA = {
       generated_at: "2026-05-20",
-      source: "CURRENT_STATE.md + Vision_v1.md @ session 3 close",
+      source: "CURRENT_STATE.md + Vision_v1.md @ /hydra-test module_6 v2",
       overall_percent: 84,
       modules: [
         {
           name: "Foundational commitments — 11 Hard Rules",
           percent: 72,
+          weight: 3,
           submodules: [
             { name: "HR.1 Immutability from genesis", percent: 82 },
             { name: "HR.2 No human governance over load-bearing AI components", percent: 25 },
@@ -529,6 +536,7 @@
         {
           name: "Module 1 — Canonical state, data model & emergence",
           percent: 67,
+          weight: 2,
           submodules: [
             { name: "Atomic shape — (dim, observation-time, anchor, distribution, provenance, encoder); polymorphic anchor; mandatory encoder identifier", percent: 85 },
             { name: "Representation registry — 3 types locked at genesis (histogram / weighted samples / parametric mixture)", percent: 85 },
@@ -554,6 +562,7 @@
         {
           name: "Module 2 — Source submission layer",
           percent: 65,
+          weight: 2,
           submodules: [
             { name: "Submission primitives — single atom OR atomic batch", percent: 60 },
             { name: "Source identity & signature — single scheme + key rotation", percent: 60 },
@@ -573,6 +582,7 @@
         {
           name: "Module 3 — Calibration & reputation engine",
           percent: 90,
+          weight: 2,
           submodules: [
             { name: "Reference type — strict temporal separation (canonical at coord, later-only)", percent: 70 },
             { name: "Settlement timing — event-triggered (uncertainty threshold OR window-from-observation)", percent: 70 },
@@ -593,6 +603,7 @@
         {
           name: "Module 4 — Aggregation model (self-evolving)",
           percent: 70,
+          weight: 2,
           confidence: 70,
           submodules: [
             { name: "Granularity — per-(dim, obs-time, anchor) local function; cross-correlations external", percent: 75 },
@@ -618,6 +629,7 @@
         {
           name: "Module 5 — Forecasting model (self-evolving)",
           percent: 80,
+          weight: 2,
           submodules: [
             { name: "Granularity — per-(dim, anchor) with anchor history as context", percent: 70 },
             { name: "Specialization — six adaptive models total at genesis (three per representation type); single population per type; multi-output bucketed", percent: 75 },
@@ -646,6 +658,7 @@
         {
           name: "Module 6 — Self-evolution infrastructure",
           percent: 92,
+          weight: 2,
           submodules: [
             { name: "Training work-unit — fitness atom = (candidate_model, cluster) → score", percent: 70 },
             { name: "Training-participant roles — candidate-proposer (new atom species) + fitness-scorer (generic compute); permissionless under flat-prior shrinkage", percent: 75 },
@@ -675,17 +688,18 @@
           issues: [
             "Role surface + per-class settlement locked; ES tuning (algorithm / mutation / selection) needs simulation tooling.",
             "Dispute path structurally complete (Slice C.1-C.4): atom species + lifecycle state machine + admission pipeline + settlement primitives + M12 audit-committee trait seam all locked.",
-            "FitnessAtom admission pipeline (forecasting single-provider scoring) — next M6 admission slice; composes with proposer-admission and dispute-admission pipelines.",
-            "Per-class FitnessAtom verification dispatcher — only Forecasting class uses the lifecycle tracker so far; Aggregation (threshold quorum) + Succession (full replicated) need parallel admission + verification primitives.",
+            "FitnessAtom admission pipeline landed — uniform admission across all three fitness classes (verify → well-formedness → scorer-LCB rate-gate); per-class settlement diverges downstream.",
+            "Per-class FitnessAtom verification dispatcher — only Forecasting settles via dispute window; Aggregation (threshold quorum) + Succession (full replicated quorum) settlement primitives still missing. Newly visible as actionable gap post-admission uniformity.",
             "M12 substantive committee design (selection / eligibility / rotation / compensation) — AuditCommittee trait seam now consumable.",
             "Module 13 arithmetic-succession is the escape valve if MXINT spec proves wrong.",
             "Production-stable NAS-style ES on quantized BFP NN does not yet exist at HYDRA scale — highest single technical risk.",
           ],
-          confidence: 82,
+          confidence: 88,
         },
         {
           name: "Module 7 — Adversarial defense composition",
           percent: 50,
+          weight: 1,
           submodules: [
             { name: "HR.10 Defense-in-depth composition — no single defense sufficient; composed surface required", percent: 70 },
             { name: "Calibration-LCB requirement — wide-posterior bootstrap rate-limits new-source influence", percent: 70 },
@@ -708,6 +722,7 @@
         {
           name: "Module 8 — Tokenomics & economic accounting",
           percent: 55,
+          weight: 1,
           submodules: [
             { name: "Token structure — T3 distinct non-fungible: GT (permanent compute privilege) + RT (gas, burned)", percent: 70 },
             { name: "Mint mechanism — per-pulse budget = α(demand) · burn + bootstrap subsidy; 60/40 op/info split", percent: 70 },
@@ -731,6 +746,7 @@
         {
           name: "Module 9 — Criticality mechanism",
           percent: 50,
+          weight: 1,
           submodules: [
             { name: "Criticality STATE — α<1 sustained over K pulses AND cumulative-net-burn ≥ floor", percent: 70 },
             { name: "Criticality EVENT — first entry into state; one-time discrete; irreversible", percent: 70 },
@@ -750,6 +766,7 @@
         {
           name: "Module 10 — Generalized compute marketplace",
           percent: 50,
+          weight: 1,
           submodules: [
             { name: "E1 atom-based unification — all services modeled as atoms; no formal 'node' role", percent: 70 },
             { name: "Three settlement paths — S1 oracle (quorum) + S2 private (MPC+ZK) + S3 arbitrary (provisional+disputed)", percent: 70 },
@@ -772,6 +789,7 @@
         {
           name: "Module 11 — Privacy tier (MPC + ZK)",
           percent: 50,
+          weight: 1,
           submodules: [
             { name: "STARK ZK proof system at genesis — no trusted setup; post-quantum security", percent: 70 },
             { name: "MPC1 threshold secret-sharing — M-of-N threshold; M-1 collusion cannot recover plaintext", percent: 70 },
@@ -795,6 +813,7 @@
         {
           name: "Module 12 — Audit committees & slashing",
           percent: 70,
+          weight: 1,
           submodules: [
             { name: "Audit scope — S3 arbitrary-compute disputes + storage-attestation challenges + forecasting-fitness disputes (M6 dispute path)", percent: 75 },
             { name: "VRF-selected audit committee per dispute — LCB × VRF; bootstrap-permissionless until pool ≥ M", percent: 70 },
@@ -819,6 +838,7 @@
         {
           name: "Module 13 — Community-driven succession paths",
           percent: 65,
+          weight: 1,
           submodules: [
             { name: "Two succession paths — crypto-primitive + canonical-arithmetic. New dimensions NOT a succession path", percent: 70 },
             { name: "Q13.1 V1 verifier — checklist with 3 categories: evidence-thresholds + zero-break-tests + time-tested-non-fault", percent: 70 },
@@ -847,6 +867,7 @@
         {
           name: "Module 14 — Network Health & Adaptive Pulse",
           percent: 65,
+          weight: 2,
           submodules: [
             { name: "Pulse trigger — hybrid state-event dual signals (compute consumed OR atom submissions)", percent: 70 },
             { name: "Health metric — pulse-interval state IS the health surface; no separate composite", percent: 70 },
@@ -874,7 +895,7 @@
             { name: "Module 3 — Calibration & reputation engine", percent: 91, is_confidence: true },
             { name: "Module 4 — Aggregation model", percent: 70, is_confidence: true },
             { name: "Module 5 — Forecasting model", percent: 88, is_confidence: true },
-            { name: "Module 6 — Self-evolution infrastructure", percent: 82, is_confidence: true },
+            { name: "Module 6 — Self-evolution infrastructure", percent: 88, is_confidence: true },
             { name: "Module 7 — Adversarial defense composition", percent: null, is_confidence: true },
             { name: "Module 8 — Tokenomics & economic accounting", percent: null, is_confidence: true },
             { name: "Module 9 — Criticality mechanism", percent: null, is_confidence: true },
@@ -909,6 +930,34 @@
         node.appendChild(typeof child === "string" ? document.createTextNode(child) : child);
       }
       return node;
+    }
+
+    /* ----- Test-confidence-weighted overall progress ----- */
+    /* See feedback memory: progress score includes testing confidence per module. */
+    function confidenceMultiplier(c) {
+      if (c == null) return 0.70;           // untested
+      if (c >= 80) return 1.00;             // strong confidence — full credit
+      if (c >= 60) return 0.85;             // moderate confidence — mild discount
+      return 0.70;                          // weak confidence — significant discount
+    }
+    function effectivePercent(m) {
+      if (typeof m.percent !== "number") return null;
+      return m.percent * confidenceMultiplier(m.confidence);
+    }
+    function computeOverallPercent(modules) {
+      var weightedSum = 0, totalWeight = 0;
+      for (var i = 0; i < modules.length; i++) {
+        var m = modules[i];
+        if (m.is_testing_section || m.is_timeline) continue;
+        if (typeof m.percent !== "number") continue;
+        var w = (typeof m.weight === "number") ? m.weight : 1;
+        if (w <= 0) continue;
+        var eff = effectivePercent(m);
+        if (eff == null) continue;
+        weightedSum += eff * w;
+        totalWeight += w;
+      }
+      return totalWeight === 0 ? 0 : Math.round(weightedSum / totalWeight);
     }
 
     function pct(n) { return n == null ? "—" : n + "%"; }
@@ -950,10 +999,12 @@
     }
 
     function renderHeader() {
-      document.getElementById("overall-percent").textContent = pct(DATA.overall_percent);
-      document.getElementById("overall-bar").style.width = pct(DATA.overall_percent);
+      var computedOverall = computeOverallPercent(DATA.modules);
+      DATA.overall_percent = computedOverall;
+      document.getElementById("overall-percent").textContent = pct(computedOverall);
+      document.getElementById("overall-bar").style.width = pct(computedOverall);
       const fillEl = document.getElementById("overall-bar");
-      fillEl.className = fillClassFor(DATA.overall_percent);
+      fillEl.className = fillClassFor(computedOverall);
       const subtitle = document.getElementById("subtitle");
       subtitle.textContent = DATA.source;
       document.getElementById("footer").innerHTML =
