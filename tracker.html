@@ -317,7 +317,7 @@
        ===================================================================== */
     const DATA = {
       generated_at: "2026-05-22",
-      source: "CURRENT_STATE.md + Vision_v1.md @ 2026-05-22 session 2 (M2 perfected + reaped; M7 memo-only; M1 forkability locked post-handoff)",
+      source: "CURRENT_STATE.md + Vision_v1.md @ 2026-05-22 session 3 close (M3 perfected + reaped; 10 attestations; vindication ledger removed from genesis; unified four-factor M8 reward)",
       modules: [
         {
           name: "Foundational commitments — 11 Hard Rules",
@@ -400,24 +400,30 @@
         },
         {
           name: "Module 3 — Calibration & reputation engine",
-          architectural: 65,
-          code: 70,
-          testing: 93,
+          architectural: 88,
+          code: 15,
+          testing: null,
           weight: 2,
           submodules: [
-            { name: "Reference type — strict temporal separation", percent: 70 },
-            { name: "Scoring rule family — Brier + log + CRPS; B1 blend per-dim", percent: 90 },
-            { name: "Two-estimator partition (point + LCB) — load-bearing", percent: 90 },
-            { name: "4-way calibration partitions", percent: 95 },
-            { name: "Bootstrap — flat-prior Bayesian", percent: 85 },
-            { name: "Settlement primitives + ledger composition", percent: 90 },
-            { name: "Vindication trigger logic — design-pending", percent: 45 },
-            { name: "B1 α emergence layer — design-pending", percent: 50 },
-            { name: "T1 settlement timing — design-pending", percent: 50 },
+            { name: "Reference type — strict temporal separation", percent: 75 },
+            { name: "Scoring rule family — Brier + log + CRPS; B1 blend per-dim; ParametricMixture CRPS-N/A forever", percent: 90 },
+            { name: "Two-estimator partition — point (Beta(1,1)) + LCB (Wilson-Agresti-Coull Z=2); per-role floor at consumption-site", percent: 90 },
+            { name: "Four-partition calibration substrate — source-observation + proposer + disputer + scorer; genesis-closed at four", percent: 90 },
+            { name: "Bootstrap — flat-prior Beta(1,1); COLD_START = ONE/2 at n=0; no separate cold-start surface", percent: 90 },
+            { name: "Calibration history — VecDeque FIFO rolling window at MAX_CALIBRATION_WINDOW; per-partition independent; α at derivation time", percent: 90 },
+            { name: "Realization event (T1) — stability criterion (tightness AND stationarity) at pulse boundary + MAX_PENDING_PULSES forcing cap", percent: 90 },
+            { name: "Grading function + entry shape — three-field CalibrationEntry forever; argmax / expected_value realized-reference extraction; graded_points per-node derived", percent: 90 },
+            { name: "B1 α emergence — variance-based discrimination signal; lower-variance rule wins; proportional τ update at Phase B", percent: 85 },
+            { name: "Pulse-close lifecycle — two-phase composition (snapshot-then-decide / write-then-commit) eliminating M3↔M12/M6 circular dependencies", percent: 85 },
+            { name: "Contribution-value INPUT seam — exports POINT estimator for M8 unified reward; never LCB", percent: 90 },
+            { name: "Settlement primitives RELOCATED to M12 (m12_dispute_settlement_primitives); M3 retains scorer/disputer/proposer outcome RECORDING", percent: 90 },
+            { name: "Vindication ledger DELETED from genesis substrate; whistleblower compensation flows through M8 unified four-factor function", percent: 100 },
           ],
           issues: [
-            "Code broken under post-M1-reaping (CoordScale import missing — 1-line fix when M3 reaping lands).",
-            "Vindication trigger / B1 α / T1 settlement timing — substantive design pending. Next module after M2 perfection.",
+            "Code is scaffolded (todo!() bodies) post-Reaping; awaits behavior-implementation phase after full M1-M14 perfection sweep.",
+            "Magnitudes pending sim (Category C): MAX_CALIBRATION_WINDOW, MAX_PENDING_PULSES, per-dim TIGHTNESS_THRESHOLD, per-rep-type ε, K_STATIONARITY, τ, MIN_PULSE_ENTRIES_FOR_SIGNAL.",
+            "Cross-module deps: per-dim TIGHTNESS_THRESHOLD + per-dim f_divergence normalization caps live on M1 DimensionSchema — additions pending M1 re-perfection.",
+            "Testing was 93 pre-perfection pre-Reaping; needs re-test against perfected scaffolding (type-surface only until behavior-implementation phase).",
           ],
         },
         {
@@ -497,7 +503,7 @@
         },
         {
           name: "Module 8 — Tokenomics & economic accounting",
-          architectural: 50,
+          architectural: 55,
           code: 38,
           testing: 60,
           weight: 1,
@@ -571,7 +577,7 @@
         },
         {
           name: "Module 12 — Audit committees & slashing",
-          architectural: 78,
+          architectural: 82,
           code: 70,
           testing: 85,
           weight: 1,
