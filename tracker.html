@@ -507,8 +507,8 @@
        ===================================================================== */
     const DATA = {
       generated_at: "2026-05-21",
-      source: "CURRENT_STATE.md + Vision_v1.md @ session 1 close",
-      overall_percent: 88,
+      source: "CURRENT_STATE.md + Vision_v1.md @ /hydra-test module_8 v1 (+ tracker honest-progress policy fix)",
+      overall_percent: 0,
       modules: [
         {
           name: "Foundational commitments — 11 Hard Rules",
@@ -729,31 +729,35 @@
         },
         {
           name: "Module 8 — Tokenomics & economic accounting",
-          percent: 62,
+          percent: 30,
           weight: 1,
           submodules: [
-            { name: "Token structure — two non-fungible: GT (permanent compute privilege) + RT (gas, burned)", percent: 80 },
-            { name: "Mint mechanism — per-pulse budget = α(demand) · burn + bootstrap subsidy; 60/40 operator/info-provider split (LOCKED Tier A)", percent: 80 },
-            { name: "Demand-responsive α(demand) — bounded sigmoid; α>1 low demand, α<1 high demand", percent: 70 },
-            { name: "X(demand) per-unit compute price — bounded sigmoid; serves paid-user + rental-burn floor", percent: 70 },
-            { name: "GT_factor decay — D-netburn × F-exp; zero at criticality event", percent: 70 },
-            { name: "Contribution-value reward — C2 multi-stream additive; LCB-blended + whistleblower-shape bonus continuous-multiplier by divergence × vindication (LOCKED Tier A); S2 sybil decay", percent: 75 },
-            { name: "Per-role stake-minimum formula — min_stake[role] = K_role · median_active_stake (LOCKED Tier A; K_role constants sim-pending)", percent: 75 },
-            { name: "Slash distribution — challenger 40 / refund 60 / burn 0 (LOCKED Tier A; vision edited to make burn optional)", percent: 80 },
-            { name: "Auto-stake (operator earnings) — fraction s RT auto-locked; vests V pulses; slashable per the three-way distribution", percent: 70 },
-            { name: "Founder allocation — 50% cumulative GT at criticality via ZK-claim pool", percent: 70 },
-            { name: "Bootstrap subsidy — D-netburn × F-exp decay; goes to zero as cumulative-net-burn grows", percent: 70 },
-            { name: "Per-pulse entitlement-atoms — auto-mint at pulse boundaries; NO ROLLOVER EVER", percent: 70 },
-            { name: "Stake-management plumbing — StakeLedger free/reserved/sink + closed-op conservation invariant + slash_divergent_scorers + apply_*_settlement composition", percent: 85 },
+            { name: "Token structure — two non-fungible: GT (permanent compute privilege) + RT (gas, burned)", percent: 25 },
+            { name: "Mint mechanism — per-pulse budget = α(demand) · burn + bootstrap subsidy; 60/40 operator/info-provider split (LOCKED Tier A)", percent: 25 },
+            { name: "Demand-responsive α(demand) — bounded sigmoid; α>1 low demand, α<1 high demand", percent: 20 },
+            { name: "X(demand) per-unit compute price — bounded sigmoid; serves paid-user + rental-burn floor", percent: 20 },
+            { name: "GT_factor decay — D-netburn × F-exp; zero at criticality event", percent: 20 },
+            { name: "Contribution-value reward — C2 multi-stream additive; LCB-blended + whistleblower-shape bonus continuous-multiplier by divergence × vindication (LOCKED Tier A); S2 sybil decay", percent: 25 },
+            { name: "Per-role stake-minimum formula — min_stake[role] = K_role · median_active_stake (LOCKED Tier A; K_role constants sim-pending; median_active_stake accessor missing in code)", percent: 30 },
+            { name: "Slash distribution — challenger 40 / refund 60 / burn 0 (LOCKED Tier A; code still encodes pre-s1 25/75; refund channel structurally absent)", percent: 30 },
+            { name: "Auto-stake (operator earnings) — fraction s RT auto-locked; vests V pulses; slashable per the three-way distribution", percent: 20 },
+            { name: "Founder allocation — 50% cumulative GT at criticality via ZK-claim pool", percent: 20 },
+            { name: "Bootstrap subsidy — D-netburn × F-exp decay; goes to zero as cumulative-net-burn grows", percent: 20 },
+            { name: "Per-pulse entitlement-atoms — auto-mint at pulse boundaries; NO ROLLOVER EVER", percent: 20 },
+            { name: "Stake-management plumbing — StakeLedger free/reserved/sink + closed-op conservation invariant + slash_divergent_scorers + apply_*_settlement composition", percent: 80 },
           ],
           issues: [
+            "Re-baselined under ship-readiness scale 2026-05-21: 12 of 13 submodules are design-locked but code-deferred; only Submodule 13 (stake plumbing) has substantial code.",
+            "Code/attestation drift on slash distribution (HIGH): dispute_settlement.rs encodes 25/75 disputer/sink while slash_three_way_split.md attests 40/60/0 challenger/refund/burn. Refund channel structurally absent in code.",
+            "Atomicity-on-overflow gap (MEDIUM) in StakeLedger slash_to_recipient/transfer_free/reserve/release: debit_balance commits before checked_add validates destination.",
+            "Missing primitive: median_active_stake accessor required by per-role stake-min formula.",
             "OQ-1 Liquidity boat — bootstrap demand mechanism; principal-deferred (multi-session arc).",
             "OQ-2 Burn rate vs RT speculation — query-cost ceiling; principal-deferred (multi-session arc).",
             "Tier B sim-driven magnitudes pending: α(demand) curve, X(demand) curve, bootstrap subsidy decay, GT pre-criticality mint trajectory, criticality α<1 window length, cumulative-net-burn floor.",
             "Per-role K_role constants + δ-divergence threshold + whistleblower bonus multiplier curve all sim-derivable; lock attestations pending hydra-sim completion.",
             "Bootstrap demand depends on factors outside the protocol's control — largest economic risk.",
           ],
-          confidence: null,
+          confidence: 60,
         },
         {
           name: "Module 9 — Criticality mechanism",
@@ -914,7 +918,7 @@
             { name: "Module 5 — Forecasting model", percent: 88, is_confidence: true },
             { name: "Module 6 — Self-evolution infrastructure", percent: 94, is_confidence: true },
             { name: "Module 7 — Adversarial defense composition", percent: null, is_confidence: true },
-            { name: "Module 8 — Tokenomics & economic accounting", percent: null, is_confidence: true },
+            { name: "Module 8 — Tokenomics & economic accounting", percent: 60, is_confidence: true },
             { name: "Module 9 — Criticality mechanism", percent: null, is_confidence: true },
             { name: "Module 10 — Generalized compute marketplace", percent: null, is_confidence: true },
             { name: "Module 11 — Privacy tier (MPC + ZK)", percent: null, is_confidence: true },
@@ -923,12 +927,46 @@
             { name: "Module 14 — Network Health & Adaptive Pulse", percent: 88, is_confidence: true },
           ],
           issues: [
-            "Confidence scores reflect latest /hydra-test pass per module. Modules without a test pass yet show as untested.",
+            "Confidence scores reflect the latest /hydra-test pass per module. Modules without a test pass yet show as 'not yet tested'.",
+            "Section percent counts every module: tested modules contribute their score, untested count as 0. This keeps the headline honest about test coverage rather than averaging only over tested modules.",
           ],
         },
       ],
     };
     /* ===== /DATA ===== */
+
+    /* ===== HYDRA PROGRESS SEMANTICS (read me before editing percentages) =====
+     *
+     *   `percent` on a HYDRA module/submodule = SHIP-READINESS.
+     *
+     *   The principal's definition (2026-05-21):
+     *     "When [the tracker's] progress hits 100% it means I can deploy this
+     *      immutable program with full confidence that it will work as intended."
+     *
+     *   This is stronger than "feature complete" — HYDRA is immutable. Once
+     *   shipped, the substrate cannot be revised. 100% means: code exists,
+     *   tests cover golden + edge + adversarial paths, attestations are signed,
+     *   sim citations are locked, the principal would press deploy without
+     *   reservation. Use 100% sparingly and only when you would stake the
+     *   protocol's success on this submodule shipping as-is.
+     *
+     *   Scale:
+     *     0-20%    — vision-declared but no code, no design memo. Pure aspiration.
+     *     20-50%   — substantial design lock + memo/attestation; no code, OR
+     *                code that doesn't yet implement the locked structure.
+     *     50-70%   — code exists, partial test coverage, partial vision alignment.
+     *     70-85%   — code matches vision, tests cover golden + edge cases,
+     *                structurally complete pending pre-genesis tuning.
+     *     85-95%   — implementation is ship-shape; only pre-genesis magnitude
+     *                tuning + sim-citation locks remain. Deployable in a
+     *                test-genesis; not yet in a real-genesis.
+     *     100%     — deploy-now confidence. The principal would ship this
+     *                immutably as-is.
+     *
+     *   Untested modules do not contribute to overall progress (multiplier 0).
+     *   Weakly-tested (confidence <60) get half credit. Strong (>=80) full.
+     *
+     * ========================================================================= */
 
     function el(tag, attrs, children) {
       const node = document.createElement(tag);
@@ -949,16 +987,36 @@
       return node;
     }
 
-    /* ----- Test-confidence-weighted overall progress ----- */
-    /* See feedback memory: progress score includes testing confidence per module. */
+    /* ----- Test-confidence-weighted overall progress -----
+     *
+     * Policy (HYDRA, 2026-05-21):
+     *
+     *   - `percent` on each module = feature completeness + ship-readiness
+     *     (NOT loose "alignment progress"). A submodule with no code is low
+     *     even if its design is locked.
+     *
+     *   - Untested modules get ZERO credit in overall progress. An untested
+     *     module has no validated signal; its `percent` does not flow into
+     *     the headline overall until a /hydra-test confidence score lands.
+     *     The earlier 0.70 multiplier was misleading — it credited untested
+     *     modules the same as weakly-tested ones, inflating headline progress.
+     *
+     *   - Tested modules get a confidence-weighted credit (weak/moderate/strong).
+     */
     function confidenceMultiplier(c) {
-      if (c == null) return 0.70;           // untested
+      if (c == null) return 0.00;           // untested — no signal, no credit
       if (c >= 80) return 1.00;             // strong confidence — full credit
       if (c >= 60) return 0.85;             // moderate confidence — mild discount
-      return 0.70;                          // weak confidence — significant discount
+      return 0.50;                          // weak confidence (<60) — half credit
     }
     function effectivePercent(m) {
       if (typeof m.percent !== "number") return null;
+      // No `confidence` field at all → not a test target (foundational
+      // commitments, framing sections). Full credit; the policy below
+      // applies only to modules that opt into being scored.
+      if (!Object.prototype.hasOwnProperty.call(m, "confidence")) {
+        return m.percent;
+      }
       return m.percent * confidenceMultiplier(m.confidence);
     }
     function computeOverallPercent(modules) {
@@ -1116,21 +1174,47 @@
     }
 
     function deriveTestingPercent(m) {
-      // Testing section's overall percent is the mean of available confidence
-      // scores (each is already on a 0..100 scale). Untested modules don't
-      // pull the mean down — they're excluded from the denominator.
+      // Testing-section overall percent is the mean of confidence scores
+      // INCLUDING untested modules as 0. Earlier behavior excluded untested
+      // from the denominator, which produced a misleading high average
+      // when most modules had no test pass yet. The new policy: every
+      // module counts; untested = 0; the average reflects honest test
+      // coverage + average confidence simultaneously.
       if (!m.is_testing_section || !m.submodules) return m.percent;
-      const scored = m.submodules.filter(function (s) { return s.is_confidence && typeof s.percent === "number"; });
-      if (scored.length === 0) return m.percent;
-      const sum = scored.reduce(function (acc, s) { return acc + s.percent; }, 0);
-      return Math.round(sum / scored.length);
+      const all = m.submodules.filter(function (s) { return s.is_confidence; });
+      if (all.length === 0) return null;
+      const sum = all.reduce(function (acc, s) {
+        return acc + (typeof s.percent === "number" ? s.percent : 0);
+      }, 0);
+      return Math.round(sum / all.length);
+    }
+
+    function testingCoverage(m) {
+      // Returns { tested: K, total: N } for the testing section.
+      if (!m.is_testing_section || !m.submodules) return null;
+      const all = m.submodules.filter(function (s) { return s.is_confidence; });
+      if (all.length === 0) return null;
+      const tested = all.filter(function (s) { return typeof s.percent === "number"; }).length;
+      return { tested: tested, total: all.length };
     }
 
     function renderModules() {
       const host = document.getElementById("modules");
       DATA.modules.forEach(function (m, idx) {
-        if (m.is_testing_section && (m.percent == null)) {
+        if (m.is_testing_section) {
+          // Always recompute (don't honor a stale static percent in DATA).
           m.percent = deriveTestingPercent(m);
+          // Prepend a coverage line to the issues list so the honest
+          // signal (X of N modules tested) is visible without expansion.
+          const cov = testingCoverage(m);
+          if (cov) {
+            const covLine =
+              "<b>Coverage: " + cov.tested + " of " + cov.total +
+              " modules tested</b> (" + Math.round(100 * cov.tested / cov.total) +
+              "%). Untested modules count as 0 in this section's average and " +
+              "contribute 0 to overall progress until a /hydra-test pass scores them.";
+            m.issues = [covLine].concat(m.issues || []);
+          }
         }
         host.appendChild(renderModule(m, { openByDefault: idx === 0 }));
       });
