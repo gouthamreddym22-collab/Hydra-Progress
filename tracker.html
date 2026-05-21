@@ -507,7 +507,7 @@
        ===================================================================== */
     const DATA = {
       generated_at: "2026-05-21",
-      source: "CURRENT_STATE.md + Vision_v1.md @ /hydra-test module_8 v1 (+ tracker honest-progress policy fix)",
+      source: "CURRENT_STATE.md + Vision_v1.md @ session 2 close (posture lock + M4/M6/M8 tests + M4 geometry locked)",
       overall_percent: 0,
       modules: [
         {
@@ -606,23 +606,23 @@
         },
         {
           name: "Module 4 — Aggregation model (self-evolving)",
-          percent: 78,
+          percent: 45,
           weight: 2,
-          confidence: 70,
+          confidence: 79,
           submodules: [
             { name: "Granularity — per-(dim, obs-time, anchor) local function; cross-correlations external", percent: 75 },
-            { name: "Specialization — three models per representation type; three independent ES populations", percent: 70 },
-            { name: "Inference path — per-pulse materialization", percent: 70 },
-            { name: "Fitness — proper-scoring-rule blend vs materialized canonical at T + dim_timescale", percent: 75 },
-            { name: "Output — matches dim's declared representation type and schema", percent: 75 },
-            { name: "Input weighting — calibration point estimator × encoder-concentration", percent: 75 },
-            { name: "Architecture — NAS-NARROW within Set-Transformer family (ISAB + PMA)", percent: 78 },
-            { name: "Determinism substrate — BFP block-floating-point arithmetic (MXINT 32-i16 + 1-u8 biased exp; free-order reduction + round-half-to-even); activation LUTs (sigmoid/tanh/GELU/exp/sqrt, 4096 entries each, Q11→Q15/Q11, piecewise-linear interpolation + RHTE); matrix-vector products (BfpMatrix + bfp_dot + bfp_matvec)", percent: 85 },
-            { name: "Training — JEPA-AUX: fitness + masked-source SS auxiliary; calibration-gated; scalar blend", percent: 70 },
-            { name: "Per-type coupling — shared hyperparameter range; full population isolation", percent: 70 },
-            { name: "Calibration-output — proper scoring rules guarantee calibration directly", percent: 70 },
-            { name: "ES population structure — within NAS search space; ship-now reframe applies (use functional approaches from existing literature)", percent: 50 },
-            { name: "Mode preservation — attention + isolated populations resolve structurally", percent: 65 },
+            { name: "Specialization — three models per representation type; three independent ES populations", percent: 50 },
+            { name: "Inference path — per-pulse materialization", percent: 25 },
+            { name: "Fitness — proper-scoring-rule blend vs materialized canonical at T + dim_timescale", percent: 50 },
+            { name: "Output — matches dim's declared representation type and schema", percent: 70 },
+            { name: "Input weighting — calibration point estimator × encoder-concentration", percent: 55 },
+            { name: "Architecture — NAS-NARROW within Set-Transformer family (ISAB + PMA); geometry LOCKED 2026-05-21 (d_model=256; n_heads∈{4,8}; n_layers∈{2,3,4}; m_induced∈{16,32,64}; mlp_hidden∈{128,256,384}; pma_seeds=1; pre-LN). 162+ ES-mutable configs", percent: 65 },
+            { name: "Determinism substrate — BFP block-floating-point arithmetic (MXINT 32-i16 + 1-u8 biased exp; free-order reduction + round-half-to-even); activation LUTs (sigmoid/tanh/GELU/exp/sqrt, 4096 entries each, Q11→Q15/Q11, piecewise-linear interpolation + RHTE); matrix-vector products (BfpMatrix + bfp_dot + bfp_matvec)", percent: 80 },
+            { name: "Training — JEPA-AUX: fitness + masked-source SS auxiliary; calibration-gated; scalar blend", percent: 20 },
+            { name: "Per-type coupling — shared hyperparameter range; full population isolation", percent: 20 },
+            { name: "Calibration-output — proper scoring rules guarantee calibration directly", percent: 30 },
+            { name: "ES population structure — within NAS search space; ship-now reframe applies", percent: 20 },
+            { name: "Mode preservation — attention + isolated populations resolve structurally", percent: 50 },
           ],
           issues: [
             "Set-Transformer family choice is permanent (no architecture-succession path); HR.2 stretching acknowledged.",
@@ -663,8 +663,9 @@
         },
         {
           name: "Module 6 — Self-evolution infrastructure",
-          percent: 94,
+          percent: 50,
           weight: 2,
+          confidence: 95,
           submodules: [
             { name: "Training work-unit — fitness atom = (candidate_model, cluster) → score", percent: 75 },
             { name: "Training-participant roles — candidate-proposer + fitness-scorer + disputer; permissionless under flat-prior shrinkage; 4-way disjoint calibration partitions", percent: 85 },
@@ -699,7 +700,6 @@
             "Module 13 arithmetic-succession is the escape valve if MXINT spec proves wrong.",
             "Production-stable NAS-style ES on quantized BFP NN does not yet exist at HYDRA scale — highest single technical risk.",
           ],
-          confidence: 94,
         },
         {
           name: "Module 7 — Adversarial defense composition",
@@ -800,6 +800,8 @@
           ],
           issues: [
             "Substrate gap: M10 is at 0% of substantive design. Currently: storage primitives + compute primitives exist internally; user-facing query API + RT-payment-for-query flow + routing + light-client verification + MPC integration are all undesigned.",
+            "Identified 2026-05-21: RT BURN PATHS (user-initiated query → RT burn settlement) are entirely undesigned. StakeLedger::burn_from_sink exists for protocol-internal burn but no user-query-burn surface. See project_rt_burn_and_gt_quota_undesigned memory.",
+            "Identified 2026-05-21: GT QUOTA ACCESS (per-pulse entitlement-atom auto-mint at pulse boundary + GT-direct-use consumption without burn + GT-rental signed-transition with X(demand)-equivalent burn) is entirely undesigned. Depends on M14 pulse-boundary primitive.",
             "Sequencing: M10 substantive design AFTER M4/M5/M6 substantively complete (10a/10b have nothing to serve until then). 10c (general compute) is independent.",
             "Three verification stories for 10c (game-theoretic + audit; ZK proof via zkVM; N-redundancy): M10 substantive design must pick one or compose. Ship-now recommends game-theoretic + audit as first cut (cheapest per-job; M12 extension).",
             "S3 arbitrary-compute has dimension_timescale-window vulnerability before audit-committee verdict can override.",
@@ -914,9 +916,9 @@
             { name: "Module 1 — Canonical state & schema", percent: 87, is_confidence: true },
             { name: "Module 2 — Source submission layer", percent: 80, is_confidence: true },
             { name: "Module 3 — Calibration & reputation engine", percent: 93, is_confidence: true },
-            { name: "Module 4 — Aggregation model", percent: 70, is_confidence: true },
+            { name: "Module 4 — Aggregation model", percent: 79, is_confidence: true },
             { name: "Module 5 — Forecasting model", percent: 88, is_confidence: true },
-            { name: "Module 6 — Self-evolution infrastructure", percent: 94, is_confidence: true },
+            { name: "Module 6 — Self-evolution infrastructure", percent: 95, is_confidence: true },
             { name: "Module 7 — Adversarial defense composition", percent: null, is_confidence: true },
             { name: "Module 8 — Tokenomics & economic accounting", percent: 60, is_confidence: true },
             { name: "Module 9 — Criticality mechanism", percent: null, is_confidence: true },
