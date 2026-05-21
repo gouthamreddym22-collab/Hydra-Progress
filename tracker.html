@@ -11,7 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* surfaces — cool slate, low chroma */
     --bg: #0a0c10;
     --bg-grad-2: #0d1015;
     --surface: #0f131800;
@@ -20,17 +19,24 @@
     --border: #1d232c;
     --border-bright: #2a313c;
 
-    /* text — neutral cool */
     --text: #e2e6ec;
     --text-mid: #97a0ad;
     --text-dim: #5b6470;
 
-    /* accents — muted steel, low saturation */
     --accent: #7a99bd;
     --accent-bright: #9bb6d6;
     --accent-soft: #455870;
 
-    /* status — desaturated */
+    /* Three-bar palette: architectural / code / testing */
+    --bar-arch: #9bb6d6;       /* steel blue — design lock */
+    --bar-arch-soft: #455870;
+    --bar-code: #c89576;       /* warm amber — implementation */
+    --bar-code-soft: #6b4836;
+    --bar-test: #7eac9c;       /* desaturated green — testing */
+    --bar-test-soft: #3d5d52;
+    --bar-composite: #d4c896;  /* pale gold — composite */
+    --bar-composite-soft: #6b6446;
+
     --done: #7eac9c;
     --warn: #bda076;
 
@@ -53,72 +59,25 @@
     background-attachment: fixed;
     color: var(--text);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     line-height: 1.5;
   }
-  .container { max-width: 860px; margin: 0 auto; padding: 56px 24px 96px; }
+  .container { max-width: 900px; margin: 0 auto; padding: 56px 24px 96px; }
 
-  header {
-    display: flex; align-items: baseline; gap: 16px;
-    margin-bottom: 8px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 20px;
-  }
-  .brand-mark {
-    width: 14px; height: 14px;
-    border: 1px solid var(--accent);
-    border-radius: 1px;
-    position: relative;
-    flex-shrink: 0;
-    top: 1px;
-  }
-  .brand-mark::before {
-    content: ""; position: absolute;
-    inset: 3px;
-    background: var(--accent);
-    opacity: 0.5;
-  }
-  h1 {
-    font-family: var(--font-display);
-    font-size: 30px; font-weight: 500; margin: 0;
-    letter-spacing: -0.02em;
-    color: var(--text);
-  }
-  h1 .subtitle-em {
-    color: var(--text-dim);
-    font-weight: 400;
-    font-size: 22px;
-    letter-spacing: -0.01em;
-  }
-  .subtitle {
-    color: var(--text-dim); font-size: 12px;
-    margin: 14px 0 32px;
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
+  header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 8px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+  .brand-mark { width: 14px; height: 14px; border: 1px solid var(--accent); border-radius: 1px; position: relative; flex-shrink: 0; top: 1px; }
+  .brand-mark::before { content: ""; position: absolute; inset: 3px; background: var(--accent); opacity: 0.5; }
+  h1 { font-family: var(--font-display); font-size: 30px; font-weight: 500; margin: 0; letter-spacing: -0.02em; color: var(--text); }
+  h1 .subtitle-em { color: var(--text-dim); font-weight: 400; font-size: 22px; letter-spacing: -0.01em; }
+  .subtitle { color: var(--text-dim); font-size: 12px; margin: 14px 0 32px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; }
 
-  .about-card {
-    background: transparent;
-    border: none;
-    border-left: 1px solid var(--accent-soft);
-    padding: 4px 0 4px 24px;
-    margin-bottom: 32px;
-  }
-  .about-card p {
-    margin: 0;
-    color: var(--text-mid);
-    font-size: 13.5px;
-    line-height: 1.7;
-    font-family: var(--font-sans);
-    font-weight: 400;
-  }
+  .about-card { background: transparent; border: none; border-left: 1px solid var(--accent-soft); padding: 4px 0 4px 24px; margin-bottom: 32px; }
+  .about-card p { margin: 0; color: var(--text-mid); font-size: 13.5px; line-height: 1.7; }
   .about-card p + p { margin-top: 12px; }
   .about-card strong { color: var(--text); font-weight: 500; }
   .about-card em { color: var(--accent-bright); font-style: normal; font-weight: 500; }
 
+  /* Overall composite card with all four bars (composite + 3 sub-bars) */
   .overall-card {
     background: linear-gradient(180deg, var(--surface-elev) 0%, transparent 100%);
     border: 1px solid var(--border);
@@ -126,65 +85,32 @@
     padding: 24px 28px;
     margin-bottom: 28px;
   }
-  .overall-label {
-    font-size: 10px; color: var(--text-dim);
-    text-transform: uppercase; letter-spacing: 0.14em;
-    margin-bottom: 14px; font-weight: 500;
-    font-family: var(--font-mono);
-  }
-  .overall-row {
-    display: flex; align-items: baseline; gap: 16px; margin-bottom: 18px;
-  }
-  .overall-percent {
-    font-family: var(--font-display);
-    font-size: 44px; font-weight: 500;
-    color: var(--accent-bright);
-    font-variant-numeric: tabular-nums;
-    letter-spacing: -0.04em;
-    line-height: 1;
-  }
-  .overall-name {
-    font-size: 12.5px;
-    color: var(--text-mid);
-    font-family: var(--font-sans);
-  }
+  .overall-label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 14px; font-weight: 500; font-family: var(--font-mono); }
+  .overall-row { display: flex; align-items: baseline; gap: 16px; margin-bottom: 6px; }
+  .overall-percent { font-family: var(--font-display); font-size: 44px; font-weight: 500; color: var(--bar-composite); font-variant-numeric: tabular-nums; letter-spacing: -0.04em; line-height: 1; }
+  .overall-name { font-size: 12.5px; color: var(--text-mid); }
 
-  .bar-track {
-    background: var(--bar-bg);
-    border-radius: 2px;
-    overflow: hidden;
-    position: relative;
-    height: 4px;
-  }
-  .bar-fill {
-    background: linear-gradient(90deg, var(--accent-soft), var(--accent-bright));
-    height: 100%;
-    border-radius: 1px;
-    transition: width 0.5s cubic-bezier(.2,.7,.2,1);
-  }
-  .bar-fill.done {
-    background: linear-gradient(90deg, #4f7f70, var(--done));
-  }
+  .overall-sub-bars { margin-top: 18px; display: grid; gap: 10px; }
+  .overall-sub-bar-row { display: grid; grid-template-columns: 110px 50px 1fr; gap: 12px; align-items: center; }
+  .overall-sub-bar-label { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); }
+  .overall-sub-bar-pct { font-family: var(--font-mono); font-size: 11.5px; font-variant-numeric: tabular-nums; text-align: right; color: var(--text-mid); }
+
+  /* Per-bar variants */
+  .bar-track { background: var(--bar-bg); border-radius: 2px; overflow: hidden; position: relative; height: 4px; }
+  .bar-fill { height: 100%; border-radius: 1px; transition: width 0.5s cubic-bezier(.2,.7,.2,1); }
+  .bar-fill.arch { background: linear-gradient(90deg, var(--bar-arch-soft), var(--bar-arch)); }
+  .bar-fill.code { background: linear-gradient(90deg, var(--bar-code-soft), var(--bar-code)); }
+  .bar-fill.test { background: linear-gradient(90deg, var(--bar-test-soft), var(--bar-test)); }
+  .bar-fill.composite { background: linear-gradient(90deg, var(--bar-composite-soft), var(--bar-composite)); }
   .bar-fill.empty { background: var(--border); }
+  .bar-fill.done { background: linear-gradient(90deg, #4f7f70, var(--done)); }
   .overall-card .bar-track { height: 6px; }
+  .overall-sub-bar-row .bar-track { height: 4px; }
 
-  .expand-hint {
-    font-size: 11px;
-    color: var(--text-dim);
-    margin: 0 4px 16px;
-    display: flex; align-items: center; gap: 10px;
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-  .expand-hint .key {
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    padding: 2px 8px;
-    font-size: 10px;
-    color: var(--text-mid);
-  }
+  .expand-hint { font-size: 11px; color: var(--text-dim); margin: 0 4px 16px; display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; }
+  .expand-hint .key { border: 1px solid var(--border); border-radius: 2px; padding: 2px 8px; font-size: 10px; color: var(--text-mid); }
 
+  /* Module card */
   .module {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -193,42 +119,33 @@
     overflow: hidden;
     transition: border-color 0.2s, background 0.2s;
   }
-  .module:hover {
-    border-color: var(--border-bright);
-    background: rgba(28,25,21,0.5);
-  }
-  .module.open {
-    border-color: var(--border-bright);
-    background: rgba(28,25,21,0.7);
-  }
+  .module:hover { border-color: var(--border-bright); background: rgba(28,25,21,0.5); }
+  .module.open { border-color: var(--border-bright); background: rgba(28,25,21,0.7); }
+
   .module-header {
     padding: 16px 20px;
     cursor: pointer;
     user-select: none;
     display: grid;
     grid-template-columns: 1fr auto;
-    gap: 16px;
+    gap: 12px;
     align-items: center;
   }
-  .module-name-row {
-    display: flex; align-items: center; gap: 12px; min-width: 0;
-  }
-  .module-name {
-    font-family: var(--font-display);
-    font-weight: 500; font-size: 15px; color: var(--text);
-    letter-spacing: -0.01em;
-    line-height: 1.35;
-  }
-  .module-meta { display: flex; align-items: center; gap: 14px; }
-  .module-percent {
-    color: var(--text);
-    font-family: var(--font-mono);
-    font-variant-numeric: tabular-nums;
-    font-size: 13px; font-weight: 500;
-    letter-spacing: -0.01em;
-  }
-  .module-bar { grid-column: 1 / -1; margin-top: 10px; }
-  .module-bar .bar-track { height: 3px; }
+  .module-name-row { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .module-name { font-family: var(--font-display); font-weight: 500; font-size: 15px; color: var(--text); letter-spacing: -0.01em; line-height: 1.35; }
+  .module-composite-pct { color: var(--bar-composite); font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 14px; font-weight: 500; }
+
+  /* The three sub-bars + composite per module, in the header (always visible) */
+  .module-bars { grid-column: 1 / -1; margin-top: 12px; display: grid; gap: 6px; }
+  .module-bar-row { display: grid; grid-template-columns: 80px 42px 1fr; gap: 10px; align-items: center; }
+  .module-bar-label { font-family: var(--font-mono); font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); }
+  .module-bar-pct { font-family: var(--font-mono); font-size: 10.5px; font-variant-numeric: tabular-nums; text-align: right; color: var(--text-mid); }
+  .module-bar-row .bar-track { height: 3px; }
+
+  /* The composite bar gets a slightly larger label */
+  .module-bar-row.composite .module-bar-label { color: var(--bar-composite); font-weight: 500; }
+  .module-bar-row.composite .module-bar-pct { color: var(--bar-composite); font-weight: 500; }
+  .module-bar-row.composite .bar-track { height: 4px; }
 
   .chevron {
     color: var(--accent);
@@ -243,31 +160,10 @@
     flex-shrink: 0;
   }
   .module:hover .chevron { border-color: var(--accent-soft); }
-  .module.open .chevron {
-    transform: rotate(180deg);
-    border-color: var(--accent);
-    background: rgba(200,152,104,0.08);
-  }
+  .module.open .chevron { transform: rotate(180deg); border-color: var(--accent); background: rgba(200,152,104,0.08); }
 
-  .warn-dot {
-    width: 6px; height: 6px;
-    border-radius: 1px;
-    background: var(--warn);
-    flex-shrink: 0;
-  }
-  .done-dot {
-    width: 6px; height: 6px;
-    border-radius: 1px;
-    background: var(--done);
-    flex-shrink: 0;
-  }
-  .test-dot {
-    width: 6px; height: 6px;
-    border-radius: 1px;
-    background: var(--text-dim);
-    flex-shrink: 0;
-  }
-  .testing-header { border-top: 1px solid var(--border); }
+  .warn-dot { width: 6px; height: 6px; border-radius: 1px; background: var(--warn); flex-shrink: 0; }
+  .done-dot { width: 6px; height: 6px; border-radius: 1px; background: var(--done); flex-shrink: 0; }
 
   .module-body {
     display: none;
@@ -277,170 +173,48 @@
   }
   .module.open .module-body { display: block; }
 
-  .section-label {
-    font-size: 10px; color: var(--text-dim);
-    text-transform: uppercase; letter-spacing: 0.14em;
-    margin: 0 0 14px;
-    font-weight: 500;
-    font-family: var(--font-mono);
-  }
+  .section-label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.14em; margin: 0 0 14px; font-weight: 500; font-family: var(--font-mono); }
   .section-label + .section-label { margin-top: 20px; }
 
-  .sub {
-    padding: 11px 0 13px;
-    border-bottom: 1px solid var(--border);
-  }
+  .sub { padding: 11px 0 13px; border-bottom: 1px solid var(--border); }
   .sub:last-of-type { border-bottom: none; }
-  .sub-top {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    gap: 16px;
-    align-items: baseline;
-    margin-bottom: 8px;
-  }
-  .sub-name {
-    color: var(--text-mid);
-    font-size: 13px;
-    line-height: 1.5;
-  }
-  .sub-name .lock-tag {
-    color: var(--accent);
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-right: 6px;
-    font-weight: 500;
-  }
-  .sub-name .pending-tag {
-    color: var(--text-dim);
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-right: 6px;
-    font-weight: 500;
-    opacity: 0.8;
-  }
-  .sub-name .resolved-tag {
-    color: var(--done);
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-right: 6px;
-    font-weight: 500;
-  }
-  .sub-percent {
-    color: var(--text);
-    font-family: var(--font-mono);
-    font-variant-numeric: tabular-nums;
-    text-align: right;
-    font-size: 12px; font-weight: 500;
-    letter-spacing: -0.01em;
-    min-width: 38px;
-  }
-  .sub-status {
-    text-align: right;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight: 500;
-    min-width: 60px;
-    font-family: var(--font-mono);
-  }
+  .sub-top { display: grid; grid-template-columns: 1fr auto auto; gap: 16px; align-items: baseline; margin-bottom: 8px; }
+  .sub-name { color: var(--text-mid); font-size: 13px; line-height: 1.5; }
+  .sub-percent { color: var(--text); font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; font-size: 12px; font-weight: 500; min-width: 38px; }
+  .sub-status { text-align: right; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; min-width: 60px; font-family: var(--font-mono); }
   .status-done { color: var(--done); }
   .status-partial { color: var(--accent); }
   .status-todo { color: var(--text-dim); }
   .status-untested { color: var(--text-dim); opacity: 0.6; font-style: italic; }
 
-  .confidence-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 12px 16px;
-    border-radius: 3px;
-    margin: 0 0 12px;
-    font-size: 13px;
-    border: 1px solid var(--border);
-    font-family: var(--font-mono);
-  }
-  .confidence-label {
-    font-weight: 500;
-    font-variant-numeric: tabular-nums;
-  }
-  .confidence-hint {
-    font-size: 10px;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-  .confidence-untested {
-    background: rgba(91, 100, 112, 0.04);
-    color: var(--text-dim);
-    border-color: var(--border);
-  }
-  .confidence-untested .confidence-label { font-style: italic; }
-  .confidence-low {
-    background: rgba(196, 110, 110, 0.05);
-    color: #c89898;
-    border-color: rgba(196, 110, 110, 0.22);
-  }
-  .confidence-medium {
-    background: rgba(189, 160, 118, 0.05);
-    color: var(--warn);
-    border-color: rgba(189, 160, 118, 0.22);
-  }
-  .confidence-high {
-    background: rgba(126, 172, 156, 0.05);
-    color: var(--done);
-    border-color: rgba(126, 172, 156, 0.22);
-  }
-
   .sub-bar { padding: 0; }
   .sub-bar .bar-track { height: 3px; }
 
   .issues-list { margin: 0; padding: 0; list-style: none; }
-  .issue {
-    display: flex; align-items: flex-start; gap: 12px;
-    padding: 10px 0;
-    font-size: 12.5px; color: var(--text-mid);
-    line-height: 1.65;
-    border-bottom: 1px solid var(--border);
-    font-family: var(--font-sans);
-    font-weight: 400;
-  }
+  .issue { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; font-size: 12.5px; color: var(--text-mid); line-height: 1.65; border-bottom: 1px solid var(--border); }
   .issue:last-of-type { border-bottom: none; }
-  .issue-icon {
-    color: var(--accent-soft);
-    flex-shrink: 0;
-    font-size: 13px;
-    line-height: 1.5;
-    margin-top: 2px;
-    font-family: var(--font-mono);
-  }
+  .issue-icon { color: var(--accent-soft); flex-shrink: 0; font-size: 13px; line-height: 1.5; margin-top: 2px; font-family: var(--font-mono); }
 
-  footer {
-    margin-top: 48px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-    color: var(--text-dim);
-    font-size: 11px;
-    text-align: center;
-    line-height: 1.7;
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
+  footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 11px; text-align: center; line-height: 1.7; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; }
 
-  @media (max-width: 540px) {
+  /* Legend */
+  .legend { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 16px 0 12px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 3px; background: rgba(15,19,24,0.5); }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); }
+  .legend-swatch { width: 12px; height: 4px; border-radius: 1px; flex-shrink: 0; }
+  .legend-swatch.arch { background: var(--bar-arch); }
+  .legend-swatch.code { background: var(--bar-code); }
+  .legend-swatch.test { background: var(--bar-test); }
+  .legend-swatch.composite { background: var(--bar-composite); }
+
+  @media (max-width: 600px) {
     .container { padding: 32px 18px 80px; }
     h1 { font-size: 26px; }
     h1 .subtitle-em { font-size: 20px; }
     .overall-percent { font-size: 36px; }
     .module-name { font-size: 14.5px; }
-    .sub-status { display: none; }
-    .sub-top { grid-template-columns: 1fr auto; }
+    .module-bar-row { grid-template-columns: 65px 36px 1fr; gap: 8px; }
+    .module-bar-label { font-size: 9px; }
+    .legend { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 </head>
@@ -464,29 +238,52 @@
         Permissionless, immutable from genesis, adversarially-robust by composition rather than gatekeeping.
       </p>
       <p>
-        This tracker measures architectural progress against the vision. Percentages reflect
-        <em>alignment + readiness</em>, not feature-completeness.
-      </p>
-      <p>
-        <strong>Overall progress weighs in test confidence.</strong> Each module's bar shows
-        its raw build progress; the overall figure folds in the latest <em>/hydra-test</em>
-        confidence per module &mdash; strong-confidence modules (&ge;80) get full credit,
-        moderate (60&ndash;79) take a 15% discount, weak or untested work takes a 30% discount.
+        <strong>Each module shows three bars + a composite.</strong>
+        <em>Architectural</em> = design-lock completeness (locked attestations / total surface).
+        <em>Code</em> = implementation completeness (real bodies vs scaffolded `todo!()`).
+        <em>Testing</em> = latest <em>/hydra-test</em> confidence (null = untested).
+        <em>Composite</em> = the MIN of the three: a module is only as ship-ready as its weakest axis.
+        The overall figure averages per-module composites weighted by module-weight.
       </p>
     </div>
 
     <div class="overall-card">
-      <div class="overall-label">Overall progress</div>
+      <div class="overall-label">Overall ship-readiness</div>
       <div class="overall-row">
         <span class="overall-percent" id="overall-percent">0%</span>
-        <span class="overall-name">across foundational commitments + build modules</span>
+        <span class="overall-name">composite: min(architectural, code, testing) per module, weighted-averaged across modules</span>
       </div>
-      <div class="bar-track"><div class="bar-fill" id="overall-bar" style="width: 0%"></div></div>
+      <div class="bar-track"><div class="bar-fill composite" id="overall-bar" style="width: 0%"></div></div>
+
+      <div class="overall-sub-bars">
+        <div class="overall-sub-bar-row">
+          <span class="overall-sub-bar-label">Architectural</span>
+          <span class="overall-sub-bar-pct" id="overall-arch-pct">—</span>
+          <div class="bar-track"><div class="bar-fill arch" id="overall-arch-bar" style="width: 0%"></div></div>
+        </div>
+        <div class="overall-sub-bar-row">
+          <span class="overall-sub-bar-label">Code</span>
+          <span class="overall-sub-bar-pct" id="overall-code-pct">—</span>
+          <div class="bar-track"><div class="bar-fill code" id="overall-code-bar" style="width: 0%"></div></div>
+        </div>
+        <div class="overall-sub-bar-row">
+          <span class="overall-sub-bar-label">Testing</span>
+          <span class="overall-sub-bar-pct" id="overall-test-pct">—</span>
+          <div class="bar-track"><div class="bar-fill test" id="overall-test-bar" style="width: 0%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><span class="legend-swatch arch"></span>Architectural</div>
+      <div class="legend-item"><span class="legend-swatch code"></span>Code</div>
+      <div class="legend-item"><span class="legend-swatch test"></span>Testing</div>
+      <div class="legend-item"><span class="legend-swatch composite"></span>Composite</div>
     </div>
 
     <div class="expand-hint">
       <span class="key">Click</span>
-      <span>any section to expand sub-items, progress, and open issues</span>
+      <span>any module to expand sub-items + open issues</span>
     </div>
 
     <div id="modules"></div>
@@ -496,477 +293,370 @@
 
   <script>
     /* =====================================================================
-       DATA — edit this block to update the tracker.
-       Submodule tags:
-         LOCKED        — architecturally committed (~70%)
-         CASCADE       — locked but cross-module recalibration pending (~55%)
-         RESEARCH      — open structural question (~10%)
-         TUNING        — within locked structure; awaits simulation (~40%)
-         FINE-TUNE     — parameters within locked structure (~55%)
-         RESOLVED      — folded into another lock (~65%)
+       DATA — three bars per module + composite.
+
+       Schema per module:
+         {
+           name: "Module N — ...",
+           architectural: 0..100,   // design-lock completeness
+           code: 0..100,            // implementation completeness
+           testing: 0..100 | null,  // /hydra-test confidence; null = untested
+           weight: <N>,
+           submodules: [ ... ],     // optional drill-down (single percent each)
+           issues: [ ... ],         // optional open issues
+         }
+
+       Composite per module = min(architectural, code, testing_or_0).
+       Memo-only modules (e.g., M7 reframed as standing memo) have code=null
+       and testing=null; their composite = architectural.
+
+       Overall = weighted-mean of per-module composites.
+       Overall sub-bars = weighted-mean of each axis across modules.
+
+       Last updated: 2026-05-22 (session 2 close — M2 vision-perfection complete + M2 Reaping + M7 reframe + tracker redo to three-bar architecture).
        ===================================================================== */
     const DATA = {
-      generated_at: "2026-05-21",
-      source: "CURRENT_STATE.md + Vision_v1.md @ session 2 close (posture lock + M4/M6/M8 tests + M4 geometry locked)",
-      overall_percent: 0,
+      generated_at: "2026-05-22",
+      source: "CURRENT_STATE.md + Vision_v1.md @ 2026-05-22 session 2 (M2 perfected + reaped; M7 reframed memo-only; tracker redo)",
       modules: [
         {
           name: "Foundational commitments — 11 Hard Rules",
-          percent: 74,
+          architectural: 80,
+          code: 65,
+          testing: null,
           weight: 3,
           submodules: [
-            { name: "HR.1 Immutability from genesis — PQ-correct via ML-DSA-65 (FIPS 204) genesis crypto lock", percent: 86 },
-            { name: "HR.2 No human governance over load-bearing AI components", percent: 25 },
+            { name: "HR.1 Immutability from genesis (PQ-correct via ML-DSA-65)", percent: 88 },
+            { name: "HR.2 No human governance over load-bearing AI components", percent: 30 },
             { name: "HR.3 Calibration, not accuracy, drives reputation", percent: 78 },
             { name: "HR.4 Multi-modal posteriors preserved", percent: 72 },
-            { name: "HR.5 Permissionless intake — floor enforced at rate-gate consumption, not at calibration LCB primitive", percent: 82 },
+            { name: "HR.5 Permissionless intake — LCB-floored rate-gate", percent: 82 },
             { name: "HR.6 Off-protocol source-side conversion", percent: 82 },
             { name: "HR.7 Probabilistic intake", percent: 82 },
-            { name: "HR.8 Emergent within structure", percent: 72 },
-            { name: "HR.9 Minimum substrate at ship", percent: 78 },
-            { name: "HR.10 Defense-in-depth composition — attack-surface enumeration via M7 v1 memo", percent: 80 },
-            { name: "HR.11 No meta-succession — integer-only arithmetic substrate via BFP + activation LUTs + matvec", percent: 78 },
+            { name: "HR.8 Emergent within structure", percent: 75 },
+            { name: "HR.9 Minimum substrate at ship", percent: 80 },
+            { name: "HR.10 Defense-in-depth composition — per-module per `m7_adversarial_composition.md`", percent: 80 },
+            { name: "HR.11 Integer-only arithmetic substrate (BFP + LUTs + matvec)", percent: 78 },
           ],
           issues: [
-            "HR.2 is lowest because no load-bearing AI subsystem exists yet — exercised when Module 5/6 land.",
-            "No HR at 100% pre-genesis — each has open structural items pending downstream modules.",
-            "HR.12 reconsideration door left open (pulse-state-event-determinism). Default: no.",
-            "HR lift candidates pending principal review: typed CalibrationLcb wrapper; 4-way cross-pipeline isolation as HR.10 corollary; M8 conservation invariant as explicit HR; BFP round-half-to-even as HR.11 sub-clause.",
+            "HR.2 elevated this session — vision §233 edit makes operator-legitimacy structurally bound to contributor calibration (no governance-only roles).",
+            "HR.10 reframed: defenses per-module (M7 is memo-only). M1+M2 retro complete; M3-M14 retros pending each module's perfection cycle.",
+            "HR lift candidates: factor-adversarial-AI as HR.12 (currently a feedback-discipline memory).",
           ],
         },
         {
           name: "Module 1 — Canonical state, data model & emergence",
-          percent: 67,
+          architectural: 88,
+          code: 18,
+          testing: 87,
           weight: 2,
           submodules: [
-            { name: "Atomic shape — (dim, observation-time, anchor, distribution, provenance, encoder); polymorphic anchor; mandatory encoder identifier", percent: 85 },
-            { name: "Representation registry — 3 types locked at genesis (histogram / weighted samples / parametric mixture)", percent: 85 },
-            { name: "Dimension declaration — sticky from first declaration; no in-place edits", percent: 80 },
-            { name: "Canonical state as time-indexed block — first-class blanks; bidirectional revisable", percent: 80 },
-            { name: "Entity registry — emergent; probabilistic resolution (auto-merge / auto-split / auto-elevation)", percent: 75 },
-            { name: "Relations as binary atoms — higher-arity composed via event-entities", percent: 80 },
-            { name: "Emergent dimension lifecycle — pending → accepted via calibration-weighted threshold", percent: 70 },
-            { name: "Encoder taxonomy — 32-byte EncoderRef on Atom (mandatory); 1:1 source-encoder exemption via EncoderRef = ProvenanceId.0; content-addressed by convention under domain tag b\"hydra.encoder\"; pulse-coupled concentration window", percent: 75 },
-            { name: "Encoder-concentration query — per (dim, anchor-type, encoder, last K pulses); calibration-weighted aggregation; deterministic from canonical state", percent: 70 },
-            { name: "Persistence & retrieval — sliced + erasure-coded + VRF-assigned + Merkle-committed", percent: 75 },
+            { name: "Atom shape + canonical encoding (post-M1 reaping)", percent: 92 },
+            { name: "Representation registry — 3 types + 6-kernel universe locked", percent: 95 },
+            { name: "Dimension declaration + canonical schema serialization", percent: 92 },
+            { name: "Canonical state as time-indexed block — first-class blanks", percent: 80 },
+            { name: "Entity resolution — full-auto deterministic LOCKED", percent: 88 },
+            { name: "Emergent dimension lifecycle — full-auto LOCKED + DECAYED state", percent: 88 },
+            { name: "Protocol-reserved dimensions registry (NEW M2 R4 — m1_protocol_reserved_dimensions)", percent: 85 },
+            { name: "Lossless canonical compression — Zstd + locked dictionary LOCKED", percent: 92 },
+            { name: "Provenance metadata (optional 5-byte default footprint) LOCKED", percent: 90 },
+            { name: "Query-driven 3-tier priority (cross-module M1/M4/M5/M10) LOCKED", percent: 80 },
+            { name: "Persistence layer interface — design-pending (M11 STARK family)", percent: 35 },
+            { name: "Gossip-mesh substrate (RE-SCOPED to M1 2026-05-22 R3) — design-pending", percent: 15 },
           ],
           issues: [
-            "Schema design is the gating decision for what world-state HYDRA can meaningfully track.",
-            "Anchor-bucket granularity, K/N erasure params, Merkle scheme — fine-tuning deferred.",
-            "Persistence-layer implementation deferred to post-genesis-crypto-suite decision.",
-            "ParametricMixture uniform-params + ProbabilityMass denominator — vision-lift pending.",
-            "Encoder-concentration query landed (Slice B); encoder-concentration window magnitude K (range: 128–1024 pulses) and modulation α — pre-genesis tuning.",
-            "Probabilistic identity resolution (submodule 5) is the largest M1 research-pending block; deserves a dedicated memo when surfaced.",
+            "M1 reaping complete (session 1, 2026-05-22): substantial scaffolding with todo!() bodies in hydra-core.",
+            "Gossip-mesh substrate now M1-scoped per principal directive (push defenses to M1). Likely new hydra-gossip crate when designed.",
+            "Persistence layer interface blocked on M11 STARK family choice.",
+            "Testing score (87/100) is pre-re-baseline — pre-M1-reaping test. Needs re-test against post-reaping shape.",
           ],
-          confidence: 87,
         },
         {
           name: "Module 2 — Source submission layer",
-          percent: 65,
+          architectural: 95,
+          code: 12,
+          testing: 80,
           weight: 2,
           submodules: [
-            { name: "Submission primitives — single atom OR atomic batch", percent: 60 },
-            { name: "Source identity & signature — single scheme + key rotation", percent: 60 },
-            { name: "Lifecycle — sync structural validation + gossip-mesh + eventual consistency", percent: 60 },
-            { name: "Query-time threshold consensus — quorum nodes converge + threshold-signed response", percent: 70 },
-            { name: "Acknowledgment format — node-signed receipt; non-repudiation; binary status; domain-separated from atom signatures", percent: 85 },
-            { name: "Calibration-modulated rate gating — token bucket; refill ∝ conservative-LCB estimator; non-zero floor preserves HR.5", percent: 85 },
-            { name: "Off-protocol boundary discipline — protocol refuses raw observations", percent: 85 },
-            { name: "Batch as structural-poisoning filter — atomic accept/reject", percent: 70 },
+            { name: "Submission primitives — single atom + atomic batch (m2_batch_primitive LOCKED)", percent: 95 },
+            { name: "Source identity + key rotation (m2_key_rotation LOCKED — ProvenanceId permanent + chain)", percent: 92 },
+            { name: "Four-stage accept pipeline (m2_accept_pipeline LOCKED — decode/sig/rate/schema)", percent: 95 },
+            { name: "Calibration-modulated rate-gate (m2_rate_gate_refill_function LOCKED — pulse-time + partition-key)", percent: 92 },
+            { name: "Cross-node rate-gate state reconciliation (m2_rate_gate_state_reconciliation LOCKED — LCB-weighted median)", percent: 90 },
+            { name: "Acknowledgment receipts (m2_acknowledgment_receipts LOCKED — atoms on __receipt__)", percent: 92 },
+            { name: "Submission lifecycle (m2_submission_lifecycle LOCKED — admitted-pending/canonical/graded)", percent: 90 },
+            { name: "Off-protocol boundary discipline (vision §85)", percent: 95 },
+            { name: "Silent admission/rejection — DEFERRED to gossip-mesh substrate", percent: 30 },
+            { name: "M14 health-metric vector consumption — deferred to M14 perfection", percent: 60 },
           ],
           issues: [
-            "Batch primitive, key-rotation, gossip-mesh, query-time threshold consensus — deferred.",
-            "Pre-genesis magnitudes: BUCKET_CAPACITY_TOKENS, NS_PER_TOKEN_AT_FULL, MIN_RATE_WEIGHT_FLOOR; rate-gate MAX_IDLE_NS threshold (caller-policy magnitude for the evict_idle_since surface).",
+            "M2 vision-perfection complete (8 rounds + AI retro + 3 vision edits + M7 reframe). M2 declared perfect 2026-05-22.",
+            "M2 Reaping executed 2026-05-22: deleted 7 misaligned files, scaffolded 8 new files with todo!() bodies. cargo check -p hydra-submission clean.",
+            "Magnitudes sim-pending: MAX_BATCH_ATOMS, MAX_BATCH_BYTES, BASE_BUCKET_CAPACITY_TOKENS, BASE_REFILL_TOKENS_PER_PULSE, MIN_REFILL_FLOOR_TOKENS_PER_PULSE.",
+            "Testing score (80/100) is pre-perfection pre-reaping; needs re-test against post-reaping scaffolding (test suite would test type-surface only; behavior tests post-coding-pass).",
           ],
-          confidence: 80,
         },
         {
           name: "Module 3 — Calibration & reputation engine",
-          percent: 92,
+          architectural: 65,
+          code: 70,
+          testing: 93,
           weight: 2,
           submodules: [
-            { name: "Reference type — strict temporal separation (canonical at coord, later-only)", percent: 70 },
-            { name: "Settlement timing — event-triggered (uncertainty threshold OR window-from-observation)", percent: 70 },
-            { name: "Scoring-rule family — Brier + log-score + CRPS; B1 weighted blend per-dim emergent", percent: 90 },
-            { name: "Per-rule scalar — point estimator for weighting; conservative-LCB for gating; smooth-saturating encoder-concentration modulation 1/(1+α·c) with 1:1-self-encoded exemption", percent: 80 },
-            { name: "Calibration partitions — 4-way disjoint: source-observation (provenance, dim, anchor-type) + proposer (proposer, fitness-class) + disputer (disputer, fitness-class) + scorer (scorer, fitness-class)", percent: 95 },
-            { name: "Bootstrap — flat-prior Bayesian update; no separate cold-start surface", percent: 85 },
-            { name: "Specialist/novice on-ramp — emerges from calibration-shrinkage machinery; no separate surface", percent: 80 },
-            { name: "Settlement primitives — OverturnSettlement + UpholdSettlement + map_settlement_to_disputers (returns Result with SettlementError closed-enum); 25%/75% bounty/sink split; saturating_mul arithmetic-overflow defense; symmetric conservation invariants", percent: 90 },
-            { name: "Settlement → ledger composition — apply_overturn_settlement + apply_uphold_settlement + SettlementApplicationError compose end-to-end through StakeLedger; atomic pre-flight balance checks", percent: 90 },
-            { name: "Retroactive vindication — append-only economic ledger; source-keyed; trigger function research-pending", percent: 80 },
+            { name: "Reference type — strict temporal separation", percent: 70 },
+            { name: "Scoring rule family — Brier + log + CRPS; B1 blend per-dim", percent: 90 },
+            { name: "Two-estimator partition (point + LCB) — load-bearing", percent: 90 },
+            { name: "4-way calibration partitions", percent: 95 },
+            { name: "Bootstrap — flat-prior Bayesian", percent: 85 },
+            { name: "Settlement primitives + ledger composition", percent: 90 },
+            { name: "Vindication trigger logic — design-pending", percent: 45 },
+            { name: "B1 α emergence layer — design-pending", percent: 50 },
+            { name: "T1 settlement timing — design-pending", percent: 50 },
           ],
           issues: [
-            "Sample-set CRPS grading integration deferred (primitive landed; CalibrationEntry shape OQ for sample-set entries surfaced s11).",
-            "B1 α emergence rule research-pending (proposal v1 in docs/design).",
-            "Calibration-as-reputation requires source-side statistical literacy — friction, not barrier.",
-            "4-way disjoint calibration partition + settlement composition through StakeLedger structurally complete (s5); M8 substantive economic-design locks the remaining magnitudes.",
+            "Code broken under post-M1-reaping (CoordScale import missing — 1-line fix when M3 reaping lands).",
+            "Vindication trigger / B1 α / T1 settlement timing — substantive design pending. Next module after M2 perfection.",
           ],
-          confidence: 93,
         },
         {
           name: "Module 4 — Aggregation model (self-evolving)",
-          percent: 45,
+          architectural: 78,
+          code: 45,
+          testing: 79,
           weight: 2,
-          confidence: 79,
           submodules: [
-            { name: "Granularity — per-(dim, obs-time, anchor) local function; cross-correlations external", percent: 75 },
-            { name: "Specialization — three models per representation type; three independent ES populations", percent: 50 },
-            { name: "Inference path — per-pulse materialization", percent: 25 },
-            { name: "Fitness — proper-scoring-rule blend vs materialized canonical at T + dim_timescale", percent: 50 },
-            { name: "Output — matches dim's declared representation type and schema", percent: 70 },
-            { name: "Input weighting — calibration point estimator × encoder-concentration", percent: 55 },
-            { name: "Architecture — NAS-NARROW within Set-Transformer family (ISAB + PMA); geometry LOCKED 2026-05-21 (d_model=256; n_heads∈{4,8}; n_layers∈{2,3,4}; m_induced∈{16,32,64}; mlp_hidden∈{128,256,384}; pma_seeds=1; pre-LN). 162+ ES-mutable configs", percent: 65 },
-            { name: "Determinism substrate — BFP block-floating-point arithmetic (MXINT 32-i16 + 1-u8 biased exp; free-order reduction + round-half-to-even); activation LUTs (sigmoid/tanh/GELU/exp/sqrt, 4096 entries each, Q11→Q15/Q11, piecewise-linear interpolation + RHTE); matrix-vector products (BfpMatrix + bfp_dot + bfp_matvec)", percent: 80 },
-            { name: "Training — JEPA-AUX: fitness + masked-source SS auxiliary; calibration-gated; scalar blend", percent: 20 },
-            { name: "Per-type coupling — shared hyperparameter range; full population isolation", percent: 20 },
-            { name: "Calibration-output — proper scoring rules guarantee calibration directly", percent: 30 },
-            { name: "ES population structure — within NAS search space; ship-now reframe applies", percent: 20 },
-            { name: "Mode preservation — attention + isolated populations resolve structurally", percent: 50 },
+            { name: "Set-Transformer NAS-NARROW geometry LOCKED (s2)", percent: 90 },
+            { name: "ES algorithm family LOCKED (μ+λ GA + tournament + mutation-only)", percent: 90 },
+            { name: "Per-rep-type three populations (isolated)", percent: 80 },
+            { name: "Determinism substrate (BFP + LUTs + matvec)", percent: 85 },
+            { name: "Per-pulse materialization — blocked on M14 implementation", percent: 30 },
+            { name: "Encoder-concentration second weighting factor — partial", percent: 55 },
+            { name: "Training procedure — OFF-PROTOCOL (vision §211)", percent: 80 },
+            { name: "Calibration-output direct guarantee", percent: 30 },
           ],
           issues: [
-            "Set-Transformer family choice is permanent (no architecture-succession path); HR.2 stretching acknowledged.",
-            "CRPS grading integration pending Module 1 dimension-schema coord-scale.",
-            "Off-protocol encoder concentration partially mitigated by layered defense; ecosystem-level residual.",
-            "Next substantive layer: softmax (via exp LUT) + layer-norm (via sqrt LUT) + Set-Transformer ISAB / PMA / SAB composition. Gates M10's 10a/10b query types.",
-            "Activation LUT bit-precisions + matrix-product magnitudes are structurally locked but sim-citation-pending for genesis attestation.",
+            "Set-Transformer family + ES algorithm both LOCKED s2/s3 2026-05-21. Magnitudes (μ, λ, k, E, p_m, G, W) sim-pending.",
+            "Code partially broken under post-M1-reaping; nas_narrow.rs field ranges wider than attestation (narrow when reaping lands).",
           ],
         },
         {
           name: "Module 5 — Forecasting model (self-evolving)",
-          percent: 80,
+          architectural: 72,
+          code: 55,
+          testing: 88,
           weight: 2,
           submodules: [
-            { name: "Granularity — per-(dim, anchor) with anchor history as context", percent: 70 },
-            { name: "Specialization — six adaptive models total at genesis (three per representation type); single population per type; multi-output bucketed", percent: 75 },
-            { name: "Inference path — single forward pass produces one distribution per declared bucket for the queried dim", percent: 75 },
-            { name: "Forecast horizon — per-dimension bucket-set declaration; min-Δ floor at 1 pulse; sub-pulse off-protocol", percent: 75 },
-            { name: "Multi-horizon bucket-set — per-dim declaration of up to 4 HorizonBucket values (genesis-immutable bound); values emerge per dim at introduction within locked family", percent: 75 },
-            { name: "Per-bucket fitness atom — fitness emitted per (model, cluster, bucket); composes with M6 Forecasting fitness class settlement (single-provider + dispute)", percent: 75 },
-            { name: "Fitness target — eventually-stable canonical at each bucket's realization time; M3 settlement-fired canonical, not real-time", percent: 75 },
-            { name: "Output — matches dim's type and schema; N distributions per query (one per declared bucket)", percent: 75 },
-            { name: "One-way dependency on aggregation — fitness target is M4 output; not symmetric", percent: 70 },
-            { name: "Architecture — NAS-NARROW within causal Transformer family", percent: 70 },
-            { name: "Training — unified fitness across all forecast atoms as targets materialize", percent: 70 },
-            { name: "Per-time-step encoding — per-type token construction; pulse-delta PE; blank-mask", percent: 70 },
-            { name: "Per-type coupling + calibration — shared range; full isolation; direct calibration", percent: 70 },
-            { name: "ES population structure — within Module 6 R-items; needs simulation", percent: 40 },
-            { name: "Mode preservation — attention + isolated populations resolve structurally", percent: 65 },
+            { name: "Granularity + 6-population partition + multi-horizon bucket-set", percent: 75 },
+            { name: "Per-bucket fitness atom", percent: 75 },
+            { name: "Set-Transformer + ES algorithm INHERITED from M4 LOCKS", percent: 85 },
+            { name: "Multi-horizon ES integration — design-pending", percent: 55 },
+            { name: "Per-bucket fitness specifics — design-pending", percent: 55 },
           ],
           issues: [
-            "Multi-horizon shape locked at genesis (per-dim bucket sets, max 4 buckets per dim, single population, multi-output); Slice B code landed (BucketSet + BucketedForecast + BucketedFitnessTracker).",
-            "Forecasting fitness depends on aggregation's output — adapts as M4 ES evolves.",
-            "Per-bucket fitness atom settlement couples with M6 OQ-9 — forecasting fitness class settles via single-provider + dispute window (Slice C in M6 dependency).",
-            "Causal Transformer family choice is permanent; same HR.2 stretching as M4 (acknowledged).",
+            "Inherits M4's geometry + ES locks. Multi-horizon fitness integration is M5-specific design-pending.",
           ],
-          confidence: 88,
         },
         {
           name: "Module 6 — Self-evolution infrastructure",
-          percent: 50,
+          architectural: 80,
+          code: 58,
+          testing: 95,
           weight: 2,
-          confidence: 95,
           submodules: [
-            { name: "Training work-unit — fitness atom = (candidate_model, cluster) → score", percent: 75 },
-            { name: "Training-participant roles — candidate-proposer + fitness-scorer + disputer; permissionless under flat-prior shrinkage; 4-way disjoint calibration partitions", percent: 85 },
-            { name: "Off-protocol candidate weights — 32-byte content-addr ref on canonical state; full payload in storage substrate", percent: 70 },
-            { name: "Fitness-atom settlement — per-class: aggregation = threshold quorum (T-of-N), forecasting = single-provider + dispute window, succession = full replicated quorum; all 3 state-machine primitives now landed", percent: 85 },
-            { name: "Proposer/disputer/scorer calibration — three (provenance, fitness-class) partitions; canonical-fitness-class rate as win metric; LCB rate-gate composition", percent: 80 },
-            { name: "Slash trigger — bitwise-consensus failure on FitnessAtom; scorer-side; primitives unit-agnostic pending M8 stake-plumbing", percent: 75 },
-            { name: "Canonical model version — best-fitness of most-recent fully-scored generation; promoted at pulse boundary", percent: 55 },
-            { name: "Population evolution — deterministic function of accumulated fitness atoms; RNG seeded by gen-state hash", percent: 70 },
-            { name: "Generation cadence — decoupled from pulse cadence", percent: 70 },
-            { name: "Population state persistence — current gen via Module 1; past M generations audit window", percent: 70 },
-            { name: "Determinism substrate — canonical arithmetic family + deterministic algorithm family at genesis", percent: 70 },
-            { name: "Canonical arithmetic family — integer-only / quantized; no FP in protocol-canonical ops", percent: 70 },
-            { name: "Determinism — shared STARK-suite hash", percent: 70 },
-            { name: "Arithmetic — MXINT block-floating-point (32-block, 8-bit shared exponent)", percent: 70 },
-            { name: "Reduction order — free-order with associative wraparound + tie-break rules", percent: 70 },
-            { name: "Primitives — minimal set + reciprocal LUT + 5 activation LUTs (sigmoid/tanh/GELU/exp/sqrt)", percent: 70 },
-            { name: "RNG — counter-mode-hash with context-keyed per-call seeding", percent: 70 },
-            { name: "Verification — test-vectors-only; corpus off-chain with Merkle root canonical", percent: 70 },
-            { name: "Fitness-atom verification — per-class consensus state machines + admission-time dispatcher (PerClassSettlement + accept_and_dispatch_fitness_atom) landed; FullReplicatedQuorum has symmetric mark_quorum_failed", percent: 90 },
-            { name: "ES algorithm — within locked NAS-NARROW spaces; needs simulation", percent: 40 },
-            { name: "Mutation operators — within Set-Transformer + causal Transformer hyperparameter spaces", percent: 40 },
-            { name: "Selection-rule specifics — tournament size, elitism, population size", percent: 40 },
-            { name: "Cross-population dynamics — six independent populations; no cross-flow; adversarial isolation", percent: 65 },
-            { name: "Cold-start training — JEPA-AUX dense signal + retrospective scoring on materialized history", percent: 65 },
+            { name: "ES algorithm family LOCKED (μ+λ + tournament + mutation-only)", percent: 92 },
+            { name: "FitnessAtom + admission-time per-class dispatch", percent: 80 },
+            { name: "Per-class settlement (Threshold / FullReplicated / dispute-window)", percent: 85 },
+            { name: "Slash trigger primitives (composes through M8)", percent: 78 },
+            { name: "Canonical model version promotion — blocked on M14", percent: 35 },
+            { name: "RNG counter-mode-hash scheme — design-pending", percent: 55 },
           ],
           issues: [
-            "Role surface + per-class settlement + admission-time dispatch locked; ES tuning (algorithm / mutation / selection) needs simulation tooling.",
-            "Dispute path structurally complete (Slice C.1-C.4): atom species + lifecycle state machine + admission pipeline + settlement primitives + M12 audit-committee trait seam all locked.",
-            "FitnessAtom admission pipeline + per-class admission dispatcher landed; all three settlement state machines (Forecasting / Aggregation / Succession) consumable end-to-end. FullReplicatedQuorum gained symmetric mark_quorum_failed API.",
-            "End-to-end path FitnessAtom → settlement → divergent-scorer slash → ledger debit structurally complete via M8 StakeLedger + slash_divergent_scorers + apply_overturn_settlement composition.",
-            "Module 13 arithmetic-succession is the escape valve if MXINT spec proves wrong.",
-            "Production-stable NAS-style ES on quantized BFP NN does not yet exist at HYDRA scale — highest single technical risk.",
+            "ES algorithm locked s3. RNG scheme + verification test-vectors corpus pending.",
           ],
         },
         {
-          name: "Module 7 — Adversarial defense composition",
-          percent: 55,
+          name: "Module 7 — Adversarial defense composition (MEMO-ONLY, 2026-05-22 reframe)",
+          architectural: 25,
+          code: null,
+          testing: null,
           weight: 1,
           submodules: [
-            { name: "Attack-surface enumeration — v1 memo at docs/design/module_7_attack_surface_v1.md; 12+ surfaces with per-surface defender map + 16-scenario sim coverage map", percent: 70 },
-            { name: "HR.10 Defense-in-depth composition — no single defense sufficient; composed surface required", percent: 70 },
-            { name: "Calibration-LCB requirement — wide-posterior bootstrap rate-limits new-source influence", percent: 70 },
-            { name: "Sybil power-law decay — coordinated confirming-source attacks diluted across coalition", percent: 70 },
-            { name: "Calibration-modulated submission rate gating — spam + flood attacks bounded", percent: 70 },
-            { name: "Vindication-credit retroactive — whistleblower-vs-mimic partial defense (economic)", percent: 70 },
-            { name: "Encoder-concentration three-layer defense — queryable + reward + influence weighting", percent: 70 },
-            { name: "Auto-stake from operator earnings — fraction s of RT auto-locked; vests V pulses; slashable", percent: 70 },
-            { name: "VRF rotation — audit per-dispute; MPC per-job; storage per-pulse; prevents committee capture", percent: 70 },
-            { name: "Dispute bond mechanism — filer locks D RT; bond burned if lost; refund + challenger share if won", percent: 70 },
-            { name: "Bootstrap audit gap-fill — D1 cross-dimension audit pool + D2 deferred resolution", percent: 70 },
-            { name: "Crypto-primitive succession (Module 13 path) — conservative genesis choice + succession only modification path", percent: 70 },
+            { name: "Composition memo (m7_adversarial_composition.md) written", percent: 70 },
+            { name: "Per-module defense map (15 defenses mapped)", percent: 60 },
+            { name: "Cross-cutting composition properties (7 identified)", percent: 70 },
+            { name: "Adversarial-AI retro: M1+M2 complete (2 of 13 modules)", percent: 15 },
+            { name: "Sim scenario coverage (Category C scenarios surfaced)", percent: 10 },
           ],
           issues: [
-            "M7 is a composition AUDIT, not a runtime layer. Final-state M7 derives after every defender module ships + has passing sim invariants for the 16 enumerated scenarios.",
-            "Three structural residuals acknowledged: audit-primitive frozenness; encoder-concentration ecosystem; whistleblower-vs-mimic information-theoretically hard.",
-            "Patient capitalized adversaries cannot be fully priced out — defense is principled, not absolute.",
-            "Query/inference layer (surfaces 12a-12e) is a substrate gap, not a defense gap — M10 substrate itself is undesigned, blocking the corresponding defense composition.",
+            "RE-FRAMED 2026-05-22 from coding module to standing composition memo per principal directive.",
+            "Defenses now live at their natural mechanism sites (per-module). M7 = cross-module reasoning artifact.",
+            "Standing AI-retro layer: M3-M14 retros land as each module's perfection cycle completes.",
           ],
-          confidence: null,
         },
         {
           name: "Module 8 — Tokenomics & economic accounting",
-          percent: 30,
+          architectural: 50,
+          code: 38,
+          testing: 60,
           weight: 1,
           submodules: [
-            { name: "Token structure — two non-fungible: GT (permanent compute privilege) + RT (gas, burned)", percent: 25 },
-            { name: "Mint mechanism — per-pulse budget = α(demand) · burn + bootstrap subsidy; 60/40 operator/info-provider split (LOCKED Tier A)", percent: 25 },
-            { name: "Demand-responsive α(demand) — bounded sigmoid; α>1 low demand, α<1 high demand", percent: 20 },
-            { name: "X(demand) per-unit compute price — bounded sigmoid; serves paid-user + rental-burn floor", percent: 20 },
-            { name: "GT_factor decay — D-netburn × F-exp; zero at criticality event", percent: 20 },
-            { name: "Contribution-value reward — C2 multi-stream additive; LCB-blended + whistleblower-shape bonus continuous-multiplier by divergence × vindication (LOCKED Tier A); S2 sybil decay", percent: 25 },
-            { name: "Per-role stake-minimum formula — min_stake[role] = K_role · median_active_stake (LOCKED Tier A; K_role constants sim-pending; median_active_stake accessor missing in code)", percent: 30 },
-            { name: "Slash distribution — challenger 40 / refund 60 / burn 0 (LOCKED Tier A; code still encodes pre-s1 25/75; refund channel structurally absent)", percent: 30 },
-            { name: "Auto-stake (operator earnings) — fraction s RT auto-locked; vests V pulses; slashable per the three-way distribution", percent: 20 },
-            { name: "Founder allocation — 50% cumulative GT at criticality via ZK-claim pool", percent: 20 },
-            { name: "Bootstrap subsidy — D-netburn × F-exp decay; goes to zero as cumulative-net-burn grows", percent: 20 },
-            { name: "Per-pulse entitlement-atoms — auto-mint at pulse boundaries; NO ROLLOVER EVER", percent: 20 },
-            { name: "Stake-management plumbing — StakeLedger free/reserved/sink + closed-op conservation invariant + slash_divergent_scorers + apply_*_settlement composition", percent: 80 },
+            { name: "Pulse pool partition (60:40 op:info) LOCKED", percent: 80 },
+            { name: "Stake minimum formulation (K_role × median_active_stake) LOCKED", percent: 75 },
+            { name: "Whistleblower bonus shape LOCKED", percent: 75 },
+            { name: "Slash 3-way split (40:60:0) LOCKED", percent: 80 },
+            { name: "Emission curve + burn rate — OQ-1 pending", percent: 25 },
+            { name: "Dual-standard reward formulas — OQ-2 pending", percent: 25 },
+            { name: "RT burn paths (user-query-burn flow) — undesigned", percent: 15 },
+            { name: "GT quota access (per-pulse entitlement-atoms) — undesigned", percent: 15 },
           ],
           issues: [
-            "Re-baselined under ship-readiness scale 2026-05-21: 12 of 13 submodules are design-locked but code-deferred; only Submodule 13 (stake plumbing) has substantial code.",
-            "Code/attestation drift on slash distribution (HIGH): dispute_settlement.rs encodes 25/75 disputer/sink while slash_three_way_split.md attests 40/60/0 challenger/refund/burn. Refund channel structurally absent in code.",
-            "Atomicity-on-overflow gap (MEDIUM) in StakeLedger slash_to_recipient/transfer_free/reserve/release: debit_balance commits before checked_add validates destination.",
-            "Missing primitive: median_active_stake accessor required by per-role stake-min formula.",
-            "OQ-1 Liquidity boat — bootstrap demand mechanism; principal-deferred (multi-session arc).",
-            "OQ-2 Burn rate vs RT speculation — query-cost ceiling; principal-deferred (multi-session arc).",
-            "Tier B sim-driven magnitudes pending: α(demand) curve, X(demand) curve, bootstrap subsidy decay, GT pre-criticality mint trajectory, criticality α<1 window length, cumulative-net-burn floor.",
-            "Per-role K_role constants + δ-divergence threshold + whistleblower bonus multiplier curve all sim-derivable; lock attestations pending hydra-sim completion.",
-            "Bootstrap demand depends on factors outside the protocol's control — largest economic risk.",
+            "M8 OQ-1 (emission curve) + OQ-2 (dual-standard formulas) are the largest remaining tokenomic gaps.",
+            "RT burn paths + GT quota access surfaced as undesigned 2026-05-21 (memory: project_rt_burn_and_gt_quota_undesigned).",
           ],
-          confidence: 60,
         },
         {
           name: "Module 9 — Criticality mechanism",
-          percent: 50,
+          architectural: 50,
+          code: 0,
+          testing: null,
           weight: 1,
           submodules: [
-            { name: "Criticality STATE — α<1 sustained over K pulses AND cumulative-net-burn ≥ floor", percent: 70 },
-            { name: "Criticality EVENT — first entry into state; one-time discrete; irreversible", percent: 70 },
-            { name: "Atomic event actions — GT_factor → 0; founder ZK-pool activates at 50% cumulative GT; subsidy → 0", percent: 70 },
-            { name: "Atomicity ordering — mint distribution FIRST, K-sustained check SECOND, event fires after", percent: 70 },
-            { name: "State representation — boolean criticality_status + event-pulse stamp; observable in canonical state", percent: 70 },
-            { name: "Post-criticality dynamics — α continues responding; no further structural events", percent: 70 },
-            { name: "Edge case: protocol may never criticalize — accepted residual", percent: 70 },
+            { name: "Criticality trigger — α<1 sustained + cumulative-net-burn floor", percent: 70 },
+            { name: "GT mint cessation at criticality", percent: 70 },
+            { name: "Founder claim pool (hash-of-secret commitment)", percent: 60 },
+            { name: "Bootstrap subsidy zeroing", percent: 70 },
+            { name: "Atomic mint-first/criticality-check-second ordering", percent: 70 },
           ],
           issues: [
-            "K pulse count + cumulative-net-burn floor specific values are fine-tuning; must lock pre-genesis.",
-            "50% founder allocation locked as design commitment; centralization signal accepted as trade.",
-            "Criticality is genesis-frozen and one-shot — calibration error cannot be repaired post-launch.",
+            "No code surface yet; substantive design landed in vision §185-201.",
           ],
-          confidence: null,
         },
         {
-          name: "Module 10 — Query & Compute Layer",
-          percent: 52,
+          name: "Module 10 — Query & Compute Layer (renamed; user-facing)",
+          architectural: 48,
+          code: 8,
+          testing: null,
           weight: 1,
           submodules: [
-            { name: "User-facing surface — decentralized inference like ChatGPT/Claude: user pays RT, network does compute, user receives cryptographically verifiable answer; users do NOT run full nodes", percent: 55 },
-            { name: "Three query types — 10a canonical-state read (Merkle proof + threshold-attested root); 10b HYDRA model inference (HR.11 deterministic re-derivable); 10c general compute (verification via game-theoretic + audit, or zkVM, or N-redundancy)", percent: 55 },
-            { name: "MPC privacy mode — identical UX, more RT, MPC under hood; same authentication surface for verifiability; no separate API", percent: 50 },
-            { name: "E1 atom-based unification — all services modeled as atoms; no formal 'node' role", percent: 70 },
-            { name: "Three settlement paths — S1 oracle (quorum) + S2 private (MPC+ZK) + S3 arbitrary (provisional+disputed)", percent: 70 },
-            { name: "E1-β full user-burn — paid-user RT destroyed on use; no direct flow to provider", percent: 70 },
-            { name: "Per-pulse entitlement-atoms — auto-mint at pulse boundaries proportional to GT", percent: 70 },
-            { name: "Quota rental via signed transitions — burn B = X(demand) · c; prevents undercutting paid market", percent: 70 },
-            { name: "Storage challenge-response — Merkle proof = positive settlement; failed/no-response = slash", percent: 70 },
-            { name: "VRF rotation per dispute / per job — audit + MPC + storage selection prevents capture", percent: 70 },
-            { name: "Auto-stake from operator earnings — fraction s RT; vests V pulses; per-category fractions", percent: 70 },
-            { name: "Slash three-way — challenger 40 / refund 60 / burn 0 (LOCKED in M8 Tier A; trigger-dependent refund target)", percent: 80 },
-            { name: "Positioning discipline — oracle is purpose; compute marketplace is one consumer among many", percent: 75 },
+            { name: "10a Canonical-state reads — substrate undesigned", percent: 20 },
+            { name: "10b HYDRA-model inference — substrate undesigned (compute primitives landed)", percent: 30 },
+            { name: "10c General-compute marketplace — verification story undesigned", percent: 15 },
+            { name: "Query-time threshold consensus (MOVED here from M2 R1) — design-pending", percent: 35 },
+            { name: "M14 pulse-boundary canonical-state-root attestation — blocks 10a/10b verifiability", percent: 35 },
           ],
           issues: [
-            "Substrate gap: M10 is at 0% of substantive design. Currently: storage primitives + compute primitives exist internally; user-facing query API + RT-payment-for-query flow + routing + light-client verification + MPC integration are all undesigned.",
-            "Identified 2026-05-21: RT BURN PATHS (user-initiated query → RT burn settlement) are entirely undesigned. StakeLedger::burn_from_sink exists for protocol-internal burn but no user-query-burn surface. See project_rt_burn_and_gt_quota_undesigned memory.",
-            "Identified 2026-05-21: GT QUOTA ACCESS (per-pulse entitlement-atom auto-mint at pulse boundary + GT-direct-use consumption without burn + GT-rental signed-transition with X(demand)-equivalent burn) is entirely undesigned. Depends on M14 pulse-boundary primitive.",
-            "Sequencing: M10 substantive design AFTER M4/M5/M6 substantively complete (10a/10b have nothing to serve until then). 10c (general compute) is independent.",
-            "Three verification stories for 10c (game-theoretic + audit; ZK proof via zkVM; N-redundancy): M10 substantive design must pick one or compose. Ship-now recommends game-theoretic + audit as first cut (cheapest per-job; M12 extension).",
-            "S3 arbitrary-compute has dimension_timescale-window vulnerability before audit-committee verdict can override.",
-            "Fine-tuning deferred: N replication, M-of-N privacy, K audit size, V vesting, M eligibility, s fractions — all sim-derivable post-substrate.",
+            "Substantial substrate gap. Primary user-facing surface per principal's decentralized-inference-UX framing.",
+            "M10 substantive design must pick verification story for 10c (game-theoretic / ZK proof / N-redundancy).",
           ],
-          confidence: null,
         },
         {
           name: "Module 11 — Privacy tier (MPC + ZK)",
-          percent: 52,
+          architectural: 50,
+          code: 0,
+          testing: null,
           weight: 1,
           submodules: [
-            { name: "STARK ZK proof system at genesis — no trusted setup; post-quantum security", percent: 70 },
-            { name: "MPC1 threshold secret-sharing — M-of-N threshold; M-1 collusion cannot recover plaintext", percent: 70 },
-            { name: "Coverage scope — S2 substrate covers BOTH oracle-private AND arbitrary-private compute", percent: 70 },
-            { name: "Joint proof composition — each MPC participant contributes; aggregated; no single trust anchor", percent: 70 },
-            { name: "Cost structure — privacy compute carries X(demand) · privacy_multiplier · c premium", percent: 70 },
-            { name: "Participant selection — VRF per job from MPC-capability-declared pool", percent: 70 },
-            { name: "Shared crypto suite at genesis — STARK + MPC1 + STARK-friendly encryption", percent: 70 },
-            { name: "MPC participant earnings — equal split among N VRF-selected; auto-stake; slashable on failure", percent: 70 },
-            { name: "Result encryption to user — same crypto suite; only user can decrypt", percent: 70 },
-            { name: "MPC-A privacy-leak detection — out-of-scope at protocol; rely on threshold + reputation + ZK", percent: 70 },
-            { name: "Crypto-primitive succession via Module 13 — emergent within structure reserved path", percent: 70 },
+            { name: "STARK ZK proof system at genesis (no trusted setup; PQ)", percent: 65 },
+            { name: "Threshold MPC framework — M-of-N", percent: 65 },
+            { name: "Joint proof composition", percent: 55 },
+            { name: "VRF-driven per-job participant selection", percent: 65 },
+            { name: "Auto-stake + slash-on-failure", percent: 60 },
+            { name: "Shared crypto suite at genesis (STARK + MPC1)", percent: 55 },
           ],
           issues: [
-            "Privacy-tier economic viability depends on user willingness to pay premium; may be under-utilized at launch.",
-            "Production-grade malicious-secure MPC + ZK is substantial engineering; specific scheme choices fine-tuning.",
-            "MPC privacy-leak attack surface relies on threshold-security + reputation rather than crypto leak-detection.",
+            "Substantive design pending. PQ-compatibility constraint locked.",
           ],
-          confidence: null,
         },
         {
           name: "Module 12 — Audit committees & slashing",
-          percent: 78,
+          architectural: 78,
+          code: 70,
+          testing: 85,
           weight: 1,
           submodules: [
-            { name: "Audit scope — forecasting-fitness path structurally complete; S3/arbitrary-compute + storage-attestation await M10/M11", percent: 80 },
-            { name: "VRF-selected audit committee per dispute — select_committee deterministic BLAKE3-keyed selection from CommitteeBeacon; pool-too-small + zero-size errors", percent: 85 },
-            { name: "Dispute-filing economics per kind — forecasting-fitness: 25%/75% bounty/sink + false-dispute slash via apply_overturn_settlement; S3/storage bond model awaits M10", percent: 75 },
-            { name: "LCB-weighted verdict consensus — VerdictAggregator with AuditorWeight LCB-keyed adoption + adopters + dissenters + InsufficientQuorum terminal", percent: 90 },
-            { name: "Non-response slash — mark_insufficient_quorum terminal; non-responder computation via committee - verdicts_snapshot.keys() at orchestrator layer", percent: 75 },
-            { name: "Slash magnitude proportional to divergence — primitives magnitude-agnostic; m_base · divergence_factor lives at orchestrator", percent: 75 },
-            { name: "Refund / bounty distribution per kind — forecasting-fitness end-to-end via apply_overturn_settlement composing OverturnSettlement + StakeLedger; S3/storage refund pool awaits M10", percent: 75 },
-            { name: "No cascading disputes — audit-verdict atoms not structurally disputable; VerdictAggregator::Adopted is terminal", percent: 90 },
-            { name: "Disputer calibration partition — (disputer, fitness_class) partition + DisputerRateGate landed s3+C.2; LCB rate-gate composition", percent: 90 },
-            { name: "Audit-primitive frozenness (HR.10 mitigation) — structural residual; trait seam + substantive primitives now both locked", percent: 75 },
+            { name: "Audit scope (forecasting-fitness + storage + S3 arbitrary-compute)", percent: 80 },
+            { name: "VRF-selected per-dispute committee", percent: 90 },
+            { name: "LCB-weighted verdict consensus", percent: 90 },
+            { name: "Dispute-bond economics + refund/bounty per kind", percent: 80 },
+            { name: "Non-response slash + insufficient-quorum terminal", percent: 80 },
+            { name: "Per-kind dispute economics (forecasting end-to-end; S3/storage await M10)", percent: 70 },
           ],
           issues: [
-            "Audit-primitive frozenness is acknowledged structural residual — mitigation via composed defenses, not via audit-primitive evolution.",
-            "Bootstrap-phase audit gaming bounded by D1 cross-dim pool + D2 deferred resolution + LCB-weighting + stake.",
-            "Per-kind dispute economics (bond vs slash, refund pool vs bounty) reflect different dispute kinds' different cost structures; HR.9 single-primitive vs per-kind-specialization resolved in favor of per-kind.",
-            "Substantive surface landed s5: AuditPool + select_committee + VerdictAggregator + sweep_against_ledger consume StakeLedger end-to-end for forecasting-fitness disputes. S3/storage dispute classes await M10/M11.",
-            "Fine-tuning deferred: D bond (S3/storage), forecasting-fitness slash magnitude, K committee size, M eligibility pool size, m_base slash, dispute window magnitude, threshold_weight > total/2 discipline (S11).",
+            "Forecasting-fitness dispute path structurally complete. S3 + storage await M10/M11.",
           ],
-          confidence: 85,
         },
         {
           name: "Module 13 — Community-driven succession paths",
-          percent: 65,
+          architectural: 65,
+          code: 0,
+          testing: null,
           weight: 1,
           submodules: [
-            { name: "Two succession paths — crypto-primitive + canonical-arithmetic. New dimensions NOT a succession path", percent: 70 },
-            { name: "Q13.1 V1 verifier — checklist with 3 categories: evidence-thresholds + zero-break-tests + time-tested-non-fault", percent: 70 },
-            { name: "Q13.2 A2 evidence atoms — crypto-evidence, arithmetic-evidence, candidate-spec; type-tag in-schema", percent: 70 },
-            { name: "Q13.3 T3 test specification — locked baseline per-path + permissionless break-tests", percent: 70 },
-            { name: "Q13.4 C2 parallel candidates — deterministic hash-tiebreak on simultaneous-verification", percent: 70 },
-            { name: "Q13.5 D1 activation — atomic at pulse boundary; backward-compatible", percent: 70 },
-            { name: "Q13.6 F1 failure handling — no rollback ever; structural residual from HR.1", percent: 70 },
-            { name: "Q13.7 / HR.11 No meta-succession — verification functions + test specs + path enumeration cannot succeed", percent: 70 },
-            { name: "Evidence aggregation — per-subcategory atoms with protocol-canonical verification + audit-committee for formal-verification", percent: 70 },
-            { name: "Threshold conjunction — per-subcategory threshold conjunction across evidence atoms", percent: 70 },
-            { name: "Break-test handling — per-break-category atoms; failed-break burns stake; successful-break + whistleblower share", percent: 70 },
-            { name: "Time-tested non-fault — continuous strict; any fault disqualifies; re-submission required", percent: 70 },
-            { name: "Activation conjunction — all-of conjunction across three category-classes", percent: 70 },
-            { name: "Activation cadence — per-pulse evaluation; atomic activation; parallel-candidate hash-tiebreak", percent: 70 },
-            { name: "Module 13 atom species at genesis — 5 total (3 evidence/spec + 2 break-test)", percent: 70 },
-            { name: "Test specification CONTENT — specific test vectors, formal-verification properties, benchmarks, hardware-class enumeration", percent: 50 },
+            { name: "Two paths (crypto-primitive + canonical-arithmetic)", percent: 75 },
+            { name: "Verifier checklist (3 categories) + evidence atoms", percent: 70 },
+            { name: "Activation atomic + monotonic + backward-compatible", percent: 70 },
+            { name: "Test specification CONTENT — pre-genesis spec authoring", percent: 50 },
           ],
           issues: [
-            "Test specification content (specific vectors, formal-verification properties, benchmarks, hardware-class enumeration) is pre-genesis spec authoring.",
-            "Verification function locked at genesis; cannot itself succeed (HR.11). Mitigation: V1 conservatism + permissionless break-tests + continuous-strict time-testing.",
-            "Acknowledged residuals: no-rollback; verification-function-flaw permanent; emergency-window if primitive breaks faster than verification completes.",
+            "Test specification content is pre-genesis spec authoring; no code surface yet.",
           ],
-          confidence: null,
         },
         {
           name: "Module 14 — Network Health & Adaptive Pulse",
-          percent: 65,
+          architectural: 60,
+          code: 30,
+          testing: 88,
           weight: 2,
           submodules: [
-            { name: "Pulse trigger — hybrid state-event dual signals (compute consumed OR atom submissions)", percent: 70 },
-            { name: "Health metric — pulse-interval state IS the health surface; no separate composite", percent: 70 },
-            { name: "Pulse rate bounds — soft bounds via M magnitudes only", percent: 70 },
-            { name: "Cross-module interface — both event-driven (pulse-boundary atom) and state-read", percent: 70 },
-            { name: "Genesis cold-start — pure state-event from day 1; dormant-until-used", percent: 70 },
-            { name: "Adversarial robustness — no module-specific defense; covered by HR.10 composition", percent: 70 },
-            { name: "Pulse-boundary atom shape — anchor=Null; 2-bin categorical histogram; sentinel provenance; totals NOT encoded", percent: 100 },
+            { name: "Dual state-event pulse trigger", percent: 75 },
+            { name: "Pulse-interval IS the health surface (no separate composite)", percent: 75 },
+            { name: "Pulse-boundary atom shape", percent: 100 },
+            { name: "Health-metric vector shape — design-pending (M2 R4 G4.10)", percent: 40 },
+            { name: "Genesis-default health values (stingy-first) — design-pending (M2 R5 G5.2)", percent: 35 },
+            { name: "Network-partition pulse-sequence reconciliation — design-pending (M2 R5 G5.4)", percent: 30 },
+            { name: "Pulse-boundary canonical-state-root attestation — design-pending", percent: 35 },
           ],
           issues: [
-            "Fixed-pulse protocol locked permanently at 2026-era scale would underperform decades-out — neither correctable under HR.1; activity-paced cadence is the structural fix.",
-            "Pulse-function genesis-locked; no succession path for the pulse mechanism itself (HR.11).",
-            "Multi-node consensus seam on pulse cadence; pulse-atom threshold-signing seam (M11 dependency) — deferred.",
-            "Fine-tuning deferred: M_compute, M_atoms magnitudes; r_min liveness floor.",
-          ],
-          confidence: 88,
-        },
-        {
-          name: "Testing",
-          percent: null,
-          is_testing_section: true,
-          submodules: [
-            { name: "Module 1 — Canonical state & schema", percent: 87, is_confidence: true },
-            { name: "Module 2 — Source submission layer", percent: 80, is_confidence: true },
-            { name: "Module 3 — Calibration & reputation engine", percent: 93, is_confidence: true },
-            { name: "Module 4 — Aggregation model", percent: 79, is_confidence: true },
-            { name: "Module 5 — Forecasting model", percent: 88, is_confidence: true },
-            { name: "Module 6 — Self-evolution infrastructure", percent: 95, is_confidence: true },
-            { name: "Module 7 — Adversarial defense composition", percent: null, is_confidence: true },
-            { name: "Module 8 — Tokenomics & economic accounting", percent: 60, is_confidence: true },
-            { name: "Module 9 — Criticality mechanism", percent: null, is_confidence: true },
-            { name: "Module 10 — Generalized compute marketplace", percent: null, is_confidence: true },
-            { name: "Module 11 — Privacy tier (MPC + ZK)", percent: null, is_confidence: true },
-            { name: "Module 12 — Audit committees & slashing", percent: 85, is_confidence: true },
-            { name: "Module 13 — Community-driven succession paths", percent: null, is_confidence: true },
-            { name: "Module 14 — Network Health & Adaptive Pulse", percent: 88, is_confidence: true },
-          ],
-          issues: [
-            "Confidence scores reflect the latest /hydra-test pass per module. Modules without a test pass yet show as 'not yet tested'.",
-            "Section percent counts every module: tested modules contribute their score, untested count as 0. This keeps the headline honest about test coverage rather than averaging only over tested modules.",
+            "M14 perfection cycle next major queue item; multiple cross-module dependencies identified from M2 R4-R5 deferrals.",
           ],
         },
       ],
     };
     /* ===== /DATA ===== */
 
-    /* ===== HYDRA PROGRESS SEMANTICS (read me before editing percentages) =====
+    /* ===== TRACKER SEMANTICS — three bars + composite =========================
      *
-     *   `percent` on a HYDRA module/submodule = SHIP-READINESS.
+     *  Each module reports three independent ship-readiness axes:
      *
-     *   The principal's definition (2026-05-21):
-     *     "When [the tracker's] progress hits 100% it means I can deploy this
-     *      immutable program with full confidence that it will work as intended."
+     *  • ARCHITECTURAL — design-lock completeness. The fraction of structural
+     *    surfaces locked via attestation. 100% = every commitment the module
+     *    will ship at genesis is captured in a `lock_attestations/*.md` file
+     *    with the 6-item discipline satisfied. Memo-only modules count their
+     *    composition-memo completeness.
      *
-     *   This is stronger than "feature complete" — HYDRA is immutable. Once
-     *   shipped, the substrate cannot be revised. 100% means: code exists,
-     *   tests cover golden + edge + adversarial paths, attestations are signed,
-     *   sim citations are locked, the principal would press deploy without
-     *   reservation. Use 100% sparingly and only when you would stake the
-     *   protocol's success on this submodule shipping as-is.
+     *  • CODE — implementation completeness. The fraction of attested design
+     *    surfaces that exist in code WITH real bodies (NOT just scaffolded
+     *    `todo!()` placeholders). A perfectly scaffolded but uniformly
+     *    `todo!()` module is ~5-10% code; a module whose locked surfaces are
+     *    fully implemented and clippy-clean is closer to 100%.
      *
-     *   Scale:
-     *     0-20%    — vision-declared but no code, no design memo. Pure aspiration.
-     *     20-50%   — substantial design lock + memo/attestation; no code, OR
-     *                code that doesn't yet implement the locked structure.
-     *     50-70%   — code exists, partial test coverage, partial vision alignment.
-     *     70-85%   — code matches vision, tests cover golden + edge cases,
-     *                structurally complete pending pre-genesis tuning.
-     *     85-95%   — implementation is ship-shape; only pre-genesis magnitude
-     *                tuning + sim-citation locks remain. Deployable in a
-     *                test-genesis; not yet in a real-genesis.
-     *     100%     — deploy-now confidence. The principal would ship this
-     *                immutably as-is.
+     *  • TESTING — latest /hydra-test confidence score. Untested = null;
+     *    composite treats null as 0 (a module with no validated tests is
+     *    not ship-ready regardless of its other axes).
      *
-     *   Untested modules do not contribute to overall progress (multiplier 0).
-     *   Weakly-tested (confidence <60) get half credit. Strong (>=80) full.
+     *  PER-MODULE COMPOSITE = MIN of the three axes (with null testing = 0).
+     *  A module is only as ship-ready as its WEAKEST axis: a fully-designed,
+     *  fully-coded, untested module is 0% ship-ready by this metric, because
+     *  HYDRA is immutable — untested code at genesis is a permanent risk.
+     *
+     *  MEMO-ONLY MODULES (e.g., M7 reframed): code=null + testing=null.
+     *  Composite = architectural (no code to compose against).
+     *
+     *  OVERALL = weighted-mean of per-module composites.
+     *  Overall sub-bars = weighted-mean of each axis across modules.
+     *
+     *  Untested + weak testing are both surfaced honestly — no hidden
+     *  multipliers, no excluded modules.
      *
      * ========================================================================= */
 
@@ -989,168 +679,156 @@
       return node;
     }
 
-    /* ----- Test-confidence-weighted overall progress -----
-     *
-     * Policy (HYDRA, 2026-05-21):
-     *
-     *   - `percent` on each module = feature completeness + ship-readiness
-     *     (NOT loose "alignment progress"). A submodule with no code is low
-     *     even if its design is locked.
-     *
-     *   - Untested modules get ZERO credit in overall progress. An untested
-     *     module has no validated signal; its `percent` does not flow into
-     *     the headline overall until a /hydra-test confidence score lands.
-     *     The earlier 0.70 multiplier was misleading — it credited untested
-     *     modules the same as weakly-tested ones, inflating headline progress.
-     *
-     *   - Tested modules get a confidence-weighted credit (weak/moderate/strong).
-     */
-    function confidenceMultiplier(c) {
-      if (c == null) return 0.00;           // untested — no signal, no credit
-      if (c >= 80) return 1.00;             // strong confidence — full credit
-      if (c >= 60) return 0.85;             // moderate confidence — mild discount
-      return 0.50;                          // weak confidence (<60) — half credit
-    }
-    function effectivePercent(m) {
-      if (typeof m.percent !== "number") return null;
-      // No `confidence` field at all → not a test target (foundational
-      // commitments, framing sections). Full credit; the policy below
-      // applies only to modules that opt into being scored.
-      if (!Object.prototype.hasOwnProperty.call(m, "confidence")) {
-        return m.percent;
-      }
-      return m.percent * confidenceMultiplier(m.confidence);
-    }
-    function computeOverallPercent(modules) {
-      var weightedSum = 0, totalWeight = 0;
-      for (var i = 0; i < modules.length; i++) {
-        var m = modules[i];
-        if (m.is_testing_section || m.is_timeline) continue;
-        if (typeof m.percent !== "number") continue;
-        var w = (typeof m.weight === "number") ? m.weight : 1;
-        if (w <= 0) continue;
-        var eff = effectivePercent(m);
-        if (eff == null) continue;
-        weightedSum += eff * w;
-        totalWeight += w;
-      }
-      return totalWeight === 0 ? 0 : Math.round(weightedSum / totalWeight);
-    }
-
     function pct(n) { return n == null ? "—" : n + "%"; }
 
-    function statusFor(p, opts) {
-      if (opts && opts.isConfidence && p == null) return { cls: "status-untested", text: "untested" };
-      if (p == null) return { cls: "status-untested", text: "pending" };
+    function statusFor(p) {
+      if (p == null) return { cls: "status-untested", text: "n/a" };
       if (p >= 100) return { cls: "status-done", text: "done" };
       if (p <= 0) return { cls: "status-todo", text: "todo" };
       return { cls: "status-partial", text: "partial" };
     }
 
-    function fillClassFor(p) {
-      if (p == null) return "bar-fill empty";
-      if (p >= 100) return "bar-fill done";
-      if (p <= 0) return "bar-fill empty";
-      return "bar-fill";
+    function fillClass(axis, percent) {
+      if (percent == null) return "bar-fill empty";
+      if (percent >= 100) return "bar-fill done";
+      if (percent <= 0) return "bar-fill empty";
+      return "bar-fill " + axis;
     }
 
-    function confidenceClsFor(c) {
-      if (c == null) return "confidence-untested";
-      if (c >= 70) return "confidence-high";
-      if (c >= 40) return "confidence-medium";
-      return "confidence-low";
-    }
-
-    function confidenceLabel(c) {
-      return c == null ? "Not yet tested" : c + " / 100";
-    }
-
-    function progressBar(percent, fillClass) {
+    function progressBar(percent, axis) {
       const safePct = percent == null ? 0 : Math.max(0, Math.min(100, percent));
       return el("div", { class: "bar-track" }, [
         el("div", {
-          class: fillClass || fillClassFor(percent),
+          class: fillClass(axis || "composite", percent),
           style: "width: " + safePct + "%",
         }),
       ]);
     }
 
-    function renderHeader() {
-      var computedOverall = computeOverallPercent(DATA.modules);
-      DATA.overall_percent = computedOverall;
-      document.getElementById("overall-percent").textContent = pct(computedOverall);
-      document.getElementById("overall-bar").style.width = pct(computedOverall);
-      const fillEl = document.getElementById("overall-bar");
-      fillEl.className = fillClassFor(computedOverall);
-      const subtitle = document.getElementById("subtitle");
-      subtitle.textContent = DATA.source;
-      document.getElementById("footer").innerHTML =
-        "Last updated " + DATA.generated_at;
+    /** Composite of one module: min(architectural, code, testing_or_0).
+     *  Memo-only (code=null AND testing=null) returns architectural. */
+    function computeComposite(m) {
+      const isMemoOnly = (m.code == null && m.testing == null);
+      if (isMemoOnly) return m.architectural;
+      const arch = (typeof m.architectural === "number") ? m.architectural : 0;
+      const code = (typeof m.code === "number") ? m.code : 0;
+      const testing = (typeof m.testing === "number") ? m.testing : 0;
+      return Math.min(arch, code, testing);
     }
 
-    function renderModule(m, opts) {
-      const openByDefault = !!(opts && opts.openByDefault);
-      const hasIssues = m.issues && m.issues.length > 0;
-      const isTestingSection = !!m.is_testing_section;
-      const hasConfidence = Object.prototype.hasOwnProperty.call(m, "confidence");
+    /** Weighted mean of per-module composites. */
+    function computeOverall(modules) {
+      let weightedSum = 0, totalWeight = 0;
+      for (const m of modules) {
+        const w = (typeof m.weight === "number") ? m.weight : 1;
+        if (w <= 0) continue;
+        weightedSum += computeComposite(m) * w;
+        totalWeight += w;
+      }
+      return totalWeight === 0 ? 0 : Math.round(weightedSum / totalWeight);
+    }
 
-      const iconEl = isTestingSection
-        ? el("span", { class: "test-dot", title: "testing section" })
-        : (hasIssues
-            ? el("span", { class: "warn-dot", title: m.issues.length + " open issue(s)" })
-            : (m.percent >= 100 ? el("span", { class: "done-dot", title: "complete" }) : null));
+    /** Weighted mean of a single axis across modules. */
+    function computeAxisMean(modules, axis) {
+      let weightedSum = 0, totalWeight = 0;
+      for (const m of modules) {
+        const w = (typeof m.weight === "number") ? m.weight : 1;
+        const v = m[axis];
+        if (w <= 0) continue;
+        // null treats as 0 for the mean — surfaces untested honestly.
+        weightedSum += (typeof v === "number" ? v : 0) * w;
+        totalWeight += w;
+      }
+      return totalWeight === 0 ? 0 : Math.round(weightedSum / totalWeight);
+    }
+
+    function renderHeader() {
+      const overall = computeOverall(DATA.modules);
+      const archMean = computeAxisMean(DATA.modules, "architectural");
+      const codeMean = computeAxisMean(DATA.modules, "code");
+      const testMean = computeAxisMean(DATA.modules, "testing");
+
+      document.getElementById("overall-percent").textContent = pct(overall);
+      document.getElementById("overall-bar").style.width = overall + "%";
+
+      document.getElementById("overall-arch-pct").textContent = pct(archMean);
+      document.getElementById("overall-arch-bar").style.width = archMean + "%";
+
+      document.getElementById("overall-code-pct").textContent = pct(codeMean);
+      document.getElementById("overall-code-bar").style.width = codeMean + "%";
+
+      document.getElementById("overall-test-pct").textContent = pct(testMean);
+      document.getElementById("overall-test-bar").style.width = testMean + "%";
+
+      document.getElementById("subtitle").textContent = DATA.source;
+      document.getElementById("footer").innerHTML = "Last updated " + DATA.generated_at;
+    }
+
+    function moduleBarRow(label, percent, axis, isComposite) {
+      return el("div", { class: "module-bar-row" + (isComposite ? " composite" : "") }, [
+        el("span", { class: "module-bar-label" }, label),
+        el("span", { class: "module-bar-pct" }, pct(percent)),
+        progressBar(percent, axis),
+      ]);
+    }
+
+    function renderModule(m) {
+      const hasIssues = m.issues && m.issues.length > 0;
+      const composite = computeComposite(m);
+      const isMemoOnly = (m.code == null && m.testing == null);
+
+      const iconEl = hasIssues
+        ? el("span", { class: "warn-dot", title: m.issues.length + " open issue(s)" })
+        : (composite >= 100 ? el("span", { class: "done-dot", title: "complete" }) : null);
 
       const nameRow = el("div", { class: "module-name-row" }, [
         iconEl,
         el("span", { class: "module-name" }, m.name),
       ]);
-      const meta = el("div", { class: "module-meta" }, [
-        el("span", { class: "module-percent" }, pct(m.percent)),
-        el("span", { class: "chevron", title: "expand / collapse" }, "▾"),
+      const meta = el("div", null, [
+        el("span", { class: "module-composite-pct" }, pct(composite)),
+        el("span", { class: "chevron", title: "expand / collapse" }, "  ▾"),
       ]);
-      const bar = el("div", { class: "module-bar" }, [
-        progressBar(m.percent),
-      ]);
-      const header = el("div", {
-        class: "module-header" + (isTestingSection ? " testing-header" : ""),
-        role: "button",
-        tabindex: "0",
-        "aria-expanded": openByDefault ? "true" : "false",
-      }, [nameRow, meta, bar]);
+
+      // Build the per-module bar block: composite first, then three sub-bars.
+      const barChildren = [
+        moduleBarRow("Composite", composite, "composite", true),
+        moduleBarRow("Architectural", m.architectural, "arch"),
+      ];
+      if (!isMemoOnly) {
+        barChildren.push(moduleBarRow("Code", m.code, "code"));
+        barChildren.push(moduleBarRow("Testing", m.testing, "test"));
+      } else {
+        barChildren.push(el("div", { class: "module-bar-row" }, [
+          el("span", { class: "module-bar-label" }, "Memo-only"),
+          el("span", { class: "module-bar-pct" }, "n/a"),
+          el("div", { class: "bar-track" }, [el("div", { class: "bar-fill empty", style: "width: 0%" })]),
+        ]));
+      }
+
+      const bars = el("div", { class: "module-bars" }, barChildren);
+      const header = el("div", { class: "module-header", role: "button", tabindex: "0", "aria-expanded": "false" }, [nameRow, meta, bars]);
 
       const bodyChildren = [];
       if (m.submodules && m.submodules.length) {
-        bodyChildren.push(el("div", { class: "section-label" }, isTestingSection ? "Module confidence scores" : "Sub-items"));
+        bodyChildren.push(el("div", { class: "section-label" }, "Sub-items"));
         for (const s of m.submodules) {
-          const isSubConfidence = !!s.is_confidence;
-          const st = statusFor(s.percent, { isConfidence: isSubConfidence });
-          const statusText = isSubConfidence && s.percent == null ? "not yet tested" : st.text;
-          const percentLabel = isSubConfidence
-            ? (s.percent == null ? "—" : s.percent + " / 100")
-            : pct(s.percent);
+          const st = statusFor(s.percent);
           const subTop = el("div", { class: "sub-top" }, [
             el("span", { class: "sub-name" }, s.name),
-            el("span", { class: "sub-percent" }, percentLabel),
-            el("span", { class: "sub-status " + st.cls }, statusText),
+            el("span", { class: "sub-percent" }, pct(s.percent)),
+            el("span", { class: "sub-status " + st.cls }, st.text),
           ]);
-          const subBar = el("div", { class: "sub-bar" }, [progressBar(s.percent)]);
+          const subBar = el("div", { class: "sub-bar" }, [progressBar(s.percent, "composite")]);
           bodyChildren.push(el("div", { class: "sub" }, [subTop, subBar]));
         }
       }
-      if (hasConfidence && !isTestingSection) {
-        bodyChildren.push(el("div", { class: "section-label" }, "Test confidence"));
-        const cls = confidenceClsFor(m.confidence);
-        bodyChildren.push(el("div", { class: "confidence-row " + cls }, [
-          el("span", { class: "confidence-label" }, confidenceLabel(m.confidence)),
-          el("span", { class: "confidence-hint" }, m.confidence == null ? "run /hydra-test to score this module" : "score / 100"),
-        ]));
-      }
       if (hasIssues) {
-        bodyChildren.push(el("div", { class: "section-label" }, isTestingSection ? "Notes" : "Open issues / followups"));
+        bodyChildren.push(el("div", { class: "section-label" }, "Open issues / followups"));
         const ul = el("ul", { class: "issues-list" });
         for (const issue of m.issues) {
           ul.appendChild(el("li", { class: "issue" }, [
-            el("span", { class: "issue-icon" }, isTestingSection ? "ⓘ" : "·"),
+            el("span", { class: "issue-icon" }, "·"),
             el("span", { html: issue }),
           ]));
         }
@@ -1158,7 +836,7 @@
       }
       const body = el("div", { class: "module-body" }, bodyChildren);
 
-      const root = el("div", { class: "module" + (openByDefault ? " open" : "") }, [header, body]);
+      const root = el("div", { class: "module" }, [header, body]);
 
       function toggle() {
         const willOpen = !root.classList.contains("open");
@@ -1175,55 +853,16 @@
       return root;
     }
 
-    function deriveTestingPercent(m) {
-      // Testing-section overall percent is the mean of confidence scores
-      // INCLUDING untested modules as 0. Earlier behavior excluded untested
-      // from the denominator, which produced a misleading high average
-      // when most modules had no test pass yet. The new policy: every
-      // module counts; untested = 0; the average reflects honest test
-      // coverage + average confidence simultaneously.
-      if (!m.is_testing_section || !m.submodules) return m.percent;
-      const all = m.submodules.filter(function (s) { return s.is_confidence; });
-      if (all.length === 0) return null;
-      const sum = all.reduce(function (acc, s) {
-        return acc + (typeof s.percent === "number" ? s.percent : 0);
-      }, 0);
-      return Math.round(sum / all.length);
+    function render() {
+      renderHeader();
+      const modulesEl = document.getElementById("modules");
+      modulesEl.innerHTML = "";
+      for (const m of DATA.modules) {
+        modulesEl.appendChild(renderModule(m));
+      }
     }
 
-    function testingCoverage(m) {
-      // Returns { tested: K, total: N } for the testing section.
-      if (!m.is_testing_section || !m.submodules) return null;
-      const all = m.submodules.filter(function (s) { return s.is_confidence; });
-      if (all.length === 0) return null;
-      const tested = all.filter(function (s) { return typeof s.percent === "number"; }).length;
-      return { tested: tested, total: all.length };
-    }
-
-    function renderModules() {
-      const host = document.getElementById("modules");
-      DATA.modules.forEach(function (m, idx) {
-        if (m.is_testing_section) {
-          // Always recompute (don't honor a stale static percent in DATA).
-          m.percent = deriveTestingPercent(m);
-          // Prepend a coverage line to the issues list so the honest
-          // signal (X of N modules tested) is visible without expansion.
-          const cov = testingCoverage(m);
-          if (cov) {
-            const covLine =
-              "<b>Coverage: " + cov.tested + " of " + cov.total +
-              " modules tested</b> (" + Math.round(100 * cov.tested / cov.total) +
-              "%). Untested modules count as 0 in this section's average and " +
-              "contribute 0 to overall progress until a /hydra-test pass scores them.";
-            m.issues = [covLine].concat(m.issues || []);
-          }
-        }
-        host.appendChild(renderModule(m, { openByDefault: idx === 0 }));
-      });
-    }
-
-    renderHeader();
-    renderModules();
+    render();
   </script>
 </body>
 </html>
