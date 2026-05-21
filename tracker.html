@@ -317,7 +317,7 @@
        ===================================================================== */
     const DATA = {
       generated_at: "2026-05-22",
-      source: "CURRENT_STATE.md + Vision_v1.md @ 2026-05-22 session 2 (M2 perfected + reaped; M7 reframed memo-only; tracker redo)",
+      source: "CURRENT_STATE.md + Vision_v1.md @ 2026-05-22 session 2 (M2 perfected + reaped; M7 memo-only; M1 forkability locked post-handoff)",
       modules: [
         {
           name: "Foundational commitments — 11 Hard Rules",
@@ -346,7 +346,7 @@
         },
         {
           name: "Module 1 — Canonical state, data model & emergence",
-          architectural: 88,
+          architectural: 92,
           code: 18,
           testing: 87,
           weight: 2,
@@ -357,7 +357,8 @@
             { name: "Canonical state as time-indexed block — first-class blanks", percent: 80 },
             { name: "Entity resolution — full-auto deterministic LOCKED", percent: 88 },
             { name: "Emergent dimension lifecycle — full-auto LOCKED + DECAYED state", percent: 88 },
-            { name: "Protocol-reserved dimensions registry (NEW M2 R4 — m1_protocol_reserved_dimensions)", percent: 85 },
+            { name: "Protocol-reserved dimensions registry (6 dims; CLOSED under HR.1)", percent: 90 },
+            { name: "Canonical-state publication + fork discipline LOCKED (NEW post-handoff — snapshot atom + hydra. namespace + cross-fork sig non-replay)", percent: 88 },
             { name: "Lossless canonical compression — Zstd + locked dictionary LOCKED", percent: 92 },
             { name: "Provenance metadata (optional 5-byte default footprint) LOCKED", percent: 90 },
             { name: "Query-driven 3-tier priority (cross-module M1/M4/M5/M10) LOCKED", percent: 80 },
@@ -366,8 +367,9 @@
           ],
           issues: [
             "M1 reaping complete (session 1, 2026-05-22): substantial scaffolding with todo!() bodies in hydra-core.",
+            "Forkability locked post-handoff (session 2, 2026-05-22): three coupled commitments — per-pulse snapshot atom on __canonical_state_snapshot__ reserved dim + hydra. domain-tag namespace forever-reserved + cross-fork sig non-replay structurally guaranteed. Token + identity portable across forks via shared PROVENANCE_DOMAIN + snapshot inheritance. No in-protocol fork mechanism — off-protocol coordination only.",
             "Gossip-mesh substrate now M1-scoped per principal directive (push defenses to M1). Likely new hydra-gossip crate when designed.",
-            "Persistence layer interface blocked on M11 STARK family choice.",
+            "Persistence layer interface blocked on M11 STARK family choice (and now composes with snapshot publication discipline).",
             "Testing score (87/100) is pre-re-baseline — pre-M1-reaping test. Needs re-test against post-reaping shape.",
           ],
         },
